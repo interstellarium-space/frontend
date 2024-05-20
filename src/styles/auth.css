@@ -20,7 +20,7 @@
 }
 
 .interstellarium-auth-picture {
-    width: 60%;
+    width: 45%;
 }
 
 .interstellarium-auth-form-wrapper {
@@ -69,11 +69,7 @@
 
 @media (min-width: 992px) {
     .interstellarium-auth-picture {
-        width: 75%;
-    }
-
-    .interstellarium-auth-form-wrapper {
-        padding: 0;
+        width: 64%;
     }
 }
 

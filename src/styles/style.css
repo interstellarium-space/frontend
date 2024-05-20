@@ -9,7 +9,7 @@
     --interstellarium-special-font-family: 'Rubik Vinyl';
 }
 
-html, body {
+html, body, #app {
     min-height: 100vh;
     margin: 0;
     display: flex;
