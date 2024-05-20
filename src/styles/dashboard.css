@@ -18,6 +18,10 @@
     left: 0;
     width: 100%;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background: black;
 }
 
 .interstellarium-dashboard-sidebar.hidden {
@@ -44,7 +48,12 @@
     align-items: center;
 }
 
-
+.interstellarium-dashboard-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
 @media (min-width: 768px) {
     .interstellarium-dashboard-sidebar {
@@ -61,6 +70,10 @@
 
     .interstellarium-dashboard-sidebar.hidden {
         display: flex;
+    }
+
+    .interstellarium-dashboard-logo {
+        font-size: 2vw;
     }
 }
 
