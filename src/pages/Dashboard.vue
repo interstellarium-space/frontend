@@ -3,7 +3,10 @@
   import DashboardLogo from "../components/DashboardLogo.vue";
   
   export default {
-    components: {DashboardLogo, DashboardShowSidebar},
+    components: {
+      DashboardLogo,
+      DashboardShowSidebar
+    },
     // hack for component-dependent html tag 'body' styling
     beforeCreate: function() {
         document.body.className = 'dashboard'
@@ -25,9 +28,18 @@
 <template>
   <div class="interstellarium-container">
     <div class="interstellarium-dashboard">
-      <div class="interstellarium-dashboard-sidebar" id="dashboard-sidebar">
+      <div class="interstellarium-dashboard-sidebar hidden" id="dashboard-sidebar">
         <div class="interstellarium-dashboard-header">
           <DashboardLogo/>
+        </div>
+        <div class="interstellarium-dashboard-sidebar-content">
+          <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12"></div>
+          <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12"></div>
+          <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12"></div>
+          <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12"></div>
+          <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12"></div>
+          <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12"></div>
+          <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12"></div>
         </div>
         <div class="interstellarium-dashboard-footer">
           <DashboardShowSidebar/>
@@ -43,22 +55,6 @@
       </div>
     </div>
   </div>
-  <!--
-  <div class="interstellarium-container">
-    <div class="interstellarium-dashboard">
-      <div class="interstellarium-dashboard-header">
-        <div class="interstellarium-dashboard-logo-wrapper">
-          <div class="interstellarium-dashboard-logo m-2">
-            INTERSTELLARIUM
-          </div>
-        </div>
-        <div class="interstellarium-dashboard-nav my-2"></div>
-      </div>
-      <div class="interstellarium-dashboard-content flex-grow-1"></div>
-      <div class="interstellarium-dashboard-footer justify-content-center"></div>
-    </div>
-  </div>
-  -->
 </template>
 
 <style scoped>

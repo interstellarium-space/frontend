@@ -3,10 +3,13 @@
     methods: {
       toggleSidebar() {
         let sidebar = document.getElementById('dashboard-sidebar')
+        let main = document.getElementById('dashboard-main')
         if (sidebar.classList.contains("hidden")) {
           sidebar.classList.remove("hidden")
+          main.classList.add("hidden")
         } else {
           sidebar.classList.add("hidden")
+          main.classList.remove("hidden")
         }
       }
     }
