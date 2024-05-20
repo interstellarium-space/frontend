@@ -7,6 +7,7 @@
     --interstellarium-gradient: linear-gradient(135deg, #0575E6 40%, #021B79 110%);
     --interstellarium-base-font-family: 'Nunito';
     --interstellarium-special-font-family: 'Rubik Vinyl';
+    --interstellarium-work-font-family: 'Russo One';
 }
 
 html, body, #app {
