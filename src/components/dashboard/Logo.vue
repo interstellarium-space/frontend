@@ -34,4 +34,16 @@
         display: none;
     }
 }
+
+@media (min-width: 1200px) {
+    .interstellarium-dashboard-logo {
+        font-size: 1.1vw;
+    }
+}
+
+@media (min-width: 1440px) {
+    .interstellarium-dashboard-logo {
+        font-size: 1.2vw;
+    }
+}
 </style>

@@ -7,6 +7,20 @@
       DashboardLogo,
       DashboardShowSidebar
     },
+    
+    data() {
+      return {
+        pages: [
+          {name: 'Users', title: 'Пользователи'},
+          {name: 'Departments', title: 'Отделы'},
+          {name: 'Projects', title: 'Проекты'},
+          {name: 'Contracts', title: 'Контракты'},
+          {name: 'Groups', title: 'Группы'},
+          {name: 'Equipment', title: 'Оборудование'},
+          {name: 'Works', title: 'Работы'},
+        ]
+      }
+    }
   }
 </script>
 
@@ -16,26 +30,20 @@
       <DashboardLogo/>
     </div>
     <div class="interstellarium-dashboard-sidebar-content">
-      <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12">
-        <a href="#" class="interstellarium-dashboard-card-link">Персонал</a>
+      <div @click="this.$router.push({name: 'Dashboard'})" class="interstellarium-dashboard-sidebar-card col-12 mb-3">
+        <div class="interstellarium-link interstellarium-dashboard-sidebar-card-link">
+          Dashboard
+        </div>
       </div>
-      <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12">
-        <a href="#" class="interstellarium-dashboard-card-link">Отделы</a>
+      <div v-for="page in this.pages" @click="this.$router.push({name: page.name})" class="interstellarium-dashboard-sidebar-card col-12 col-sm-6 col-md-12">
+        <div class="interstellarium-link interstellarium-dashboard-sidebar-card-link">
+          {{ page.title }}
+        </div>
       </div>
-      <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12">
-        <a href="#" class="interstellarium-dashboard-card-link">Проекты</a>
-      </div>
-      <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12">
-        <a href="#" class="interstellarium-dashboard-card-link">Договоры</a>
-      </div>
-      <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12">
-        <a href="#" class="interstellarium-dashboard-card-link">Группы</a>
-      </div>
-      <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12">
-        <a href="#" class="interstellarium-dashboard-card-link">Оборудование</a>
-      </div>
-      <div class="interstellarium-dashboard-card col-12 col-sm-6 col-md-12">
-        <a href="#" class="interstellarium-dashboard-card-link">Работы</a>
+      <div @click="this.$router.push({name: 'Logout'})" class="interstellarium-dashboard-sidebar-card col-12 mt-3 bg-danger">
+        <div class="interstellarium-link interstellarium-dashboard-sidebar-card-link text-white">
+          Выйти
+        </div>
       </div>
     </div>
     <div class="interstellarium-dashboard-footer">

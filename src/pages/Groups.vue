@@ -15,12 +15,12 @@
     },
     
     setup() {
-      document.title = 'Dashboard | Interstellarium'
+      document.title = 'Группы | Interstellarium'
     },
     
     methods: {
       mounted() {
-        document.title = 'Dashboard | Interstellarium'
+        document.title = 'Группы | Interstellarium'
       }
     }
   }
@@ -30,7 +30,9 @@
   <div class="interstellarium-container">
     <div class="interstellarium-dashboard">
       <DashboardSidebar></DashboardSidebar>
-      <DashboardMain></DashboardMain>
+      <DashboardMain>
+        <div></div>
+      </DashboardMain>
     </div>
   </div>
 </template>

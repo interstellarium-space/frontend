@@ -7,6 +7,13 @@ import Index from './pages/Index.vue'
 import Login from './pages/Login.vue'
 import ResetPassword from './pages/ResetPassword.vue'
 import Dashboard from './pages/Dashboard.vue'
+import Users from './pages/Users.vue'
+import Departments from './pages/Departments.vue'
+import Projects from "./pages/Projects.vue"
+import Contracts from "./pages/Contracts.vue"
+import Groups from "./pages/Groups.vue"
+import Equipment from "./pages/Equipment.vue"
+import Works from "./pages/Works.vue"
 
 const router = createRouter({
     routes: [
@@ -21,6 +28,17 @@ const router = createRouter({
             component: Login,
             meta: {
                 guest: true
+            }
+        },
+        {
+            path: '/logout',
+            name: 'Logout',
+            meta: {
+                requiresAuth: true
+            },
+            redirect: to => {
+                localStorage.removeItem('token')
+                return {name: 'Login'}
             }
         },
         {
@@ -40,14 +58,59 @@ const router = createRouter({
             }
         },
         {
-            path: '/logout',
-            name: 'Logout',
+            path: '/users',
+            name: 'Users',
+            component: Users,
             meta: {
                 requiresAuth: true
-            },
-            redirect: to => {
-                localStorage.removeItem('token')
-                return {name: 'Login'}
+            }
+        },
+        {
+            path: '/departments',
+            name: 'Departments',
+            component: Departments,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/projects',
+            name: 'Projects',
+            component: Projects,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/contracts',
+            name: 'Contracts',
+            component: Contracts,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/groups',
+            name: 'Groups',
+            component: Groups,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/equipment',
+            name: 'Equipment',
+            component: Equipment,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/works',
+            name: 'Works',
+            component: Works,
+            meta: {
+                requiresAuth: true
             }
         },
     ],

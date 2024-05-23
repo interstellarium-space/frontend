@@ -16,7 +16,7 @@
       <DashboardLogo/>
     </div>
     <div class="interstellarium-dashboard-main-content">
-    
+      <slot></slot>
     </div>
     <div class="interstellarium-dashboard-footer">
       <DashboardShowSidebar/>
