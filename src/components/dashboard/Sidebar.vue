@@ -6,7 +6,7 @@
     components: {
       DashboardLogo,
       DashboardShowSidebar
-    }
+    },
   }
 </script>
 

@@ -22,10 +22,6 @@
       
       async resetPassword() {
         if (this.isValid()) {
-          // let protocol = this.hostStore.protocol
-          // let host = this.hostStore.host
-          // let port = this.hostStore.port
-          // let url = `${protocol}://${host}:${port}/api/auth/reset-password`
           // ... send request to reset
           document.getElementById('')
         }

@@ -1,16 +1,15 @@
 <script>
   import axios from 'axios'
   
-  import { useHostStore } from '../stores/Host.js';
-  import { useAuthStore } from '../stores/Auth.js';
+  import { projectConfig } from '../common/index.js'
+  import { useAuthStore } from '../stores/Auth.js'
   
   export default {
     setup() {
       document.title = 'Авторизация | Interstellarium'
       
       const authStore = useAuthStore()
-      const hostStore = useHostStore()
-      return {authStore, hostStore}
+      return {authStore}
     },
     
     data() {
@@ -37,9 +36,9 @@
       
       async login() {
         if (this.isValid()) {
-          let protocol = this.hostStore.protocol
-          let host = this.hostStore.host
-          let port = this.hostStore.port
+          let protocol = projectConfig.protocol
+          let host = projectConfig.host
+          let port = projectConfig.port
           let url = `${protocol}://${host}:${port}/api/auth/login`
           
           const res = await axios.post(url, {
@@ -47,13 +46,31 @@
             password: this.password
           }).catch(function (error) {})
           
-          console.warn(res)
+          console.debug(res)
           
           // we catch error and then check response and status
           // response must not be undefined
           if (res && res.status === 200) {
-            this.authStore.login(this.email, this.password)
-            // this.$router.push({ name: 'Home' })
+            localStorage.setItem('token', res.data.access_token)
+            if (localStorage.getItem('token') != null) {
+              console.log(localStorage.getItem('token'))
+              if (this.$route.params.nextUrl != null) {
+                this.$router.push(this.$route.params.nextUrl)
+              } else {
+                this.$router.push({name: 'Dashboard'})
+              }
+              // how to use token
+              
+              // let protocol = projectConfig.protocol
+              // let host = projectConfig.host
+              // let port = projectConfig.port
+              // let url = `${protocol}://${host}:${port}/api/users/me`
+              // let token = localStorage.getItem('token')
+              // let config = {
+              //   headers: { Authorization: `Bearer ${token}` }
+              // }
+              // const res = await axios.get(url, config).catch(function (error) {})
+            }
           } else {
             this.msg = 'Не правильно введен логин или пароль'
           }
