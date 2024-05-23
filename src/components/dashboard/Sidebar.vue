@@ -1,11 +1,11 @@
 <script>
-  import DashboardShowSidebar from "./ShowSidebar.vue";
+  import DashboardHideSidebar from "./HideSidebar.vue";
   import DashboardLogo from "./Logo.vue";
   
   export default {
     components: {
       DashboardLogo,
-      DashboardShowSidebar
+      DashboardHideSidebar
     },
     
     data() {
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="interstellarium-dashboard-footer">
-      <DashboardShowSidebar/>
+      <DashboardHideSidebar></DashboardHideSidebar>
     </div>
   </div>
 </template>

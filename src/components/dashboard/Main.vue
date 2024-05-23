@@ -15,8 +15,11 @@
     <div class="interstellarium-dashboard-header">
       <DashboardLogo></DashboardLogo>
     </div>
+    <div class="interstellarium-dashboard-functions">
+      <slot name="functions"></slot>
+    </div>
     <div class="interstellarium-dashboard-main-content">
-      <slot></slot>
+      <slot name="content"></slot>
     </div>
     <div class="interstellarium-dashboard-footer">
       <DashboardShowSidebar></DashboardShowSidebar>

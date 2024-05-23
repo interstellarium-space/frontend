@@ -36,7 +36,45 @@
     <div class="interstellarium-dashboard">
       <DashboardSidebar></DashboardSidebar>
       <DashboardMain>
-        <div></div>
+        <template v-slot:functions>
+          <form class="row w-100 mx-3 interstellarium-search-form" @submit.prevent="" autocomplete=off>
+            <div class="col-6 col-md-3 my-2 my-md-1">
+              <input
+                  type="text"
+                  class="form-control"
+                  id="filter-name"
+                  placeholder="Имя"
+              >
+            </div>
+            <div class="col-6 col-md-3 my-2 my-md-1">
+              <input
+                  type="text"
+                  class="form-control"
+                  id="filter-birthdate-from"
+                  placeholder="С даты рождения"
+                  onfocus="this.type='date'"
+              >
+            </div>
+            <div class="col-6 col-md-3 my-2 my-md-1">
+              <input
+                  type="text"
+                  class="form-control"
+                  id="filter-birthdate-to"
+                  placeholder="По дату рождения"
+                  onfocus="this.type='date'"
+              >
+            </div>
+            <div class="col-6 col-md-3 my-2 my-md-1 px-2">
+              <input
+                  type="submit"
+                  class="form-control btn btn-interstellarium"
+                  id="search"
+                  value="Поиск"
+              >
+            </div>
+          </form>
+        </template>
+        <template v-slot:content></template>
       </DashboardMain>
     </div>
   </div>
@@ -45,4 +83,8 @@
 <style scoped>
 @import "/src/styles/style.css";
 @import "/src/styles/dashboard.css";
+
+.interstellarium-search-form {
+    font-family: var(--interstellarium-base-font-family), sans-serif;
+}
 </style>
