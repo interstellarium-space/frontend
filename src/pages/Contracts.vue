@@ -14,6 +14,11 @@
         document.getElementById('app').className = 'dashboard'
     },
     
+    beforeRouteLeave: function () {
+        document.body.classList.remove('dashboard')
+        document.getElementById('app').classList.remove('dashboard')
+    },
+    
     setup() {
       document.title = 'Контракты | Interstellarium'
     },

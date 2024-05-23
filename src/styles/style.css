@@ -40,6 +40,10 @@ body.dashboard, #app.dashboard {
     cursor: pointer;
 }
 
+.bg-interstellarium {
+    background: var(--interstellarium-gradient);
+}
+
 
 @media (min-width: 576px) {
     :root {

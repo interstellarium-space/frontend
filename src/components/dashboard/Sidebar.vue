@@ -27,11 +27,11 @@
 <template>
   <div class="interstellarium-dashboard-sidebar hidden" id="dashboard-sidebar">
     <div class="interstellarium-dashboard-header">
-      <DashboardLogo/>
+      <DashboardLogo></DashboardLogo>
     </div>
     <div class="interstellarium-dashboard-sidebar-content">
-      <div @click="this.$router.push({name: 'Dashboard'})" class="interstellarium-dashboard-sidebar-card col-12 mb-3">
-        <div class="interstellarium-link interstellarium-dashboard-sidebar-card-link">
+      <div @click="this.$router.push({name: 'Dashboard'})" class="interstellarium-dashboard-sidebar-card col-12 mb-3 bg-interstellarium">
+        <div class="interstellarium-link interstellarium-dashboard-sidebar-card-link text-white">
           Dashboard
         </div>
       </div>

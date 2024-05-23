@@ -6,7 +6,7 @@
 
 <template>
   <div class="interstellarium-dashboard-logo-wrapper">
-    <div class="interstellarium-dashboard-logo m-2">
+    <div class="interstellarium-dashboard-logo">
       INTERSTELLARIUM
     </div>
   </div>
@@ -15,7 +15,7 @@
 <style scoped>
 .interstellarium-dashboard-logo {
     font-family: var(--interstellarium-special-font-family), sans-serif;
-    font-size: max(2vw, 3.2vh);
+    font-size: 6vw;
     font-weight: 900;
     text-align: center;
     background: var(--interstellarium-gradient);
@@ -25,25 +25,33 @@
     color: var(--interstellarium-primary);
 }
 
+@media (min-width: 576px) {
+    .interstellarium-dashboard-logo {
+        font-size: 4.5vw;
+    }
+}
+
 @media (min-width: 768px) {
     .interstellarium-dashboard-logo {
-        font-size: 2vw;
+        font-size: 3vw;
     }
-  
-    .interstellarium-dashboard-main .interstellarium-dashboard-logo-wrapper {
-        display: none;
+}
+
+@media (min-width: 992px) {
+    .interstellarium-dashboard-logo {
+        font-size: 2vw;
     }
 }
 
 @media (min-width: 1200px) {
     .interstellarium-dashboard-logo {
-        font-size: 1.1vw;
+        font-size: 2vw;
     }
 }
 
 @media (min-width: 1440px) {
     .interstellarium-dashboard-logo {
-        font-size: 1.2vw;
+        font-size: 1.5vw;
     }
 }
 </style>

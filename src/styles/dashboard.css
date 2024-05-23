@@ -11,17 +11,37 @@
     width: 100%;
 }
 
-.interstellarium-dashboard-sidebar {
+.interstellarium-dashboard-header {
     position: fixed;
     top: 0;
-    bottom: 0;
     left: 0;
+    right: 0;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.interstellarium-dashboard-sidebar, .interstellarium-dashboard-main {
+    position: fixed;
+    top: 5rem;
+    bottom: 0;
     width: 100%;
     overflow: auto;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     background-color: white;
+}
+
+.interstellarium-dashboard-sidebar {
+    left: 0;
+}
+
+.interstellarium-dashboard-main {
+    border-left: 1px solid #DDDDDD;
+    right: 0;
 }
 
 .interstellarium-dashboard-sidebar.hidden,
@@ -36,16 +56,6 @@
     padding-bottom: 5rem;
 }
 
-.interstellarium-dashboard-main {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    overflow: auto;
-    background-color: white;
-}
-
 .interstellarium-dashboard-footer {
     position: fixed;
     bottom: 0;
@@ -57,19 +67,29 @@
     align-items: center;
 }
 
-.interstellarium-dashboard-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.interstellarium-dashboard-sidebar::-webkit-scrollbar,
+.interstellarium-dashboard-main::-webkit-scrollbar {
+    width: 12px;
+}
+
+.interstellarium-dashboard-sidebar::-webkit-scrollbar-track,
+.interstellarium-dashboard-main::-webkit-scrollbar-track {
+    background: #FFF;
+}
+
+.interstellarium-dashboard-sidebar::-webkit-scrollbar-thumb,
+.interstellarium-dashboard-main::-webkit-scrollbar-thumb {
+    background-color: #DDDDDD;
+    border-radius: 20px;
+    border: 3px solid #FFF;
 }
 
 .interstellarium-dashboard-sidebar-card {
-    min-height: 8rem;
+    min-height: 6rem;
     border-radius: 2rem;
     background-color: #EEEEEE;
     color: white;
-    padding: 1rem;
+    padding: 0.75rem;
     margin-bottom: -0.5rem;
     background-clip: content-box;
     cursor: pointer;
@@ -86,33 +106,16 @@
     font-family: var(--interstellarium-work-font-family), sans-serif;
     text-decoration: none;
     color: var(--interstellarium-dark);
-    font-size: 1.75rem;
+    font-size: 1.5rem;
 }
 
 @media (min-width: 768px) {
     .interstellarium-dashboard-sidebar {
-        width: 25%;
-    }
-
-    .interstellarium-dashboard-sidebar::-webkit-scrollbar,
-    .interstellarium-dashboard-main::-webkit-scrollbar {
-        width: 12px;
-    }
-
-    .interstellarium-dashboard-sidebar::-webkit-scrollbar-track,
-    .interstellarium-dashboard-main::-webkit-scrollbar-track {
-        background: #FFF;
-    }
-
-    .interstellarium-dashboard-sidebar::-webkit-scrollbar-thumb,
-    .interstellarium-dashboard-main::-webkit-scrollbar-thumb {
-        background-color: #CCC;
-        border-radius: 20px;
-        border: 3px solid #FFF;
+        width: 40%;
     }
 
     .interstellarium-dashboard-main {
-        width: 75%;
+        width: 60%;
     }
 
     .interstellarium-dashboard-footer {
@@ -124,21 +127,30 @@
         display: flex;
     }
 
-    .interstellarium-dashboard-logo {
-        font-size: 2vw;
-    }
-
     .interstellarium-dashboard-sidebar-card {
         min-height: 6rem;
         margin-bottom: -1rem;
     }
 
     .interstellarium-dashboard-sidebar-card-link {
-        font-size: 1rem;
+        font-size: 1.5rem;
     }
 }
 
 @media (min-width: 992px) {
+    .interstellarium-dashboard-sidebar {
+        width: 25%;
+    }
+
+    .interstellarium-dashboard-main {
+        width: 75%;
+    }
+
+    .interstellarium-dashboard-sidebar-card {
+        min-height: 5rem;
+        margin-bottom: -1rem;
+    }
+
     .interstellarium-dashboard-sidebar-card-link {
         font-size: 1.25rem;
     }
@@ -149,13 +161,21 @@
         width: 20%;
     }
 
+    .interstellarium-dashboard-main {
+        width: 80%;
+    }
+
     .interstellarium-dashboard-sidebar-card-link {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
 }
 
 @media (min-width: 1440px) {
     .interstellarium-dashboard-sidebar {
         width: 15%;
+    }
+
+    .interstellarium-dashboard-main {
+        width: 85%;
     }
 }
