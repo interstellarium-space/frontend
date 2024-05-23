@@ -2,6 +2,9 @@
   import DashboardSidebar from "../components/dashboard/Sidebar.vue";
   import DashboardMain from "../components/dashboard/Main.vue";
   
+  import {prepareAPIRequest} from "../services/index.js";
+  import axios from "axios";
+  
   export default {
     components: {
       DashboardSidebar,
@@ -23,7 +26,43 @@
       document.title = 'Пользователи | Interstellarium'
     },
     
+    data() {
+      return {
+        searchFilters: {
+          name: null,
+          birthdateFrom: null,
+          birthdateTo: null
+        },
+        users: []
+      }
+    },
+    
     methods: {
+      async searchUsers() {
+        let req = prepareAPIRequest('/api/users')
+        let payload =  {
+          name: this.searchFilters.name,
+          birthdate_from: this.searchFilters.birthdateFrom,
+          birthdate_to: this.searchFilters.birthdateTo
+        }
+        
+        let router = this.$router
+        
+        const res = await axios.post(req.url, payload, req.config).catch(
+            function (error) {
+              if (error.response.status === 401) {
+                router.push({name: 'Logout'})
+              }
+            }
+        )
+        
+        console.debug(res)
+        
+        if (res && res.status === 200) {
+          this.users = res.data
+        }
+      },
+      
       mounted() {
         document.title = 'Пользователи | Interstellarium'
       }
@@ -44,6 +83,7 @@
                   class="form-control"
                   id="filter-name"
                   placeholder="Имя"
+                  v-model="searchFilters.name"
               >
             </div>
             <div class="col-6 col-md-3 my-2 my-md-1">
@@ -53,6 +93,7 @@
                   id="filter-birthdate-from"
                   placeholder="С даты рождения"
                   onfocus="this.type='date'"
+                  v-model="searchFilters.birthdateFrom"
               >
             </div>
             <div class="col-6 col-md-3 my-2 my-md-1">
@@ -62,10 +103,12 @@
                   id="filter-birthdate-to"
                   placeholder="По дату рождения"
                   onfocus="this.type='date'"
+                  v-model="searchFilters.birthdateTo"
               >
             </div>
             <div class="col-6 col-md-3 my-2 my-md-1 px-2">
               <input
+                  @click="this.searchUsers()"
                   type="submit"
                   class="form-control btn btn-interstellarium"
                   id="search"
@@ -74,7 +117,14 @@
             </div>
           </form>
         </template>
-        <template v-slot:content></template>
+        
+        <template v-slot:content>
+          <div v-for="user in this.users" class="interstellarium-dashboard-main-content-card mb-3">
+            <div class="interstellarium-dashboard-main-content-link">
+              {{ user.name }}
+            </div>
+          </div>
+        </template>
       </DashboardMain>
     </div>
   </div>
@@ -83,8 +133,4 @@
 <style scoped>
 @import "/src/styles/style.css";
 @import "/src/styles/dashboard.css";
-
-.interstellarium-search-form {
-    font-family: var(--interstellarium-base-font-family), sans-serif;
-}
 </style>

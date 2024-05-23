@@ -9,7 +9,8 @@ export function prepareAPIRequest(api_path) {
 
     let config = {}
 
-    if (token != null)
+    if (token != null) {
         config['headers'] = { Authorization: `Bearer ${token}` }
+    }
     return { url, config }
 }
