@@ -39,6 +39,17 @@ const router = createRouter({
                 requiresAuth: true
             }
         },
+        {
+            path: '/logout',
+            name: 'Logout',
+            meta: {
+                requiresAuth: true
+            },
+            redirect: to => {
+                localStorage.removeItem('token')
+                return {name: 'Login'}
+            }
+        },
     ],
     history: createWebHistory()
 })

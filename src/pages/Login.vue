@@ -1,15 +1,11 @@
 <script>
   import axios from 'axios'
   
-  import { projectConfig } from '../common/index.js'
-  import { useAuthStore } from '../stores/Auth.js'
+  import { prepareAPIRequest } from '../services/index.js';
   
   export default {
     setup() {
       document.title = 'Авторизация | Interstellarium'
-      
-      const authStore = useAuthStore()
-      return {authStore}
     },
     
     data() {
@@ -36,15 +32,12 @@
       
       async login() {
         if (this.isValid()) {
-          let protocol = projectConfig.protocol
-          let host = projectConfig.host
-          let port = projectConfig.port
-          let url = `${protocol}://${host}:${port}/api/auth/login`
+          let request = prepareAPIRequest('/api/auth/login')
           
-          const res = await axios.post(url, {
+          const res = await axios.post(request.url, {
             email: this.email,
             password: this.password
-          }).catch(function (error) {})
+          }, request.config).catch(function (_) {})
           
           console.debug(res)
           
@@ -59,17 +52,6 @@
               } else {
                 this.$router.push({name: 'Dashboard'})
               }
-              // how to use token
-              
-              // let protocol = projectConfig.protocol
-              // let host = projectConfig.host
-              // let port = projectConfig.port
-              // let url = `${protocol}://${host}:${port}/api/users/me`
-              // let token = localStorage.getItem('token')
-              // let config = {
-              //   headers: { Authorization: `Bearer ${token}` }
-              // }
-              // const res = await axios.get(url, config).catch(function (error) {})
             }
           } else {
             this.msg = 'Не правильно введен логин или пароль'

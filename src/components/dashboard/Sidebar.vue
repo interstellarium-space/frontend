@@ -1,6 +1,6 @@
 <script>
-  import DashboardShowSidebar from './ShowSidebar.vue';
-  import DashboardLogo from './Logo.vue';
+  import DashboardShowSidebar from "./ShowSidebar.vue";
+  import DashboardLogo from "./Logo.vue";
   
   export default {
     components: {
