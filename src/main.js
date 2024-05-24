@@ -114,6 +114,15 @@ const router = createRouter({
                 requiresAuth: true
             }
         },
+        {
+            path: '/create-user',
+            name: 'CreateUser',
+            component: Dashboard,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        }
     ],
     history: createWebHistory()
 })

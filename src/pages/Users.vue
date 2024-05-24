@@ -6,9 +6,11 @@
   import DashboardSidebar from "../components/dashboard/Sidebar.vue";
   import DashboardMain from "../components/dashboard/Main.vue";
   import DashboardSearchArea from "../components/dashboard/SearchArea.vue";
+  import DashboardCreateEntity from "../components/dashboard/CreateEntity.vue";
   
   export default {
     components: {
+      DashboardCreateEntity,
       DashboardSearchArea,
       DashboardSidebar,
       DashboardMain
@@ -147,8 +149,8 @@
           </div>
         </template>
         
-        <template v-slot:footer-content>
-        
+        <template v-slot:create-entity>
+          <DashboardCreateEntity @click="this.$router.push({name: 'CreateUser'})"/>
         </template>
       </DashboardMain>
     </div>

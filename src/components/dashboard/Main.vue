@@ -5,7 +5,7 @@
   export default {
     components: {
       DashboardLogo,
-      DashboardShowSidebar
+      DashboardShowSidebar,
     }
   }
 </script>
@@ -21,7 +21,7 @@
     </div>
     <div class="interstellarium-dashboard-footer">
       <DashboardShowSidebar></DashboardShowSidebar>
-      <slot name="footer-content"></slot>
+      <slot name="create-entity"></slot>
     </div>
   </div>
 </template>
