@@ -2,7 +2,23 @@
   export default {
     methods: {
       toggleFilters() {
-      
+        let searchArea = document.getElementById('dashboard-search')
+        let filters = document.getElementsByClassName('interstellarium-dashboard-search-filter')
+        
+        if (filters[0].classList.contains('hidden')) {
+          searchArea.classList.add('extended')
+        } else {
+          searchArea.classList.remove('extended')
+        }
+        
+        for (let i = 0; i !== filters.length; i++) {
+          if (filters[i].classList.contains('hidden')) {
+            filters[i].classList.remove('hidden')
+          } else {
+            filters[i].classList.add('hidden')
+          }
+        }
+        
       }
     }
   }

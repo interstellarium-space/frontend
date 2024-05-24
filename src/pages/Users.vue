@@ -1,10 +1,10 @@
 <script>
-  import DashboardSidebar from "../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../components/dashboard/Main.vue";
-  
-  import {prepareAPIRequest} from "../services/index.js";
   import axios from "axios";
   
+  import {prepareAPIRequest} from "../services/index.js";
+
+  import DashboardSidebar from "../components/dashboard/Sidebar.vue";
+  import DashboardMain from "../components/dashboard/Main.vue";
   import DashboardSearchArea from "../components/dashboard/SearchArea.vue";
   
   export default {
@@ -41,13 +41,27 @@
     },
     
     methods: {
+      prepareSearchFilters() {
+        if (this.searchFilters.birthdateFrom === '')
+          this.searchFilters.birthdateFrom = null
+        if (this.searchFilters.birthdateTo === '')
+          this.searchFilters.birthdateTo = null
+        if (this.searchFilters.name === '')
+          this.searchFilters.name = null
+      },
+      
       async searchUsers() {
         let req = prepareAPIRequest('/api/users')
+        
+        this.prepareSearchFilters()
+        
         let payload =  {
           name: this.searchFilters.name,
           birthdate_from: this.searchFilters.birthdateFrom,
           birthdate_to: this.searchFilters.birthdateTo
         }
+        
+        console.log(payload)
         
         let router = this.$router
         
@@ -100,41 +114,41 @@
                 >
               </div>
             </template>
+            <template v-slot:filters>
+              <div class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
+                <input
+                    type="text"
+                    class="form-control"
+                    id="filter-birthdate-from"
+                    placeholder="С даты рождения"
+                    onfocus="this.type='date'"
+                    v-model="searchFilters.birthdateFrom"
+                >
+              </div>
+              <div class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
+                <input
+                    type="text"
+                    class="form-control"
+                    id="filter-birthdate-to"
+                    placeholder="По дату рождения"
+                    onfocus="this.type='date'"
+                    v-model="searchFilters.birthdateTo"
+                >
+              </div>
+        </template>
           </DashboardSearchArea>
         </template>
-        <!--
-        <template v-slot:functions>
-          <form class="row w-100 mx-3 interstellarium-search-form" @submit.prevent="" autocomplete=off>
-            <div class="col-6 col-md-3 my-2 my-md-1">
-              <input
-                  type="text"
-                  class="form-control"
-                  id="filter-birthdate-from"
-                  placeholder="С даты рождения"
-                  onfocus="this.type='date'"
-                  v-model="searchFilters.birthdateFrom"
-              >
-            </div>
-            <div class="col-6 col-md-3 my-2 my-md-1">
-              <input
-                  type="text"
-                  class="form-control"
-                  id="filter-birthdate-to"
-                  placeholder="По дату рождения"
-                  onfocus="this.type='date'"
-                  v-model="searchFilters.birthdateTo"
-              >
-            </div>
-            
-          </form>
-        </template>
-        -->
+        
         <template v-slot:content>
           <div v-for="user in this.users" class="interstellarium-dashboard-main-content-card mb-3">
             <div class="interstellarium-dashboard-main-content-link">
               {{ user.name }}
             </div>
           </div>
+        </template>
+        
+        <template v-slot:footer-content>
+        
         </template>
       </DashboardMain>
     </div>

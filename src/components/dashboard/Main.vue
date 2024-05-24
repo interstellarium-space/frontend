@@ -21,6 +21,7 @@
     </div>
     <div class="interstellarium-dashboard-footer">
       <DashboardShowSidebar></DashboardShowSidebar>
+      <slot name="footer-content"></slot>
     </div>
   </div>
 </template>

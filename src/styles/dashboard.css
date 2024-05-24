@@ -50,14 +50,25 @@
     position: fixed;
     top: 5rem;
     height: 4rem;
-    max-height: 4rem;
     min-height: 4rem;
+    max-height: 4rem;
     right: 0;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: start;
+    padding-top: .5rem;
     background-color: #FFFFFF;
     border-bottom: 1px solid #DDDDDD;
+}
+
+.interstellarium-dashboard-search.extended {
+    height: 8rem;
+    min-height: 8rem;
+    max-height: 8rem;
+}
+
+.interstellarium-dashboard-search-filter.hidden {
+    display: none;
 }
 
 .interstellarium-dashboard-sidebar {
