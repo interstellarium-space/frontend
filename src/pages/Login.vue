@@ -44,9 +44,10 @@
           // we catch error and then check response and status
           // response must not be undefined
           if (res && res.status === 200) {
-            localStorage.setItem('token', res.data.access_token)
+            localStorage.setItem('user', JSON.stringify(res.data.user))
+            localStorage.setItem('token', res.data.token.access_token)
+            
             if (localStorage.getItem('token') != null) {
-              console.log(localStorage.getItem('token'))
               if (this.$route.params.nextUrl != null) {
                 this.$router.push(this.$route.params.nextUrl)
               } else {

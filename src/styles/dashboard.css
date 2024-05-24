@@ -43,15 +43,15 @@
 }
 
 .interstellarium-dashboard-main {
-    top: 13rem;
+    top: 9rem;
 }
 
-.interstellarium-dashboard-functions {
+.interstellarium-dashboard-search {
     position: fixed;
     top: 5rem;
-    height: 8rem;
-    max-height: 8rem;
-    min-height: 8rem;
+    height: 4rem;
+    max-height: 4rem;
+    min-height: 4rem;
     right: 0;
     width: 100%;
     display: flex;
@@ -154,21 +154,11 @@
 
 @media (min-width: 768px) {
     .interstellarium-dashboard-sidebar {
-        width: 40%;
+        width: 30%;
     }
 
-    .interstellarium-dashboard-main, .interstellarium-dashboard-functions {
-        width: 60%;
-    }
-
-    .interstellarium-dashboard-main {
-        top: 9rem;
-    }
-
-    .interstellarium-dashboard-functions {
-        height: 4rem;
-        min-height: 4rem;
-        max-height: 4rem;
+    .interstellarium-dashboard-main, .interstellarium-dashboard-search {
+        width: 70%;
     }
 
     .interstellarium-dashboard-footer {
@@ -181,12 +171,12 @@
     }
 
     .interstellarium-dashboard-sidebar-card {
-        min-height: 6rem;
+        min-height: 5rem;
         margin-bottom: -1rem;
     }
 
     .interstellarium-dashboard-sidebar-card-link {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
 }
 
@@ -195,7 +185,7 @@
         width: 25%;
     }
 
-    .interstellarium-dashboard-main, .interstellarium-dashboard-functions {
+    .interstellarium-dashboard-main, .interstellarium-dashboard-search {
         width: 75%;
     }
 
@@ -214,7 +204,7 @@
         width: 20%;
     }
 
-    .interstellarium-dashboard-main, .interstellarium-dashboard-functions {
+    .interstellarium-dashboard-main, .interstellarium-dashboard-search {
         width: 80%;
     }
 
@@ -228,7 +218,7 @@
         width: 15%;
     }
 
-    .interstellarium-dashboard-main, .interstellarium-dashboard-functions {
+    .interstellarium-dashboard-main, .interstellarium-dashboard-search {
         width: 85%;
     }
 }

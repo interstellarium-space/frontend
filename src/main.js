@@ -37,6 +37,7 @@ const router = createRouter({
                 requiresAuth: true
             },
             redirect: to => {
+                localStorage.removeItem('user')
                 localStorage.removeItem('token')
                 return {name: 'Login'}
             }
@@ -119,13 +120,26 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (localStorage.getItem('token') === null) {
+        let token = localStorage.getItem('token')
+        let userData = localStorage.getItem('user')
+
+        if (token == null || userData == null) {
             next({
                 path: '/login',
                 params: { nextUrl: to.fullPath }
             })
         } else {
-            next()
+            let user = JSON.parse(userData)
+            console.log(user)
+            if (to.matched.some(record => record.meta.requiresAdmin)) {
+                if (user.is_admin === true){
+                    next()
+                } else {
+                    next({ name: 'Index'})
+                }
+            } else {
+                next()
+            }
         }
     } else if (to.matched.some(record => record.meta.guest)) {
         if (localStorage.getItem('token') == null){

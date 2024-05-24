@@ -5,8 +5,11 @@
   import {prepareAPIRequest} from "../services/index.js";
   import axios from "axios";
   
+  import DashboardSearchArea from "../components/dashboard/SearchArea.vue";
+  
   export default {
     components: {
+      DashboardSearchArea,
       DashboardSidebar,
       DashboardMain
     },
@@ -75,17 +78,33 @@
     <div class="interstellarium-dashboard">
       <DashboardSidebar></DashboardSidebar>
       <DashboardMain>
+        <template v-slot:search-area>
+          <DashboardSearchArea>
+            <template v-slot:main-line-fields>
+              <div class="col-5 col-sm-8 col-lg-9 my-2 my-md-1 px-1 px-sm-2">
+                <input
+                    type="text"
+                    class="form-control"
+                    id="filter-name"
+                    placeholder="Имя пользователя"
+                    v-model="searchFilters.name"
+                >
+              </div>
+              <div class="col-4 col-sm-2 my-2 my-md-1 px-1 px-sm-2">
+                <input
+                    @click="this.searchUsers()"
+                    type="submit"
+                    class="form-control btn btn-interstellarium"
+                    id="search"
+                    value="Поиск"
+                >
+              </div>
+            </template>
+          </DashboardSearchArea>
+        </template>
+        <!--
         <template v-slot:functions>
           <form class="row w-100 mx-3 interstellarium-search-form" @submit.prevent="" autocomplete=off>
-            <div class="col-6 col-md-3 my-2 my-md-1">
-              <input
-                  type="text"
-                  class="form-control"
-                  id="filter-name"
-                  placeholder="Имя"
-                  v-model="searchFilters.name"
-              >
-            </div>
             <div class="col-6 col-md-3 my-2 my-md-1">
               <input
                   type="text"
@@ -106,18 +125,10 @@
                   v-model="searchFilters.birthdateTo"
               >
             </div>
-            <div class="col-6 col-md-3 my-2 my-md-1 px-2">
-              <input
-                  @click="this.searchUsers()"
-                  type="submit"
-                  class="form-control btn btn-interstellarium"
-                  id="search"
-                  value="Поиск"
-              >
-            </div>
+            
           </form>
         </template>
-        
+        -->
         <template v-slot:content>
           <div v-for="user in this.users" class="interstellarium-dashboard-main-content-card mb-3">
             <div class="interstellarium-dashboard-main-content-link">

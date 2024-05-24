@@ -15,9 +15,7 @@
     <div class="interstellarium-dashboard-header">
       <DashboardLogo></DashboardLogo>
     </div>
-    <div class="interstellarium-dashboard-functions">
-      <slot name="functions"></slot>
-    </div>
+    <slot name="search-area"></slot>
     <div class="interstellarium-dashboard-main-content">
       <slot name="content"></slot>
     </div>
