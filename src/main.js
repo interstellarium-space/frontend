@@ -2,18 +2,19 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 
-import App from './App.vue'
-import Index from './pages/Index.vue'
-import Login from './pages/Login.vue'
-import ResetPassword from './pages/ResetPassword.vue'
-import Dashboard from './pages/Dashboard.vue'
-import Users from './pages/Users.vue'
-import Departments from './pages/Departments.vue'
-import Projects from "./pages/Projects.vue"
-import Contracts from "./pages/Contracts.vue"
-import Groups from "./pages/Groups.vue"
-import Equipment from "./pages/Equipment.vue"
-import Works from "./pages/Works.vue"
+import App from "./App.vue";
+import Index from "./pages/Index.vue";
+import Login from "./pages/Login.vue";
+import ResetPassword from "./pages/ResetPassword.vue";
+import Dashboard from "./pages/Dashboard.vue";
+import Users from "./pages/Users.vue";
+import Departments from "./pages/Departments.vue";
+import Projects from "./pages/Projects.vue";
+import Contracts from "./pages/Contracts.vue";
+import Groups from "./pages/Groups.vue";
+import Equipment from "./pages/Equipment.vue";
+import Works from "./pages/Works.vue";
+import CreateUser from "./pages/CreateUser.vue";
 
 const router = createRouter({
     routes: [
@@ -117,7 +118,7 @@ const router = createRouter({
         {
             path: '/create-user',
             name: 'CreateUser',
-            component: Dashboard,
+            component: CreateUser,
             meta: {
                 requiresAuth: true,
                 requiresAdmin: true
