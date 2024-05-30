@@ -79,6 +79,7 @@
         
         if (res && res.status === 200) {
           this.users = res.data
+          console.log(res.data)
         }
       },
       
@@ -102,7 +103,7 @@
                     type="text"
                     class="form-control"
                     id="filter-name"
-                    placeholder="Имя пользователя"
+                    placeholder="Введите имя пользователя"
                     v-model="searchFilters.name"
                 >
               </div>
@@ -137,7 +138,7 @@
                     v-model="searchFilters.birthdateTo"
                 >
               </div>
-        </template>
+            </template>
           </DashboardSearchArea>
         </template>
         
@@ -145,6 +146,12 @@
           <div v-for="user in this.users" class="interstellarium-dashboard-main-content-card mb-3">
             <div class="interstellarium-dashboard-main-content-link">
               {{ user.name }}
+            </div>
+            <div v-if="user.department.name != null" class="interstellarium-dashboard-main-content-text">
+              Отдел: {{ user.department.name }}
+            </div>
+            <div v-else class="interstellarium-dashboard-main-content-text">
+              Отдел: Не назначен
             </div>
           </div>
         </template>

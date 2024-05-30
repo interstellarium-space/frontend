@@ -163,6 +163,10 @@
     cursor: pointer;
 }
 
+.interstellarium-dashboard-main-content-text {
+    font-family: var(--interstellarium-base-font-family), sans-serif;
+}
+
 @media (min-width: 768px) {
     .interstellarium-dashboard-sidebar {
         width: 30%;
