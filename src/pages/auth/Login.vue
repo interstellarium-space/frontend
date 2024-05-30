@@ -1,7 +1,7 @@
 <script>
   import axios from 'axios'
   
-  import { prepareAPIRequest } from '../services/index.js';
+  import { prepareAPIRequest } from '../../services/index.js';
   
   export default {
     setup() {

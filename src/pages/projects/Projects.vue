@@ -1,12 +1,12 @@
 <script>
   import axios from "axios";
   
-  import {prepareAPIRequest} from "../services/index.js";
+  import {prepareAPIRequest} from "../../services/index.js";
 
-  import DashboardSidebar from "../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../components/dashboard/Main.vue";
-  import DashboardSearchArea from "../components/dashboard/SearchArea.vue";
-  import DashboardCreateEntity from "../components/dashboard/CreateEntity.vue";
+  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
+  import DashboardMain from "../../components/dashboard/Main.vue";
+  import DashboardSearchArea from "../../components/dashboard/SearchArea.vue";
+  import DashboardCreateEntity from "../../components/dashboard/CreateEntity.vue";
   
   export default {
     components: {
@@ -28,7 +28,7 @@
     },
     
     setup() {
-      document.title = 'Контракты | Interstellarium'
+      document.title = 'Проекты | Interstellarium'
     },
     
     data() {
@@ -38,7 +38,7 @@
           start_date: null,
           finish_date: null
         },
-        contracts: []
+        projects: []
       }
     },
     
@@ -52,8 +52,8 @@
           this.searchFilters.finish_date = null
       },
       
-      async searchContracts() {
-        let req = prepareAPIRequest('/api/contracts')
+      async searchProjects() {
+        let req = prepareAPIRequest('/api/projects')
         
         this.prepareSearchFilters()
         
@@ -78,13 +78,13 @@
         console.debug(res)
         
         if (res && res.status === 200) {
-          this.contracts = res.data
+          this.projects = res.data
           console.log(res.data)
         }
       },
       
       mounted() {
-        document.title = 'Контракты | Interstellarium'
+        document.title = 'Проекты | Interstellarium'
       }
     }
   }
@@ -103,13 +103,13 @@
                     type="text"
                     class="form-control"
                     id="filter-name"
-                    placeholder="Введите наименование контракта"
+                    placeholder="Введите наименование проекта"
                     v-model="searchFilters.name"
                 >
               </div>
               <div class="col-4 col-sm-2 my-2 my-md-1 px-1 px-sm-2">
                 <input
-                    @click="this.searchContracts()"
+                    @click="this.searchProjects()"
                     type="submit"
                     class="form-control btn btn-interstellarium"
                     id="search"
@@ -118,7 +118,8 @@
               </div>
             </template>
             <template v-slot:filters>
-              <div class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
+              <div
+                  class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
                 <input
                     type="text"
                     class="form-control"
@@ -128,7 +129,8 @@
                     v-model="searchFilters.start_date"
                 >
               </div>
-              <div class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
+              <div
+                  class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
                 <input
                     type="text"
                     class="form-control"
@@ -143,21 +145,21 @@
         </template>
         
         <template v-slot:content>
-          <div v-for="contract in this.contracts"
+          <div v-for="project in this.projects"
                class="interstellarium-dashboard-main-content-card mb-3">
             <div class="interstellarium-dashboard-main-content-link">
-              {{ contract.name }}
+              {{ project.name }}
             </div>
-            <div v-if="contract.chief.id != null"
+            <div v-if="project.chief.id != null"
                  class="interstellarium-dashboard-main-content-text">
-              Руководитель: {{ contract.chief.name }}
+              Руководитель: {{ project.chief.name }}
             </div>
             <div v-else class="interstellarium-dashboard-main-content-text">
               Руководитель: не назначен
             </div>
-            <div v-if="contract.group.id != null"
+            <div v-if="project.group.id != null"
                  class="interstellarium-dashboard-main-content-text">
-              Рабочая группа: {{ contract.group.name }}
+              Рабочая группа: {{ project.group.name }}
             </div>
             <div v-else class="interstellarium-dashboard-main-content-text">
               Рабочая группа: не назначена
@@ -167,7 +169,7 @@
         
         <template v-slot:create-entity>
           <DashboardCreateEntity
-              @click="this.$router.push({name: 'CreateContract'})"/>
+              @click="this.$router.push({name: 'CreateProject'})"/>
         </template>
       </DashboardMain>
     </div>

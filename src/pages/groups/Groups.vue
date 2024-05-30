@@ -1,6 +1,6 @@
 <script>
-  import DashboardSidebar from "../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../components/dashboard/Main.vue";
+  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
+  import DashboardMain from "../../components/dashboard/Main.vue";
   
   export default {
     components: {
@@ -20,12 +20,12 @@
     },
     
     setup() {
-      document.title = 'Работы | Interstellarium'
+      document.title = 'Группы | Interstellarium'
     },
     
     methods: {
       mounted() {
-        document.title = 'Работы | Interstellarium'
+        document.title = 'Группы | Interstellarium'
       }
     }
   }

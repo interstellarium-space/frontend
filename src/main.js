@@ -4,18 +4,18 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import App from "./App.vue";
 import Index from "./pages/Index.vue";
-import Login from "./pages/Login.vue";
-import ResetPassword from "./pages/ResetPassword.vue";
+import Login from "./pages/auth/Login.vue";
+import ResetPassword from "./pages/auth/ResetPassword.vue";
 import Dashboard from "./pages/Dashboard.vue";
-import Users from "./pages/Users.vue";
-import Departments from "./pages/Departments.vue";
-import Projects from "./pages/Projects.vue";
-import Contracts from "./pages/Contracts.vue";
-import Groups from "./pages/Groups.vue";
-import Equipment from "./pages/Equipment.vue";
-import Works from "./pages/Works.vue";
-import CreateUser from "./pages/CreateUser.vue";
-import CreateDepartment from "./pages/CreateDepartment.vue";
+import Users from "./pages/users/Users.vue";
+import Departments from "./pages/departments/Departments.vue";
+import Projects from "./pages/projects/Projects.vue";
+import Contracts from "./pages/contracts/Contracts.vue";
+import Groups from "./pages/groups/Groups.vue";
+import Equipment from "./pages/equipment/Equipment.vue";
+import Works from "./pages/works/Works.vue";
+import CreateUser from "./pages/users/CreateUser.vue";
+import CreateDepartment from "./pages/departments/CreateDepartment.vue";
 
 const router = createRouter({
     routes: [

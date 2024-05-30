@@ -1,10 +1,10 @@
 <script>
   import axios from "axios";
   
-  import {prepareAPIRequest} from "../services/index.js";
+  import {prepareAPIRequest} from "../../services/index.js";
 
-  import DashboardSidebar from "../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../components/dashboard/Main.vue";
+  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
+  import DashboardMain from "../../components/dashboard/Main.vue";
   
   export default {
     components: {
@@ -24,31 +24,23 @@
     },
     
     setup() {
-      document.title = 'Создать пользователя | Interstellarium'
+      document.title = 'Создать отдел | Interstellarium'
     },
     
     data() {
       return {
         form: {
-          email: null,
-          password: null,
           name: null,
-          isAdmin: null,
-          birthdate: null
         }
       }
     },
     
     methods: {
-      async createUser() {
-        let req = prepareAPIRequest('/api/users/create')
+      async createDepartment() {
+        let req = prepareAPIRequest('/api/departments/create')
         
         let payload =  {
-          email: this.form.email,
-          password: this.form.password,
           name: this.form.name,
-          is_admin: this.form.isAdmin,
-          birthdate: this.form.birthdate
         }
         
         console.log(payload)
@@ -66,12 +58,12 @@
         console.debug(res)
         
         if (res && res.status === 201) {
-          this.$router.push({name: 'Users'})
+          this.$router.push({name: 'Departments'})
         }
       },
       
       mounted() {
-        document.title = 'Создать пользователя | Interstellarium'
+        document.title = 'Создать отдел | Interstellarium'
       }
     }
   }
@@ -89,28 +81,8 @@
                 <div class="col-12">
                   <input
                       class="form-control mb-3"
-                      type="email"
-                      placeholder="E-mail"
-                      v-model="form.email"
-                  >
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <input
-                      class="form-control mb-3"
-                      type="password"
-                      placeholder="Пароль"
-                      v-model="form.password"
-                  >
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <input
-                      class="form-control mb-3"
                       type="text"
-                      placeholder="Имя пользователя"
+                      placeholder="Название отдела"
                       v-model="form.name"
                   >
                 </div>
@@ -118,7 +90,7 @@
               <div class="row">
                 <div class="col-12 d-flex justify-content-center">
                   <input
-                      @click="this.createUser()"
+                      @click="this.createDepartment()"
                       class="btn btn-interstellarium rounded-pill fw-bold px-3"
                       type="submit"
                       value="Создать"

@@ -1,12 +1,12 @@
 <script>
   import axios from "axios";
   
-  import {prepareAPIRequest} from "../services/index.js";
+  import {prepareAPIRequest} from "../../services/index.js";
 
-  import DashboardSidebar from "../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../components/dashboard/Main.vue";
-  import DashboardSearchArea from "../components/dashboard/SearchArea.vue";
-  import DashboardCreateEntity from "../components/dashboard/CreateEntity.vue";
+  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
+  import DashboardMain from "../../components/dashboard/Main.vue";
+  import DashboardSearchArea from "../../components/dashboard/SearchArea.vue";
+  import DashboardCreateEntity from "../../components/dashboard/CreateEntity.vue";
   
   export default {
     components: {
@@ -23,44 +23,44 @@
     },
     
     beforeRouteLeave: function () {
-      document.body.classList.remove('dashboard')
-      document.getElementById('app').classList.remove('dashboard')
+        document.body.classList.remove('dashboard')
+        document.getElementById('app').classList.remove('dashboard')
     },
     
     setup() {
-      document.title = 'Проекты | Interstellarium'
+      document.title = 'Пользователи | Interstellarium'
     },
     
     data() {
       return {
         searchFilters: {
           name: null,
-          start_date: null,
-          finish_date: null
+          birthdateFrom: null,
+          birthdateTo: null
         },
-        projects: []
+        users: []
       }
     },
     
     methods: {
       prepareSearchFilters() {
+        if (this.searchFilters.birthdateFrom === '')
+          this.searchFilters.birthdateFrom = null
+        if (this.searchFilters.birthdateTo === '')
+          this.searchFilters.birthdateTo = null
         if (this.searchFilters.name === '')
           this.searchFilters.name = null
-        if (this.searchFilters.start_date === '')
-          this.searchFilters.start_date = null
-        if (this.searchFilters.finish_date === '')
-          this.searchFilters.finish_date = null
       },
       
-      async searchProjects() {
-        let req = prepareAPIRequest('/api/projects')
+      async searchUsers() {
+        let req = prepareAPIRequest('/api/users')
         
         this.prepareSearchFilters()
         
-        let payload = {
+        let payload =  {
           name: this.searchFilters.name,
-          start_date: this.searchFilters.start_date,
-          finish_date: this.searchFilters.finish_date,
+          birthdate_from: this.searchFilters.birthdateFrom,
+          birthdate_to: this.searchFilters.birthdateTo
         }
         
         console.log(payload)
@@ -78,13 +78,13 @@
         console.debug(res)
         
         if (res && res.status === 200) {
-          this.projects = res.data
+          this.users = res.data
           console.log(res.data)
         }
       },
       
       mounted() {
-        document.title = 'Проекты | Interstellarium'
+        document.title = 'Пользователи | Interstellarium'
       }
     }
   }
@@ -103,13 +103,13 @@
                     type="text"
                     class="form-control"
                     id="filter-name"
-                    placeholder="Введите наименование проекта"
+                    placeholder="Введите имя пользователя"
                     v-model="searchFilters.name"
                 >
               </div>
               <div class="col-4 col-sm-2 my-2 my-md-1 px-1 px-sm-2">
                 <input
-                    @click="this.searchProjects()"
+                    @click="this.searchUsers()"
                     type="submit"
                     class="form-control btn btn-interstellarium"
                     id="search"
@@ -118,26 +118,24 @@
               </div>
             </template>
             <template v-slot:filters>
-              <div
-                  class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
+              <div class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
                 <input
                     type="text"
                     class="form-control"
-                    id="filter-start-date"
-                    placeholder="Начат с даты"
+                    id="filter-birthdate-from"
+                    placeholder="С даты рождения"
                     onfocus="this.type='date'"
-                    v-model="searchFilters.start_date"
+                    v-model="searchFilters.birthdateFrom"
                 >
               </div>
-              <div
-                  class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
+              <div class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
                 <input
                     type="text"
                     class="form-control"
-                    id="filter-finish-date"
-                    placeholder="Завершен до даты"
+                    id="filter-birthdate-to"
+                    placeholder="По дату рождения"
                     onfocus="this.type='date'"
-                    v-model="searchFilters.finish_date"
+                    v-model="searchFilters.birthdateTo"
                 >
               </div>
             </template>
@@ -145,31 +143,21 @@
         </template>
         
         <template v-slot:content>
-          <div v-for="project in this.projects"
-               class="interstellarium-dashboard-main-content-card mb-3">
+          <div v-for="user in this.users" class="interstellarium-dashboard-main-content-card mb-3">
             <div class="interstellarium-dashboard-main-content-link">
-              {{ project.name }}
+              {{ user.name }}
             </div>
-            <div v-if="project.chief.id != null"
-                 class="interstellarium-dashboard-main-content-text">
-              Руководитель: {{ project.chief.name }}
-            </div>
-            <div v-else class="interstellarium-dashboard-main-content-text">
-              Руководитель: не назначен
-            </div>
-            <div v-if="project.group.id != null"
-                 class="interstellarium-dashboard-main-content-text">
-              Рабочая группа: {{ project.group.name }}
+            <div v-if="user.department.name != null" class="interstellarium-dashboard-main-content-text">
+              Отдел: {{ user.department.name }}
             </div>
             <div v-else class="interstellarium-dashboard-main-content-text">
-              Рабочая группа: не назначена
+              Отдел: не назначен
             </div>
           </div>
         </template>
         
         <template v-slot:create-entity>
-          <DashboardCreateEntity
-              @click="this.$router.push({name: 'CreateProject'})"/>
+          <DashboardCreateEntity @click="this.$router.push({name: 'CreateUser'})"/>
         </template>
       </DashboardMain>
     </div>

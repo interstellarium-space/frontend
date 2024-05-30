@@ -1,12 +1,12 @@
 <script>
   import axios from "axios";
   
-  import {prepareAPIRequest} from "../services/index.js";
+  import {prepareAPIRequest} from "../../services/index.js";
 
-  import DashboardSidebar from "../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../components/dashboard/Main.vue";
-  import DashboardSearchArea from "../components/dashboard/SearchArea.vue";
-  import DashboardCreateEntity from "../components/dashboard/CreateEntity.vue";
+  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
+  import DashboardMain from "../../components/dashboard/Main.vue";
+  import DashboardSearchArea from "../../components/dashboard/SearchArea.vue";
+  import DashboardCreateEntity from "../../components/dashboard/CreateEntity.vue";
   
   export default {
     components: {
