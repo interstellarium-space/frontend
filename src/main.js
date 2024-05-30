@@ -18,6 +18,9 @@ import CreateUser from "./pages/users/CreateUser.vue";
 import CreateDepartment from "./pages/departments/CreateDepartment.vue";
 import CreateContract from "./pages/contracts/CreateContract.vue";
 import CreateProject from "./pages/projects/CreateProject.vue";
+import CreateEquipment from "./pages/equipment/CreateEquipment.vue";
+import CreateGroup from "./pages/groups/CreateGroup.vue";
+import CreateWork from "./pages/works/CreateWork.vue";
 
 const router = createRouter({
     routes: [
@@ -119,7 +122,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/create-user',
+            path: '/users/create',
             name: 'CreateUser',
             component: CreateUser,
             meta: {
@@ -128,7 +131,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/create-department',
+            path: '/departments/create',
             name: 'CreateDepartment',
             component: CreateDepartment,
             meta: {
@@ -137,7 +140,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/create-contract',
+            path: '/contracts/create',
             name: 'CreateContract',
             component: CreateContract,
             meta: {
@@ -146,9 +149,36 @@ const router = createRouter({
             }
         },
         {
-            path: '/create-project',
+            path: '/projects/create',
             name: 'CreateProject',
             component: CreateProject,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: '/equipment/create',
+            name: 'CreateEquipment',
+            component: CreateEquipment,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: '/group/create',
+            name: 'CreateGroup',
+            component: CreateGroup,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: '/work/create',
+            name: 'CreateWork',
+            component: CreateWork,
             meta: {
                 requiresAuth: true,
                 requiresAdmin: true
