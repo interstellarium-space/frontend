@@ -15,6 +15,7 @@ import Groups from "./pages/Groups.vue";
 import Equipment from "./pages/Equipment.vue";
 import Works from "./pages/Works.vue";
 import CreateUser from "./pages/CreateUser.vue";
+import CreateDepartment from "./pages/CreateDepartment.vue";
 
 const router = createRouter({
     routes: [
@@ -119,6 +120,15 @@ const router = createRouter({
             path: '/create-user',
             name: 'CreateUser',
             component: CreateUser,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: '/create-department',
+            name: 'CreateDepartment',
+            component: CreateDepartment,
             meta: {
                 requiresAuth: true,
                 requiresAdmin: true

@@ -117,6 +117,12 @@
             <div class="interstellarium-dashboard-main-content-link">
               {{ department.name }}
             </div>
+            <div v-if="department.chief.id != null" class="interstellarium-dashboard-main-content-text">
+              Шеф: {{ department.chief.name }}
+            </div>
+            <div v-else class="interstellarium-dashboard-main-content-text">
+              Шеф (появится в последний момент): не назначен
+            </div>
           </div>
         </template>
         

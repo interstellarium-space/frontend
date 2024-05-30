@@ -151,7 +151,7 @@
               Отдел: {{ user.department.name }}
             </div>
             <div v-else class="interstellarium-dashboard-main-content-text">
-              Отдел: Не назначен
+              Отдел: не назначен
             </div>
           </div>
         </template>
