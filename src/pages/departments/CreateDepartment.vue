@@ -84,6 +84,7 @@
                       type="text"
                       placeholder="Название отдела"
                       v-model="form.name"
+                      required
                   >
                 </div>
               </div>

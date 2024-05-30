@@ -92,6 +92,7 @@
                       type="email"
                       placeholder="E-mail"
                       v-model="form.email"
+                      required
                   >
                 </div>
               </div>
@@ -102,6 +103,7 @@
                       type="password"
                       placeholder="Пароль"
                       v-model="form.password"
+                      required
                   >
                 </div>
               </div>
@@ -112,6 +114,7 @@
                       type="text"
                       placeholder="Имя пользователя"
                       v-model="form.name"
+                      required
                   >
                 </div>
               </div>

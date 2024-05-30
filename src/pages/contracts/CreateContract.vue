@@ -24,23 +24,38 @@
     },
     
     setup() {
-      document.title = 'Создать отдел | Interstellarium'
+      document.title = 'Создать контракт | Interstellarium'
     },
     
     data() {
       return {
         form: {
           name: null,
+          start_date: null,
+          finish_date: null
         }
       }
     },
     
     methods: {
-      async createDepartment() {
-        let req = prepareAPIRequest('/api/departments/create')
+      prepareForm() {
+        if (this.form.name === '')
+          this.form.name = null
+        if (this.form.start_date === '')
+          this.form.start_date = null
+        if (this.form.finish_date === '')
+          this.form.finish_date = null
+      },
+      
+      async createContract() {
+        let req = prepareAPIRequest('/api/contracts/create')
+        
+        this.prepareForm()
         
         let payload =  {
           name: this.form.name,
+          start_date: this.form.start_date,
+          finish_date: this.form.finish_date,
         }
         
         console.log(payload)
@@ -58,12 +73,12 @@
         console.debug(res)
         
         if (res && res.status === 201) {
-          this.$router.push({name: 'Departments'})
+          this.$router.push({name: 'Contracts'})
         }
       },
       
       mounted() {
-        document.title = 'Создать отдел | Interstellarium'
+        document.title = 'Создать контракт | Interstellarium'
       }
     }
   }
@@ -82,15 +97,40 @@
                   <input
                       class="form-control mb-3"
                       type="text"
-                      placeholder="Название отдела"
+                      placeholder="Наименование контракта"
                       v-model="form.name"
+                      required
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <input
+                      type="text"
+                      class="form-control mb-3"
+                      id="start-date"
+                      placeholder="Дата начала"
+                      onfocus="this.type='date'"
+                      v-model="form.start_date"
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <input
+                      type="text"
+                      class="form-control mb-3"
+                      id="finish-date"
+                      placeholder="Дата завершения"
+                      onfocus="this.type='date'"
+                      v-model="form.finish_date"
                   >
                 </div>
               </div>
               <div class="row">
                 <div class="col-12 d-flex justify-content-center">
                   <input
-                      @click="this.createDepartment()"
+                      @click="this.createContract()"
                       class="btn btn-interstellarium rounded-pill fw-bold px-3"
                       type="submit"
                       value="Создать"

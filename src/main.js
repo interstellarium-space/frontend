@@ -16,6 +16,8 @@ import Equipment from "./pages/equipment/Equipment.vue";
 import Works from "./pages/works/Works.vue";
 import CreateUser from "./pages/users/CreateUser.vue";
 import CreateDepartment from "./pages/departments/CreateDepartment.vue";
+import CreateContract from "./pages/contracts/CreateContract.vue";
+import CreateProject from "./pages/projects/CreateProject.vue";
 
 const router = createRouter({
     routes: [
@@ -133,7 +135,25 @@ const router = createRouter({
                 requiresAuth: true,
                 requiresAdmin: true
             }
-        }
+        },
+        {
+            path: '/create-contract',
+            name: 'CreateContract',
+            component: CreateContract,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: '/create-project',
+            name: 'CreateProject',
+            component: CreateProject,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
     ],
     history: createWebHistory()
 })
