@@ -119,10 +119,10 @@
             </div>
             <div v-if="item.department.id != null"
                  class="interstellarium-dashboard-main-content-text">
-              Отдел: {{ item.department.name }}
+              Закреплен за отделом: {{ item.department.name }}
             </div>
             <div v-else class="interstellarium-dashboard-main-content-text">
-              Отдел: не назначен
+              Коллективная собственность
             </div>
             <div v-if="item.group.id != null"
                  class="interstellarium-dashboard-main-content-text">
