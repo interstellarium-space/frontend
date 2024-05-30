@@ -46,6 +46,10 @@
       prepareSearchFilters() {
         if (this.searchFilters.name === '')
           this.searchFilters.name = null
+        if (this.searchFilters.minCost === '')
+          this.searchFilters.minCost = null
+        if (this.searchFilters.maxCost === '')
+          this.searchFilters.maxCost = null
       },
       
       async searchWorks() {
