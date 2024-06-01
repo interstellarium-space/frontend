@@ -8,7 +8,7 @@ import App from "./App.vue";
 import Index from "./pages/Index.vue";
 import AuthLogin from "./pages/auth/Login.vue";
 import AuthResetPassword from "./pages/auth/ResetPassword.vue";
-import Dashboard from "./pages/dashboard/Dashboard.vue";
+// import Dashboard from "./pages/dashboard/Dashboard.vue";
 /*
 import Users from "./pages/users/Users.vue";
 import Departments from "./pages/departments/Departments.vue";
@@ -66,7 +66,7 @@ const router = createRouter({
         {
             path: "/dashboard",
             name: "Dashboard",
-            component: Dashboard,
+            component: Index,
             meta: {
                 requiresAuth: true
             }

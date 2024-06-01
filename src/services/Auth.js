@@ -4,8 +4,8 @@ export function login(user, token) {
 }
 
 export function logout() {
-    localStorage.setItem("user", null)
-    localStorage.setItem("token", null)
+    localStorage.removeItem("user")
+    localStorage.removeItem("token")
 }
 
 export function getUser() {
