@@ -55,10 +55,6 @@
           }
         }
       },
-      
-      gotoResetPassword() {
-        this.$router.push({name: "ResetPassword"})
-      }
     },
   }
 </script>
@@ -86,7 +82,7 @@
               </div>
             </div>
             <p class="text-secondary text-center">
-              <a @click="this.gotoResetPassword()" class="text-secondary">
+              <a @click="this.$router.push({name: 'AuthResetPassword'})" class="text-secondary">
                 Восстановить доступ
               </a>
             </p>

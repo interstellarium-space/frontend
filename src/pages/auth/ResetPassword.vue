@@ -25,10 +25,6 @@
           // ... send request to reset
         }
       },
-      
-      gotoLogin() {
-        this.$router.push({name: "Login"})
-      }
     }
   }
 </script>
@@ -54,7 +50,7 @@
               </div>
             </div>
             <p class="text-center">
-              <a @click="this.gotoLogin()" class="text-secondary">
+              <a @click="this.$router.push({name: 'Login'})" class="text-secondary">
                 Войти в систему
               </a>
             </p>
