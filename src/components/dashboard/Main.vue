@@ -1,27 +1,11 @@
 <script>
-  import DashboardShowSidebar from "./ShowSidebar.vue";
-  import DashboardLogo from "../../components/dashboard/Logo.vue";
-
-  export default {
-    components: {
-      DashboardLogo,
-      DashboardShowSidebar,
-    }
-  }
+  export default {}
 </script>
 
 <template>
   <div class="interstellarium-dashboard-main" id="dashboard-main">
-    <div class="interstellarium-dashboard-header">
-      <DashboardLogo></DashboardLogo>
-    </div>
-    <slot name="search-area"></slot>
     <div class="interstellarium-dashboard-main-content">
       <slot name="content"></slot>
-    </div>
-    <div class="interstellarium-dashboard-footer">
-      <DashboardShowSidebar></DashboardShowSidebar>
-      <slot name="create-entity"></slot>
     </div>
   </div>
 </template>

@@ -1,24 +1,30 @@
 <script>
   export default {
+    data() {
+      return {
+        filtersAreHidden: true
+      }
+    },
+    
     methods: {
       toggleFilters() {
         let searchArea = document.getElementById('dashboard-search')
-        let filters = document.getElementsByClassName('interstellarium-dashboard-search-filter')
+        let extendedFilters = []
+        // let extendedFilters = document.getElementsByClassName('interstellarium-extended-search-filter')
         
-        if (filters[0].classList.contains('hidden')) {
+        if (this.filtersAreHidden) {
           searchArea.classList.add('extended')
+          for (let i = 0; i !== extendedFilters.length; i++) {
+            extendedFilters[i].classList.remove('hidden')
+          }
         } else {
           searchArea.classList.remove('extended')
-        }
-        
-        for (let i = 0; i !== filters.length; i++) {
-          if (filters[i].classList.contains('hidden')) {
-            filters[i].classList.remove('hidden')
-          } else {
-            filters[i].classList.add('hidden')
+          for (let i = 0; i !== extendedFilters.length; i++) {
+            extendedFilters[i].classList.add('hidden')
           }
         }
         
+        this.filtersAreHidden = !this.filtersAreHidden
       }
     }
   }

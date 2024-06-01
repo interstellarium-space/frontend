@@ -23,10 +23,6 @@
     border-bottom: 1px solid #DDDDDD;
 }
 
-.interstellarium-search-form {
-    font-family: var(--interstellarium-base-font-family), sans-serif;
-}
-
 .interstellarium-dashboard-sidebar, .interstellarium-dashboard-main {
     position: fixed;
     bottom: 0;
@@ -92,7 +88,7 @@
     padding-bottom: 5rem;
 }
 
-.interstellarium-dashboard-main-content {
+.interstellarium-dashboard-body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -127,31 +123,6 @@
     border: 3px solid #FFF;
 }
 
-.interstellarium-dashboard-sidebar-card {
-    min-height: 6rem;
-    border-radius: 2rem;
-    background-color: #EEEEEE;
-    color: white;
-    padding: 0.75rem;
-    margin-bottom: -0.5rem;
-    background-clip: content-box;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.interstellarium-dashboard-sidebar-card:hover {
-    background-color: #DDDDDD;
-}
-
-.interstellarium-dashboard-sidebar-card-link {
-    font-family: var(--interstellarium-work-font-family), sans-serif;
-    text-decoration: none;
-    color: var(--interstellarium-dark);
-    font-size: 1.5rem;
-}
-
 .interstellarium-dashboard-main-content-card {
     border: 1px solid #DDDDDD;
     border-radius: .75rem;
@@ -182,15 +153,6 @@
     .interstellarium-dashboard-main.hidden {
         display: flex;
     }
-
-    .interstellarium-dashboard-sidebar-card {
-        min-height: 5rem;
-        margin-bottom: -1rem;
-    }
-
-    .interstellarium-dashboard-sidebar-card-link {
-        font-size: 1.25rem;
-    }
 }
 
 @media (min-width: 992px) {
@@ -203,15 +165,6 @@
     .interstellarium-dashboard-footer {
         width: 75%;
     }
-
-    .interstellarium-dashboard-sidebar-card {
-        min-height: 5rem;
-        margin-bottom: -1rem;
-    }
-
-    .interstellarium-dashboard-sidebar-card-link {
-        font-size: 1.25rem;
-    }
 }
 
 @media (min-width: 1200px) {
@@ -223,10 +176,6 @@
     .interstellarium-dashboard-search,
     .interstellarium-dashboard-footer {
         width: 80%;
-    }
-
-    .interstellarium-dashboard-sidebar-card-link {
-        font-size: 1.25rem;
     }
 }
 

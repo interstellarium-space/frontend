@@ -22,6 +22,10 @@ body.dashboard, #app.dashboard {
     width: 100%;
 }
 
+a {
+    cursor: pointer;
+}
+
 .btn-interstellarium,
 .btn-interstellarium:hover,
 .btn-interstellarium:active,
@@ -30,14 +34,6 @@ body.dashboard, #app.dashboard {
     color: #FFFFFF !important;
     font-family: var(--interstellarium-base-font-family), sans-serif;
     outline: none;
-}
-
-.btn {
-    font-family: var(--interstellarium-base-font-family), sans-serif;
-}
-
-.interstellarium-link {
-    cursor: pointer;
 }
 
 .bg-interstellarium {

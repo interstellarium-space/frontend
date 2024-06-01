@@ -1,11 +1,7 @@
 <script>
   export default {
     setup() {
-      document.title = 'Interstellarium'
-    },
-    
-    mounted() {
-      document.title = 'Interstellarium'
+      document.title = "Interstellarium"
     }
   }
 </script>
@@ -69,14 +65,7 @@
     word-spacing: 0.5rem;
 }
 
-@media (min-width: 576px) {
-}
-
-@media (min-width: 768px) {
-}
-
 @media (min-width: 992px) {
-  
     .interstellarium-logo {
         font-size: 8vw;
     }
@@ -84,8 +73,5 @@
     .interstellarium-slogan {
         font-size: 3vw;
     }
-}
-
-@media (min-width: 1200px) {
 }
 </style>

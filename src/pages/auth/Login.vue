@@ -1,69 +1,98 @@
 <script>
-  import axios from 'axios'
+  import axios from "axios"
   
-  import { prepareAPIRequest } from '../../services/index.js';
+  import { prepareAPIRequest } from "../../services/APIRequests.js";
   
   export default {
     setup() {
-      document.title = 'Авторизация | Interstellarium'
+      document.title = "Авторизация | Interstellarium"
     },
     
     data() {
       return {
-        email: '',
-        password: '',
-        msg: ''
+        email: "",
+        password: "",
+        msg: ""
       }
     },
     
     methods: {
-      isValid() {
-        if (this.email === '') {
-          this.msg = 'Пожалуйста, введите E-mail'
+      loginFormIsValid() {
+        if (this.email === "") {
+          this.msg = "Пожалуйста, введите E-mail"
           return false
         }
-        if (this.password === '') {
-          this.msg = 'Пожалуйста, введите пароль'
+        if (this.password === "") {
+          this.msg = "Пожалуйста, введите пароль"
           return false
         }
-        this.msg = ''
+        this.msg = ""
         return true
       },
       
-      async login() {
-        if (this.isValid()) {
-          let request = prepareAPIRequest('/api/auth/login')
+      login(responseData) {
+        let user = responseData["user"]
+        let token = responseData["token"]["access_token"]
+        
+        localStorage.setItem("user", JSON.stringify(user))
+        localStorage.setItem("token", token)
+        
+        if (token != null) {
+          if (this.$route.params.nextUrl != null) {
+            this.$router.push(this.$route.params.nextUrl)
+          } else {
+            this.$router.push({name: "Dashboard"})
+          }
+        }
+      },
+      
+      loginError(error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          switch (error.response.status) {
+            case 400: this.msg = "Не правильно введен пароль"; break
+            case 404: this.msg = "Не правильно введен логин"; break
+            default: this.msg = "Ошибка при отправке запроса... Уже исправляем!"
+          }
+          
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser
+          // and an instance of http.ClientRequest in node.js
+          this.msg = "Ошибка при отправке запроса... Уже исправляем!"
+          
+          console.log(error.request)
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          this.msg = "Ошибка при отправке запроса... Уже исправляем!"
+          
+          console.log("Error", error.message)
+        }
+      },
+      
+      async tryLogin() {
+        if (this.loginFormIsValid()) {
+          let request = prepareAPIRequest("/api/auth/login")
           
           const res = await axios.post(request.url, {
             email: this.email,
             password: this.password
-          }, request.config).catch(function (_) {})
+          }, request.config).catch(this.loginError)
           
-          console.debug(res)
-          
-          // we catch error and then check response and status
-          // response must not be undefined
           if (res && res.status === 200) {
-            localStorage.setItem('user', JSON.stringify(res.data.user))
-            localStorage.setItem('token', res.data.token.access_token)
-            
-            if (localStorage.getItem('token') != null) {
-              if (this.$route.params.nextUrl != null) {
-                this.$router.push(this.$route.params.nextUrl)
-              } else {
-                this.$router.push({name: 'Dashboard'})
-              }
-            }
-          } else {
-            this.msg = 'Не правильно введен логин или пароль'
+            this.login(res.data)
           }
         }
+      },
+      
+      gotoResetPassword() {
+        this.$router.push({name: "ResetPassword"})
       }
     },
-    
-    mounted() {
-      document.title = 'Авторизация | Interstellarium'
-    }
   }
 </script>
 
@@ -75,25 +104,30 @@
       </div>
       <div class="interstellarium-auth-form-wrapper">
         <div class="interstellarium-auth-form">
-          <div class="interstellarium-auth-form-header mb-3">INTERSTELLARIUM</div>
+          <div class="interstellarium-auth-form-header mb-3">
+            INTERSTELLARIUM
+          </div>
           <form @submit.prevent="" autocomplete=off>
             <div class="row">
               <div class="col-12">
-                <input class="form-control mb-3" type="email" placeholder="E-mail" v-model="email">
+                <input v-model="email" class="form-control mb-3" type="email" placeholder="E-mail">
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <input class="form-control mb-3" type="password" placeholder="Пароль" v-model="password">
+                <input v-model="password" class="form-control mb-3" type="password" placeholder="Пароль">
               </div>
             </div>
             <p class="text-secondary text-center">
-              <a @click="this.$router.push({name: 'ResetPassword'})" class="interstellarium-link text-secondary">Восстановить доступ</a>
+              <a @click="this.gotoResetPassword()" class="text-secondary">
+                Восстановить доступ
+              </a>
             </p>
-            <div v-if="msg !== ''" class="text-danger text-center mb-3">{{ msg }}</div>
-            <div v-else class="d-none text-danger text-center mb-3">{{ msg }}</div>
+            <div v-if="msg" class="text-danger text-center mb-3">
+              {{ msg }}
+            </div>
             <div class="d-flex justify-content-center mb-4">
-              <input @click="this.login()" type="submit" class="btn btn-interstellarium rounded-pill fw-bold px-3" id="btn-login" value="Авторизоваться">
+              <input @click="this.tryLogin()" class="btn btn-interstellarium rounded-pill fw-bold px-3" type="submit" value="Авторизоваться">
             </div>
           </form>
         </div>

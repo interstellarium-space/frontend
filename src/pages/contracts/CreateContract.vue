@@ -1,7 +1,7 @@
 <script>
   import axios from "axios";
   
-  import {prepareAPIRequest} from "../../services/index.js";
+  import {prepareAPIRequest} from "../../services/APIRequests.js";
 
   import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
   import DashboardMain from "../../components/dashboard/Main.vue";
