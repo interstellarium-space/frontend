@@ -7,7 +7,7 @@ export async function APIAuthLogin(email, password) {
     let response = {}
 
     try {
-        response = axios.post(request.url, {
+        response = await axios.post(request.url, {
             email: email,
             password: password
         }, request.config)
@@ -34,4 +34,5 @@ function loginError(error) {
     } else {
         data.msg = "Ошибка при отправке запроса... Уже исправляем!"
     }
+    return data
 }
