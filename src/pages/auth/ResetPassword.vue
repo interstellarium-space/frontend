@@ -20,7 +20,7 @@
         return true
       },
       
-      async resetPassword() {
+      async tryResetPassword() {
         if (this.resetPasswordFormIsValid()) {
           // ... send request to reset
         }
@@ -62,7 +62,7 @@
               {{ msg }}
             </div>
             <div class="d-flex justify-content-center mb-4">
-              <input @click="this.resetPassword()" type="submit" class="btn btn-interstellarium rounded-pill fw-bold px-3" value="Восстановить пароль">
+              <input @click="this.tryResetPassword()" type="submit" class="btn btn-interstellarium rounded-pill fw-bold px-3" value="Восстановить пароль">
             </div>
           </form>
         </div>

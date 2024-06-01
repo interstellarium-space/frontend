@@ -1,7 +1,6 @@
 <script>
-  import axios from "axios"
-  
-  import { prepareAPIRequest } from "../../services/APIRequests.js";
+  import { APIAuthLogin } from "../../services/api/auth/Login.js";
+  import { login } from "../../services/Auth.js";
   
   export default {
     setup() {
@@ -30,61 +29,29 @@
         return true
       },
       
-      login(responseData) {
-        let user = responseData["user"]
-        let token = responseData["token"]["access_token"]
-        
-        localStorage.setItem("user", JSON.stringify(user))
-        localStorage.setItem("token", token)
-        
-        if (token != null) {
-          if (this.$route.params.nextUrl != null) {
-            this.$router.push(this.$route.params.nextUrl)
-          } else {
-            this.$router.push({name: "Dashboard"})
-          }
-        }
-      },
-      
-      loginError(error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          switch (error.response.status) {
-            case 400: this.msg = "Не правильно введен пароль"; break
-            case 404: this.msg = "Не правильно введен логин"; break
-            default: this.msg = "Ошибка при отправке запроса... Уже исправляем!"
-          }
-          
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser
-          // and an instance of http.ClientRequest in node.js
-          this.msg = "Ошибка при отправке запроса... Уже исправляем!"
-          
-          console.log(error.request)
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          this.msg = "Ошибка при отправке запроса... Уже исправляем!"
-          
-          console.log("Error", error.message)
-        }
-      },
-      
       async tryLogin() {
         if (this.loginFormIsValid()) {
-          let request = prepareAPIRequest("/api/auth/login")
+          let response = await APIAuthLogin(
+              this.email,
+              this.password
+          )
           
-          const res = await axios.post(request.url, {
-            email: this.email,
-            password: this.password
-          }, request.config).catch(this.loginError)
-          
-          if (res && res.status === 200) {
-            this.login(res.data)
+          if (response.isOk) {
+            let user = response.data["user"]
+            let token = response.data["token"]["access_token"]
+            
+            if (token == null)
+              return
+            
+            login(user, token)
+            
+            if (this.$route.params.nextUrl != null) {
+              this.$router.push(this.$route.params.nextUrl)
+            } else {
+              this.$router.push({name: "Dashboard"})
+            }
+          } else {
+            this.msg = response.msg
           }
         }
       },

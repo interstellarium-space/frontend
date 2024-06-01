@@ -2,12 +2,14 @@ import { createApp } from "vue"
 import { createPinia } from "pinia"
 import { createRouter, createWebHistory } from "vue-router"
 
+import { logout, getUser, getToken } from "./services/Auth.js";
+
 import App from "./App.vue";
 import Index from "./pages/Index.vue";
-import Login from "./pages/auth/Login.vue";
-import ResetPassword from "./pages/auth/ResetPassword.vue";
+import AuthLogin from "./pages/auth/Login.vue";
+import AuthResetPassword from "./pages/auth/ResetPassword.vue";
+import Dashboard from "./pages/dashboard/Dashboard.vue";
 /*
-import Dashboard from "./pages/Dashboard.vue";
 import Users from "./pages/users/Users.vue";
 import Departments from "./pages/departments/Departments.vue";
 import Projects from "./pages/projects/Projects.vue";
@@ -32,34 +34,35 @@ const router = createRouter({
             component: Index
         },
         {
-            path: "/login",
-            name: "Login",
-            component: Login,
+            path: "/auth/login",
+            name: "AuthLogin",
+            component: AuthLogin,
             meta: {
                 guest: true
             }
         },
         {
-            path: "/logout",
-            name: "Logout",
+            path: "/auth/logout",
+            name: "AuthLogout",
             meta: {
                 requiresAuth: true
             },
             redirect: to => {
-                localStorage.removeItem("user")
-                localStorage.removeItem("token")
-                return { name: "Login" }
+                logout()
+                return {
+                    name: "AuthLogin"
+                }
             }
         },
         {
-            path: "/reset-password",
-            name: "ResetPassword",
-            component: ResetPassword,
+            path: "/auth/reset-password",
+            name: "AuthResetPassword",
+            component: AuthResetPassword,
             meta: {
                 guest: true
             }
         },
-        /*
+
         {
             path: "/dashboard",
             name: "Dashboard",
@@ -68,6 +71,7 @@ const router = createRouter({
                 requiresAuth: true
             }
         },
+        /*
         {
             path: "/users",
             name: "Users",
@@ -193,30 +197,29 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        let token = localStorage.getItem("token")
-        let userData = localStorage.getItem("user")
+        let token = getToken()
+        let user = getUser()
 
-        if (token == null || userData == null) {
+        if (token == null || user == null) {
             next({
-                path: "/login",
+                name: "AuthLogin",
                 params: {
                     nextUrl: to.fullPath
                 }
             })
         } else {
-            let user = JSON.parse(userData)
             if (to.matched.some(record => record.meta.requiresAdmin)) {
-                if (user.is_admin === true){
+                if (user.isAdmin === true){
                     next()
                 } else {
-                    next({ name: "Index"})
+                    next({ name: "Dashboard"})
                 }
             } else {
                 next()
             }
         }
     } else if (to.matched.some(record => record.meta.guest)) {
-        if (localStorage.getItem("token") == null){
+        if (getToken() == null){
             next()
         } else {
             next({ name: "Dashboard"})

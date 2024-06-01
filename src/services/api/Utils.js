@@ -1,4 +1,4 @@
-import { projectConfig } from "../common/index.js";
+import { projectConfig } from "../../common/config.js";
 
 export function prepareAPIRequest(api_path) {
     let protocol = projectConfig.protocol
