@@ -16,6 +16,10 @@
     },
     
     methods: {
+      redirectToResetPassword() {
+        this.$router.push({name: "AuthResetPassword"})
+      },
+      
       loginFormIsValid() {
         if (this.email === "") {
           this.msg = "Пожалуйста, введите E-mail"
@@ -82,7 +86,7 @@
               </div>
             </div>
             <p class="text-secondary text-center">
-              <a @click="this.$router.push({name: 'AuthResetPassword'})" class="text-secondary">
+              <a @click="this.redirectToResetPassword()" class="text-secondary">
                 Восстановить доступ
               </a>
             </p>

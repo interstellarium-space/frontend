@@ -12,6 +12,10 @@
     },
     
     methods: {
+      redirectToLogin() {
+        this.$router.push({name: "AuthLogin"})
+      },
+      
       resetPasswordFormIsValid() {
         if (this.email === "") {
           this.msg = "Пожалуйста, введите E-mail"
@@ -50,7 +54,7 @@
               </div>
             </div>
             <p class="text-center">
-              <a @click="this.$router.push({name: 'Login'})" class="text-secondary">
+              <a @click="this.redirectToLogin()" class="text-secondary">
                 Войти в систему
               </a>
             </p>
