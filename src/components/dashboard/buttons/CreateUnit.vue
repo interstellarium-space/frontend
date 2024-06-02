@@ -1,17 +1,17 @@
 <script>
   export default {
     props: {
-      unit: String
+      unitClassName: String
     },
     
     setup(props) {
-      let unit = props.unit
-      return { unit }
+      let unitClassName = props.unitClassName
+      return { unitClassName }
     },
     
     methods: {
       createUnit() {
-        this.$router.push({ name: this.unit })
+        this.$router.push({ name: `Create${this.unitClassName}` })
       }
     }
   }

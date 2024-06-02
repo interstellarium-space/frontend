@@ -9,6 +9,8 @@ import Index from "./pages/Index.vue";
 import AuthLogin from "./pages/auth/Login.vue";
 import AuthResetPassword from "./pages/auth/ResetPassword.vue";
 import Dashboard from "./pages/dashboard/Dashboard.vue";
+import Users from "./pages/dashboard/users/Users.vue";
+
 /*
 import Users from "./pages/users/Users.vue";
 import Departments from "./pages/departments/Departments.vue";
@@ -71,15 +73,15 @@ const router = createRouter({
                 requiresAuth: true
             }
         },
-        /*
         {
-            path: "/users",
+            path: "/dashboard/users",
             name: "Users",
             component: Users,
             meta: {
                 requiresAuth: true
             }
         },
+        /*
         {
             path: "/departments",
             name: "Departments",

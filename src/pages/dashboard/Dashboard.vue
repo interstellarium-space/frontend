@@ -3,11 +3,9 @@
   import Sidebar from "../../components/dashboard/Sidebar.vue";
   import Header from "../../components/dashboard/Header.vue";
   import Footer from "../../components/dashboard/Footer.vue";
-  import CreateUnit from "../../components/dashboard/buttons/CreateUnit.vue";
   
   export default {
     components: {
-      CreateUnit,
       Main,
       Sidebar,
       Header,
