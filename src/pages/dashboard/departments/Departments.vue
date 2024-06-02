@@ -6,7 +6,7 @@
   import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
   import DashboardMain from "../../components/dashboard/Main.vue";
   import DashboardSearchArea from "../../components/dashboard/Search.vue";
-  import DashboardCreateEntity from "../../components/dashboard/buttons/CreateEntity.vue";
+  import DashboardCreateEntity from "../../components/dashboard/buttons/CreateUnit.vue";
   
   export default {
     components: {

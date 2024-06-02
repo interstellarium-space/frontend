@@ -1,32 +1,32 @@
 <script>
   export default {
     props: {
-      entity: String
+      unit: String
     },
     
     setup(props) {
-      let entity = props.entity
-      return { entity }
+      let unit = props.unit
+      return { unit }
     },
     
     methods: {
-      createEntity() {
-        this.$router.push({ name: this.entity })
+      createUnit() {
+        this.$router.push({ name: this.unit })
       }
     }
   }
 </script>
 
 <template>
-  <a @click="this.createEntity()" class="btn btn-interstellarium interstellarium-create-entity mx-2">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus-lg interstellarium-create-entity-icon" viewBox="0 0 16 16">
+  <a @click="this.createUnit()" class="btn btn-interstellarium interstellarium-create-unit mx-2">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus-lg interstellarium-create-unit-icon" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
     </svg>
   </a>
 </template>
 
 <style scoped>
-.interstellarium-create-entity {
+.interstellarium-create-unit {
     max-width: 3rem;
     max-height: 3rem;
     height: 3rem;
@@ -39,7 +39,7 @@
     align-items: center;
 }
 
-.interstellarium-create-entity-icon {
+.interstellarium-create-unit-icon {
     width: 1.5rem;
     height: 1.5rem;
 }

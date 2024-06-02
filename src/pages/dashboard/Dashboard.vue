@@ -33,17 +33,7 @@
     <div class="interstellarium-dashboard">
       <Header></Header>
       <Sidebar></Sidebar>
-      
-      <Main>
-        <template #tools>
-        
-        </template>
-        
-        <template #content>
-        
-        </template>
-      </Main>
-      
+      <Main></Main>
       <Footer></Footer>
     </div>
   </div>
