@@ -22,7 +22,7 @@ function handleError(error) {
 
     if (error.response) {
         switch (error.response.status) {
-            case 400: data.msg = "Не правильные данные запроса"; break
+            case 400: data.msg = "Некорректные данные запроса"; break
             case 401: data.msg = "Требуется авторизация"; break
             case 403: data.msg = "Доступ запрещен!"; break
             case 404: data.msg = "Пользователь не найден"; break
