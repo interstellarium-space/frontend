@@ -4,7 +4,7 @@
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
   
-  import { APIUsersGet } from "../../../services/api/users/Get.js";
+  import { APIUsersProfile } from "../../../services/api/users/Profile.js";
   
   export default {
     components: {
@@ -16,12 +16,15 @@
     
     setup() {
       document.title = "Interstellarium"
+      let response = null
       
       let loadPage = async () => {
-        // TODO: load page
+        response = await APIUsersProfile(this.$route.params.userId)
       }
       
       loadPage()
+      
+      console.log(response)
     },
   }
 </script>
