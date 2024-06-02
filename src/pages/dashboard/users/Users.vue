@@ -58,6 +58,8 @@
               this.$router.push({ name: "AuthLogout" })
             }
           }
+          
+          console.log(response)
         }
       }
     }

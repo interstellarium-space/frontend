@@ -26,6 +26,7 @@ function loginError(error) {
     if (error.response) {
         switch (error.response.status) {
             case 400: data.msg = "Не правильно введен пароль"; break
+            case 403: data.msg = "Доступ запрещен!"; break
             case 404: data.msg = "Не правильно введен логин"; break
             default: data.msg = "Ошибка при отправке запроса... Уже исправляем!"
         }

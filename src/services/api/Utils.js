@@ -1,6 +1,6 @@
 import { projectConfig } from "../../common/config.js";
 
-export function prepareAPIRequest(api_path) {
+export function prepareAPIRequest(api_path, queryParams) {
     let protocol = projectConfig.protocol
     let host = projectConfig.host
     let port = projectConfig.port
@@ -11,6 +11,7 @@ export function prepareAPIRequest(api_path) {
 
     if (token != null) {
         config["headers"] = { Authorization: `Bearer ${token}` }
+        config["params"] = queryParams
     }
     return { url, config }
 }

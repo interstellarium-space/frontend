@@ -57,6 +57,8 @@
           } else {
             this.msg = response.msg
           }
+          
+          console.log(response)
         }
       },
     },

@@ -3,15 +3,15 @@ import axios from "axios"
 import { prepareAPIRequest } from "../Utils.js";
 
 export async function APIUsersGetAll(filters) {
-    let request = prepareAPIRequest("/api/users")
+    let request = prepareAPIRequest("/api/users", {
+        name: filters.name,
+        birthdate_from: filters.birthdateFrom,
+        birthdate_to: filters.birthdateTo
+    })
     let response = {}
 
     try {
-        response = await axios.post(request.url, {
-            name: filters.name,
-            birthdate_from: filters.birthdateFrom,
-            birthdate_to: filters.birthdateTo
-        }, request.config)
+        response = await axios.get(request.url, request.config)
     } catch (error) {
         return handleError(error)
     }
@@ -28,6 +28,7 @@ function handleError(error) {
         switch (error.response.status) {
             case 400: data.msg = "Не правильные данные запроса"; break
             case 401: data.msg = "Требуется авторизация"; break
+            case 403: data.msg = "Доступ запрещен!"; break
             case 404: data.msg = "Ничего не нашлось"; break
             default: data.msg = "Ошибка при отправке запроса... Уже исправляем!"
         }
