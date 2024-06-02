@@ -45,7 +45,7 @@
             INTERSTELLARIUM
           </div>
           <form @submit.prevent="" autocomplete=off>
-            <p class="text-secondary text-center">
+            <p class="text-secondary text-center text-wrap">
               Мы отправим инструкцию по восстановлению пароля Вам на почту
             </p>
             <div class="row">

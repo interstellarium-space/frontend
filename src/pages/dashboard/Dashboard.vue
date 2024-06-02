@@ -3,23 +3,15 @@
   import Sidebar from "../../components/dashboard/Sidebar.vue";
   import Header from "../../components/dashboard/Header.vue";
   import Footer from "../../components/dashboard/Footer.vue";
+  import CreateUnit from "../../components/dashboard/buttons/CreateUnit.vue";
   
   export default {
     components: {
+      CreateUnit,
       Main,
       Sidebar,
       Header,
       Footer
-    },
-    
-    beforeCreate: function() {
-        document.body.classList.add("dashboard")
-        document.getElementById("app").classList.add("dashboard")
-    },
-    
-    beforeRouteLeave: function () {
-        document.body.classList.remove("dashboard")
-        document.getElementById("app").classList.remove("dashboard")
     },
     
     setup() {
@@ -33,8 +25,15 @@
     <div class="interstellarium-dashboard">
       <Header></Header>
       <Sidebar></Sidebar>
-      <Main></Main>
-      <Footer></Footer>
+      
+      <Main>
+        <template v-slot:tools></template>
+        <template v-slot:content></template>
+      </Main>
+      
+      <Footer>
+        <template v-slot:tools></template>
+      </Footer>
     </div>
   </div>
 </template>
