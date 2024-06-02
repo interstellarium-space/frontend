@@ -8,20 +8,15 @@
     
     methods: {
       toggleFilters() {
-        let searchArea = document.getElementById('dashboard-search')
-        let extendedFilters = []
-        // let extendedFilters = document.getElementsByClassName('interstellarium-extended-search-filter')
+        let searchArea = document.getElementById("dashboard-search")
+        let filters = document.getElementById("dashboard-search-filters")
         
         if (this.filtersAreHidden) {
-          searchArea.classList.add('extended')
-          for (let i = 0; i !== extendedFilters.length; i++) {
-            extendedFilters[i].classList.remove('hidden')
-          }
+          searchArea.classList.add("extended")
+          filters.classList.remove("hidden")
         } else {
-          searchArea.classList.remove('extended')
-          for (let i = 0; i !== extendedFilters.length; i++) {
-            extendedFilters[i].classList.add('hidden')
-          }
+          searchArea.classList.remove("extended")
+          filters.classList.add("hidden")
         }
         
         this.filtersAreHidden = !this.filtersAreHidden

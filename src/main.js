@@ -2,7 +2,7 @@ import { createApp } from "vue"
 import { createPinia } from "pinia"
 import { createRouter, createWebHistory } from "vue-router"
 
-import { logout, getUser, getToken } from "./services/Auth.js";
+import { logout, getUser, getToken, isAdmin } from "./services/Auth.js";
 
 import App from "./App.vue";
 import Index from "./pages/Index.vue";
@@ -209,7 +209,7 @@ router.beforeEach((to, from, next) => {
             })
         } else {
             if (to.matched.some(record => record.meta.requiresAdmin)) {
-                if (user.isAdmin === true){
+                if (isAdmin(user) === true){
                     next()
                 } else {
                     next({ name: "Dashboard"})

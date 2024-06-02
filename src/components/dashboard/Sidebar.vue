@@ -3,14 +3,28 @@
     data() {
       return {
         pages: [
-          {name: 'Users', title: 'Пользователи'},
-          {name: 'Departments', title: 'Отделы'},
-          {name: 'Projects', title: 'Проекты'},
-          {name: 'Contracts', title: 'Контракты'},
-          {name: 'Groups', title: 'Группы'},
-          {name: 'Equipment', title: 'Оборудование'},
-          {name: 'Works', title: 'Работы'},
+          {name: "Users", title: "Пользователи"},
+          {name: "Departments", title: "Отделы"},
+          {name: "Projects", title: "Проекты"},
+          {name: "Contracts", title: "Контракты"},
+          {name: "Groups", title: "Группы"},
+          {name: "Equipment", title: "Оборудование"},
+          {name: "Works", title: "Работы"},
         ]
+      }
+    },
+    
+    methods: {
+      redirectToDashboard() {
+        this.$router.push({name: "Dashboard"})
+      },
+      
+      redirectToLogout() {
+        this.$router.push({name: "AuthLogout"})
+      },
+      
+      redirectToPage(page) {
+        this.$router.push({name: page.name})
       }
     }
   }
@@ -19,18 +33,18 @@
 <template>
   <div class="interstellarium-dashboard-sidebar hidden" id="dashboard-sidebar">
     <div class="interstellarium-dashboard-sidebar-content">
-      <div @click="this.$router.push({name: 'Dashboard'})" class="interstellarium-dashboard-sidebar-card col-12 mb-3 bg-interstellarium">
+      <div @click="this.redirectToDashboard()" class="interstellarium-dashboard-sidebar-card col-12 mb-3 bg-interstellarium">
         <div class="interstellarium-link interstellarium-dashboard-sidebar-card-link text-white">
           Dashboard
         </div>
       </div>
-      <div v-for="page in this.pages" @click="this.$router.push({name: page.name})" class="interstellarium-dashboard-sidebar-card col-12 col-sm-6 col-md-12">
-        <div class="interstellarium-link interstellarium-dashboard-sidebar-card-link">
+      <div v-for="page in this.pages" @click="this.redirectToPage(page)" class="interstellarium-dashboard-sidebar-card col-12 col-sm-6 col-md-12">
+        <div class="interstellarium-dashboard-sidebar-card-link">
           {{ page.title }}
         </div>
       </div>
-      <div @click="this.$router.push({name: 'Logout'})" class="interstellarium-dashboard-sidebar-card col-12 mt-3 bg-danger">
-        <div class="interstellarium-link interstellarium-dashboard-sidebar-card-link text-white">
+      <div @click="this.redirectToLogout()" class="interstellarium-dashboard-sidebar-card col-12 mt-3 bg-danger">
+        <div class="interstellarium-dashboard-sidebar-card-link text-white">
           Выйти
         </div>
       </div>

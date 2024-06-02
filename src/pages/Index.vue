@@ -2,6 +2,12 @@
   export default {
     setup() {
       document.title = "Interstellarium"
+    },
+    
+    methods: {
+      redirectToLogin() {
+        this.$router.push({name: "AuthLogin"})
+      }
     }
   }
 </script>
@@ -9,12 +15,14 @@
 <template>
   <div class="interstellarium-container">
     <div class="interstellarium-index-hero">
-      <div class="interstellarium-logo">INTERSTELLARIUM</div>
+      <div class="interstellarium-logo">
+        INTERSTELLARIUM
+      </div>
       <div class="interstellarium-slogan">
         разработка космических проектов
       </div>
       <div class="interstellarium-goto-login">
-        <a @click="this.$router.push({name: 'Login'})" class="btn btn-interstellarium rounded-pill fw-bold mt-4 px-3" >
+        <a @click="this.redirectToLogin()" class="btn btn-interstellarium rounded-pill fw-bold mt-4 px-3">
           Войти в систему
         </a>
       </div>

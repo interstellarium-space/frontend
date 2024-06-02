@@ -12,7 +12,6 @@
       Footer
     },
     
-    // hack for component-dependent html tag 'body' styling
     beforeCreate: function() {
         document.body.classList.add("dashboard")
         document.getElementById("app").classList.add("dashboard")
@@ -32,9 +31,19 @@
 <template>
   <div class="interstellarium-container">
     <div class="interstellarium-dashboard">
-      <Sidebar></Sidebar>
-      <Main></Main>
       <Header></Header>
+      <Sidebar></Sidebar>
+      
+      <Main>
+        <template #tools>
+        
+        </template>
+        
+        <template #content>
+        
+        </template>
+      </Main>
+      
       <Footer></Footer>
     </div>
   </div>

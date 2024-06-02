@@ -1,5 +1,5 @@
 <script>
-  import ToggleFilters from "./buttons/ToggleFilters.vue";
+  import ToggleFilters from "../buttons/ToggleFilters.vue";
   
   export default {
     components: {
@@ -14,8 +14,8 @@
       <div class="col-3 col-sm-2 col-lg-1 my-2 my-md-1 px-1 px-sm-2 d-flex align-items-stretch">
         <ToggleFilters></ToggleFilters>
       </div>
-      <slot name="basic-filters"></slot>
-      <slot name="extended-filters"></slot>
+      <slot name="search"></slot>
+      <slot name="filters"></slot>
     </form>
   </div>
 </template>

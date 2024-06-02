@@ -18,3 +18,9 @@ export function getUser() {
 export function getToken() {
     return localStorage.getItem("token")
 }
+
+export function isAdmin(user) {
+    if (user === undefined || user == null)
+        return false
+    return (user.is_admin === true || user.is_superuser === true)
+}

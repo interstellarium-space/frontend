@@ -4,6 +4,9 @@
 
 <template>
   <div class="interstellarium-dashboard-main" id="dashboard-main">
+    <div class="interstellarium-dashboard-main-tools">
+      <slot name="tools"></slot>
+    </div>
     <div class="interstellarium-dashboard-main-content">
       <slot name="content"></slot>
     </div>
