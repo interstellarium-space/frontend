@@ -9,7 +9,7 @@
   import Search from "../../../components/dashboard/forms/Search.vue";
   import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
   
-  import { APIUsersGetAll } from "../../../services/api/users/GetAll.js";
+  import { APIUsersGet } from "../../../services/api/users/Get.js";
   
   export default {
     components: {
@@ -47,7 +47,7 @@
       
       async searchUsers() {
         if (this.searchFormIsValid()) {
-          let response = await APIUsersGetAll(this.store.filters)
+          let response = await APIUsersGet(this.store.filters)
           
           if (response.isOk) {
             this.store.users = response.data
@@ -114,6 +114,12 @@
             <a @click="this.redirectToUser(user)" class="interstellarium-unit-link">
               {{ user.name }}
             </a>
+            <div v-if="user.department.id" class="interstellarium-unit-description">
+              Отдел: {{ user.department.name }}
+            </div>
+            <div v-else class="interstellarium-unit-description">
+              Отдел: не назначен
+            </div>
           </div>
         </template>
       </Main>

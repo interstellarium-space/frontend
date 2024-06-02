@@ -2,7 +2,7 @@ import axios from "axios"
 
 import { prepareAPIRequest } from "../Utils.js";
 
-export async function APIUsersGetAll(filters) {
+export async function APIUsersGet(filters) {
     let request = prepareAPIRequest("/api/users", {
         name: filters.name,
         birthdate_from: filters.birthdateFrom,
