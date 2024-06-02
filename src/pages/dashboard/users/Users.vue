@@ -8,7 +8,6 @@
   
   import Search from "../../../components/dashboard/forms/Search.vue";
   
-  
   export default {
     components: {
       Search,
@@ -42,20 +41,34 @@
         <template v-slot:tools>
           <Search>
             <template v-slot:search>
-              <div class="col-5 col-sm-8 col-lg-9 my-2 my-md-1 px-1 px-sm-2">
-                <input type="text" class="form-control" placeholder="Введите имя пользователя">
+              <div class="col-5 col-sm-8 col-lg-9 my-1 px-1 px-sm-2">
+                <input v-model="store.filters.name" type="text"
+                    class="form-control"
+                    placeholder="Имя пользователя"
+                >
               </div>
-              <div class="col-4 col-sm-2 my-2 my-md-1 px-1 px-sm-2">
-                <input @click="this.searchUsers()" type="submit" class="form-control btn btn-interstellarium" value="Поиск">
+              <div class="col-4 col-sm-2 my-1 px-1 px-sm-2">
+                <input @click="this.searchUsers()" type="submit"
+                    class="form-control btn btn-interstellarium"
+                    value="Поиск"
+                >
               </div>
             </template>
             
             <template v-slot:filters>
-              <div class="col-6 my-2 my-md-1 px-1 px-sm-2">
-                <input type="text" class="form-control" placeholder="С даты рождения" onfocus="this.type='date'">
+              <div class="col-6 my-1 px-1 px-sm-2">
+                <input v-model="this.store.filters.birthdateFrom" type="text"
+                    class="form-control"
+                    placeholder="С даты рождения"
+                    onfocus="this.type='date'"
+                >
               </div>
-              <div class="col-6 my-2 my-md-1 px-1 px-sm-2">
-                <input type="text" class="form-control" placeholder="По дату рождения" onfocus="this.type='date'">
+              <div class="col-6 my-1 px-1 px-sm-2">
+                <input v-model="this.store.filters.birthdateFrom" type="text"
+                    class="form-control"
+                    placeholder="По дату рождения"
+                    onfocus="this.type='date'"
+                >
               </div>
             </template>
           </Search>
