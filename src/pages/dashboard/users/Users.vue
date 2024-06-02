@@ -29,7 +29,7 @@
     
     methods: {
       redirectToUser(user) {
-      
+        this.$router.push({ name: "UserProfile", params: { userId: user.id } })
       },
       
       searchFormIsValid() {

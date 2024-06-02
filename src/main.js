@@ -11,6 +11,7 @@ import AuthResetPassword from "./pages/auth/ResetPassword.vue";
 import Dashboard from "./pages/dashboard/Dashboard.vue";
 import Users from "./pages/dashboard/users/Users.vue";
 import CreateUser from "./pages/dashboard/users/CreateUser.vue";
+import UserProfile from "./pages/dashboard/users/UserProfile.vue";
 /*
 import Departments from "./pages/departments/Departments.vue";
 import Projects from "./pages/projects/Projects.vue";
@@ -87,6 +88,14 @@ const router = createRouter({
             meta: {
                 requiresAuth: true,
                 requiresAdmin: true
+            }
+        },
+        {
+            path: "/dashboard/users/:userId",
+            name: "UserProfile",
+            component: UserProfile,
+            meta: {
+                requiresAuth: true
             }
         },
         /*
