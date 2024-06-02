@@ -1,78 +1,72 @@
 <script>
-  import axios from "axios";
+  import Main from "../../../components/dashboard/Main.vue";
+  import Sidebar from "../../../components/dashboard/Sidebar.vue";
+  import Header from "../../../components/dashboard/Header.vue";
+  import Footer from "../../../components/dashboard/Footer.vue";
   
-  import {prepareAPIRequest} from "../../services/APIRequests.js";
-
-  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../../components/dashboard/Main.vue";
+  import { APIUsersCreate } from "../../../services/api/users/Create.js";
+  import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
   
   export default {
     components: {
-      DashboardSidebar,
-      DashboardMain
-    },
-    
-    // hack for component-dependent html tag 'body' styling
-    beforeCreate: function() {
-        document.body.className = 'dashboard'
-        document.getElementById('app').className = 'dashboard'
-    },
-    
-    beforeRouteLeave: function () {
-        document.body.classList.remove('dashboard')
-        document.getElementById('app').classList.remove('dashboard')
+      CreateUnit,
+      Main,
+      Sidebar,
+      Header,
+      Footer
     },
     
     setup() {
-      document.title = 'Создать пользователя | Interstellarium'
+      document.title = "Создать пользователя | Interstellarium"
     },
     
     data() {
       return {
         form: {
-          email: null,
-          password: null,
-          name: null,
-          isAdmin: null,
+          email: "",
+          password: "",
+          name: "",
+          isAdmin: false,
           birthdate: null
         }
       }
     },
     
     methods: {
-      async createUser() {
-        let req = prepareAPIRequest('/api/users/create')
-        
-        let payload =  {
-          email: this.form.email,
-          password: this.form.password,
-          name: this.form.name,
-          is_admin: this.form.isAdmin,
-          birthdate: this.form.birthdate
+      formIsValid() {
+        if (this.email === "") {
+          this.msg = "Пожалуйста, введите E-mail"
+          return false
         }
-        
-        console.log(payload)
-        
-        let router = this.$router
-        
-        const res = await axios.post(req.url, payload, req.config).catch(
-            function (error) {
-              if (error.response.status === 401) {
-                router.push({name: 'Logout'})
-              }
-            }
-        )
-        
-        console.debug(res)
-        
-        if (res && res.status === 201) {
-          this.$router.push({name: 'Users'})
+        if (this.password === "") {
+          this.msg = "Пожалуйста, введите пароль"
+          return false
         }
+        if (this.name === "") {
+          this.msg = "Пожалуйста, введите имя пользователя"
+          return false
+        }
+        this.msg = ""
+        return true
       },
       
-      mounted() {
-        document.title = 'Создать пользователя | Interstellarium'
-      }
+      async createUser() {
+        if (this.formIsValid()) {
+          let response = await APIUsersCreate(this.form)
+          
+          if (response.isOk) {
+            // TODO: go to user
+          } else {
+            console.log(response.msg)
+            
+            if (response.code === 401) {
+              this.$router.push({ name: "AuthLogout" })
+            }
+          }
+          
+          console.log(response)
+        }
+      },
     }
   }
 </script>
@@ -80,18 +74,25 @@
 <template>
   <div class="interstellarium-container">
     <div class="interstellarium-dashboard">
-      <DashboardSidebar></DashboardSidebar>
-      <DashboardMain>
+      <Header></Header>
+      <Sidebar></Sidebar>
+      
+      <Main>
+        <template v-slot:tools></template>
+        
         <template v-slot:content>
-          <form @submit.prevent="" autocomplete=off class="interstellarium-dashboard-form">
-            <div class="interstellarium-dashboard-form-content">
+          <form @submit.prevent="" autocomplete=off class="interstellarium-dashboard-edit-form">
+            <div class="interstellarium-dashboard-edit-form-content">
+              <div class="interstellarium-dashboard-edit-form-header">
+                Новый пользователь
+              </div>
               <div class="row">
                 <div class="col-12">
                   <input
+                      v-model="this.form.email"
                       class="form-control mb-3"
                       type="email"
                       placeholder="E-mail"
-                      v-model="form.email"
                       required
                   >
                 </div>
@@ -99,10 +100,10 @@
               <div class="row">
                 <div class="col-12">
                   <input
+                      v-model="this.form.password"
                       class="form-control mb-3"
                       type="password"
                       placeholder="Пароль"
-                      v-model="form.password"
                       required
                   >
                 </div>
@@ -110,11 +111,22 @@
               <div class="row">
                 <div class="col-12">
                   <input
+                      v-model="this.form.name"
                       class="form-control mb-3"
                       type="text"
                       placeholder="Имя пользователя"
-                      v-model="form.name"
                       required
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <input
+                      v-model="this.form.birthdate"
+                      class="form-control mb-3"
+                      type="text"
+                      placeholder="Дата рождения"
+                      onfocus="this.type='date'"
                   >
                 </div>
               </div>
@@ -131,7 +143,11 @@
             </div>
           </form>
         </template>
-      </DashboardMain>
+      </Main>
+      
+      <Footer>
+        <template v-slot:tools></template>
+      </Footer>
     </div>
   </div>
 </template>
@@ -142,28 +158,7 @@
 
 .interstellarium-dashboard-main {
     top: 5rem;
-}
-
-.interstellarium-dashboard-form {
-    width: 100%;
     display: flex;
     justify-content: center;
 }
-
-.interstellarium-dashboard-form-content {
-    width: 100%;
-}
-
-@media (min-width: 768px) {
-    .interstellarium-dashboard-form-content {
-        width: 75%;
-    }
-}
-
-@media (min-width: 992px) {
-    .interstellarium-dashboard-form-content {
-        width: 50%;
-    }
-}
-
 </style>

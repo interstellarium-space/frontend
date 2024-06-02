@@ -79,12 +79,24 @@
           <form @submit.prevent="" autocomplete=off>
             <div class="row">
               <div class="col-12">
-                <input v-model="email" class="form-control mb-3" type="email" placeholder="E-mail">
+                <input
+                    v-model="this.email"
+                    class="form-control mb-3"
+                    type="email"
+                    placeholder="E-mail"
+                    required
+                >
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <input v-model="password" class="form-control mb-3" type="password" placeholder="Пароль">
+                <input
+                    v-model="this.password"
+                    class="form-control mb-3"
+                    type="password"
+                    placeholder="Пароль"
+                    required
+                >
               </div>
             </div>
             <p class="text-secondary text-center">

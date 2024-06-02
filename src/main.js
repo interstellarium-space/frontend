@@ -10,7 +10,7 @@ import AuthLogin from "./pages/auth/Login.vue";
 import AuthResetPassword from "./pages/auth/ResetPassword.vue";
 import Dashboard from "./pages/dashboard/Dashboard.vue";
 import Users from "./pages/dashboard/users/Users.vue";
-
+import CreateUser from "./pages/dashboard/users/CreateUser.vue";
 /*
 import Departments from "./pages/departments/Departments.vue";
 import Projects from "./pages/projects/Projects.vue";
@@ -80,6 +80,15 @@ const router = createRouter({
                 requiresAuth: true
             }
         },
+        {
+            path: "/dashboard/users/create",
+            name: "CreateUser",
+            component: CreateUser,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
         /*
         {
             path: "/departments",
@@ -127,15 +136,6 @@ const router = createRouter({
             component: Works,
             meta: {
                 requiresAuth: true
-            }
-        },
-        {
-            path: "/users/create",
-            name: "CreateUser",
-            component: CreateUser,
-            meta: {
-                requiresAuth: true,
-                requiresAdmin: true
             }
         },
         {
