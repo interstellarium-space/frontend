@@ -2,17 +2,18 @@ import axios from "axios"
 
 import { prepareAPIRequest } from "../Utils.js";
 
-export async function APIAuthLogin(email, password) {
-    let request = prepareAPIRequest("/api/auth/login")
+export async function APIUsersGetAll(filters) {
+    let request = prepareAPIRequest("/api/users")
     let response = {}
 
     try {
         response = await axios.post(request.url, {
-            email: email,
-            password: password
+            name: filters.name,
+            birthdate_from: filters.birthdateFrom,
+            birthdate_to: filters.birthdateTo
         }, request.config)
     } catch (error) {
-        return loginError(error)
+        return handleError(error)
     }
 
     if (response && response.status === 200) {
@@ -20,13 +21,14 @@ export async function APIAuthLogin(email, password) {
     }
 }
 
-function loginError(error) {
+function handleError(error) {
     let data = {isOk: false, data: {}, msg: "", code: null}
 
     if (error.response) {
         switch (error.response.status) {
-            case 400: data.msg = "Не правильно введен пароль"; break
-            case 404: data.msg = "Не правильно введен логин"; break
+            case 400: data.msg = "Не правильные данные запроса"; break
+            case 401: data.msg = "Требуется авторизация"; break
+            case 404: data.msg = "Ничего не нашлось"; break
             default: data.msg = "Ошибка при отправке запроса... Уже исправляем!"
         }
         data.code = error.response.status

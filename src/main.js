@@ -12,7 +12,6 @@ import Dashboard from "./pages/dashboard/Dashboard.vue";
 import Users from "./pages/dashboard/users/Users.vue";
 
 /*
-import Users from "./pages/users/Users.vue";
 import Departments from "./pages/departments/Departments.vue";
 import Projects from "./pages/projects/Projects.vue";
 import Contracts from "./pages/contracts/Contracts.vue";

@@ -7,9 +7,13 @@
   import Footer from "../../../components/dashboard/Footer.vue";
   
   import Search from "../../../components/dashboard/forms/Search.vue";
+  import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
+  
+  import { APIUsersGetAll } from "../../../services/api/users/GetAll.js";
   
   export default {
     components: {
+      CreateUnit,
       Search,
       Main,
       Sidebar,
@@ -24,8 +28,37 @@
     },
     
     methods: {
-      async searchUsers() {
+      redirectToUser(user) {
       
+      },
+      
+      searchFormIsValid() {
+        if (this.store.filters.name === "") {
+          this.store.filters.name = null
+        }
+        if (this.store.filters.birthdateFrom === "") {
+          this.store.filters.birthdateFrom = null
+        }
+        if (this.store.filters.birthdateTo === "") {
+          this.store.filters.birthdateTo = null
+        }
+        return true
+      },
+      
+      async searchUsers() {
+        if (this.searchFormIsValid()) {
+          let response = await APIUsersGetAll(this.store.filters)
+          
+          if (response.isOk) {
+            this.store.users = response.data
+          } else {
+            console.log(response.msg)
+            
+            if (response.code === 401) {
+              this.$router.push({ name: "AuthLogout" })
+            }
+          }
+        }
       }
     }
   }
@@ -64,7 +97,7 @@
                 >
               </div>
               <div class="col-6 my-1 px-1 px-sm-2">
-                <input v-model="this.store.filters.birthdateFrom" type="text"
+                <input v-model="this.store.filters.birthdateTo" type="text"
                     class="form-control"
                     placeholder="По дату рождения"
                     onfocus="this.type='date'"
@@ -75,12 +108,18 @@
         </template>
         
         <template v-slot:content>
-        
+          <div v-for="user in this.store.users" class="interstellarium-unit-card">
+            <a @click="this.redirectToUser(user)" class="interstellarium-unit-link">
+              {{ user.name }}
+            </a>
+          </div>
         </template>
       </Main>
       
       <Footer>
-        <template v-slot:tools></template>
+        <template v-slot:tools>
+          <CreateUnit unit-class-name="User"></CreateUnit>
+        </template>
       </Footer>
     </div>
   </div>
