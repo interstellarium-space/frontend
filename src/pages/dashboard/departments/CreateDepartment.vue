@@ -36,7 +36,7 @@
       },
 
       formIsValid() {
-        if (this.name === "") {
+        if (this.form.name === "") {
           this.msg = "Пожалуйста, введите название отдела"
           return false
         }

@@ -3,9 +3,9 @@
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
-  
-  import { APIUsersCreate } from "../../../services/api/users/Create.js";
   import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
+
+  import { APIUsersCreate } from "../../../services/api/users/Create.js";
   
   export default {
     components: {
@@ -40,15 +40,15 @@
       },
 
       formIsValid() {
-        if (this.email === "") {
+        if (this.form.email === "") {
           this.msg = "Пожалуйста, введите E-mail"
           return false
         }
-        if (this.password === "") {
+        if (this.form.password === "") {
           this.msg = "Пожалуйста, введите пароль"
           return false
         }
-        if (this.name === "") {
+        if (this.form.name === "") {
           this.msg = "Пожалуйста, введите имя пользователя"
           return false
         }

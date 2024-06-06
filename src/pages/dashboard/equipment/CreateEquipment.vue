@@ -36,7 +36,7 @@
       },
 
       formIsValid() {
-        if (this.name === "") {
+        if (this.form.name === "") {
           this.msg = "Пожалуйста, введите наименование оборудования"
           return false
         }
