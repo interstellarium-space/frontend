@@ -12,11 +12,14 @@ import Dashboard from "./pages/dashboard/Dashboard.vue";
 import Users from "./pages/dashboard/users/Users.vue";
 import CreateUser from "./pages/dashboard/users/CreateUser.vue";
 import UserProfile from "./pages/dashboard/users/UserProfile.vue";
+import Groups from "./pages/dashboard/groups/Groups.vue";
+import CreateGroup from "./pages/dashboard/groups/CreateGroup.vue";
+import GroupProfile from "./pages/dashboard/groups/GroupProfile.vue";
 /*
 import Departments from "./pages/departments/Departments.vue";
 import Projects from "./pages/projects/Projects.vue";
 import Contracts from "./pages/contracts/Contracts.vue";
-import Groups from "./pages/groups/Groups.vue";
+
 import Equipment from "./pages/equipment/Equipment.vue";
 import Works from "./pages/works/Works.vue";
 import CreateUser from "./pages/users/CreateUser.vue";
@@ -24,7 +27,6 @@ import CreateDepartment from "./pages/departments/CreateDepartment.vue";
 import CreateContract from "./pages/contracts/CreateContract.vue";
 import CreateProject from "./pages/projects/CreateProject.vue";
 import CreateEquipment from "./pages/equipment/CreateEquipment.vue";
-import CreateGroup from "./pages/groups/CreateGroup.vue";
 import CreateWork from "./pages/works/CreateWork.vue";
 */
 
@@ -94,6 +96,31 @@ const router = createRouter({
             path: "/dashboard/users/:userId",
             name: "UserProfile",
             component: UserProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/groups",
+            name: "Groups",
+            component: Groups,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/groups/create",
+            name: "CreateGroup",
+            component: CreateGroup,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: "/dashboard/groups/:groupId",
+            name: "GroupProfile",
+            component: GroupProfile,
             meta: {
                 requiresAuth: true
             }

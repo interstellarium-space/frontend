@@ -1,82 +1,71 @@
 <script>
-  import axios from "axios";
-  
-  import {prepareAPIRequest} from "../../services/APIRequests.js";
+  import { useGroupsStore } from "../../../stores/dashboard/Groups.js";
 
-  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../../components/dashboard/Main.vue";
-  import DashboardSearchArea from "../../components/dashboard/Search.vue";
-  import DashboardCreateEntity from "../../components/dashboard/buttons/CreateUnit.vue";
-  
+  import Main from "../../../components/dashboard/Main.vue";
+  import Sidebar from "../../../components/dashboard/Sidebar.vue";
+  import Header from "../../../components/dashboard/Header.vue";
+  import Footer from "../../../components/dashboard/Footer.vue";
+
+  import Search from "../../../components/dashboard/forms/Search.vue";
+  import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
+
+  import { APIGroupsGet } from "../../../services/api/groups/Get.js";
+
   export default {
     components: {
-      DashboardCreateEntity,
-      DashboardSearchArea,
-      DashboardSidebar,
-      DashboardMain
+      CreateUnit,
+      Search,
+      Main,
+      Sidebar,
+      Header,
+      Footer
     },
-    
-    // hack for component-dependent html tag 'body' styling
-    beforeCreate: function () {
-      document.body.className = 'dashboard'
-      document.getElementById('app').className = 'dashboard'
-    },
-    
-    beforeRouteLeave: function () {
-      document.body.classList.remove('dashboard')
-      document.getElementById('app').classList.remove('dashboard')
-    },
-    
+
     setup() {
-      document.title = 'Группы | Interstellarium'
+      document.title = "Группы | Interstellarium"
+      const store = useGroupsStore()
+      return { store }
     },
-    
+
     data() {
       return {
-        searchFilters: {
-          name: null,
-        },
-        groups: []
+        searchIsInProgress: false,
+        seacrhMessage: ""
       }
     },
-    
+
     methods: {
-      prepareSearchFilters() {
-        if (this.searchFilters.name === '')
-          this.searchFilters.name = null
+      redirectToGroup(group) {
+        this.$router.push({ name: "GroupProfile", params: { groupId: group.id } })
       },
-      
+
+      searchFormIsValid() {
+        if (this.store.filters.name === "") {
+          this.store.filters.name = null
+        }
+        return true
+      },
+
       async searchGroups() {
-        let req = prepareAPIRequest('/api/groups')
-        
-        this.prepareSearchFilters()
-        
-        let payload = {
-          name: this.searchFilters.name,
-        }
-        
-        console.log(payload)
-        
-        let router = this.$router
-        
-        const res = await axios.post(req.url, payload, req.config).catch(
-            function (error) {
-              if (error.response.status === 401) {
-                router.push({name: 'Logout'})
-              }
+        if (this.searchFormIsValid()) {
+          this.searchIsInProgress = true
+          this.store.groups = []
+          this.seacrhMessage = ""
+
+          let response = await APIGroupsGet(this.store.filters)
+
+          if (response.isOk) {
+            this.store.groups = response.data
+          } else {
+            this.seacrhMessage = response.msg
+
+            if (response.code === 401) {
+              this.$router.push({ name: "AuthLogout" })
             }
-        )
-        
-        console.debug(res)
-        
-        if (res && res.status === 200) {
-          this.groups = res.data
-          console.log(res.data)
+          }
+
+          this.searchIsInProgress = false
         }
-      },
-      
-      mounted() {
-        document.title = 'Группы | Interstellarium'
       }
     }
   }
@@ -85,47 +74,51 @@
 <template>
   <div class="interstellarium-container">
     <div class="interstellarium-dashboard">
-      <DashboardSidebar></DashboardSidebar>
-      <DashboardMain>
-        <template v-slot:search-area>
-          <DashboardSearchArea>
-            <template v-slot:main-line-fields>
-              <div class="col-5 col-sm-8 col-lg-9 my-2 my-md-1 px-1 px-sm-2">
-                <input
-                    type="text"
+      <Header></Header>
+      <Sidebar></Sidebar>
+
+      <Main>
+        <template v-slot:tools>
+          <Search>
+            <template v-slot:search>
+              <div class="col-5 col-sm-8 col-lg-9 my-1 px-1 px-sm-2">
+                <input v-model="store.filters.name" type="text"
                     class="form-control"
-                    id="filter-name"
-                    placeholder="Введите название группы"
-                    v-model="searchFilters.name"
+                    placeholder="Название группы"
                 >
               </div>
-              <div class="col-4 col-sm-2 my-2 my-md-1 px-1 px-sm-2">
-                <input
-                    @click="this.searchGroups()"
-                    type="submit"
+              <div class="col-4 col-sm-2 my-1 px-1 px-sm-2">
+                <input @click="this.searchGroups()" type="submit"
                     class="form-control btn btn-interstellarium"
-                    id="search"
                     value="Поиск"
                 >
               </div>
             </template>
-          </DashboardSearchArea>
+          </Search>
         </template>
-        
+
         <template v-slot:content>
-          <div v-for="group in this.groups"
-               class="interstellarium-dashboard-main-content-card mb-3">
-            <div class="interstellarium-dashboard-main-content-link">
-              {{ group.name }}
+          <div v-show="this.searchIsInProgress" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
           </div>
+          <div v-show="this.seacrhMessage" class="text-danger text-center">
+            {{ this.seacrhMessage }}
+          </div>
+          <div v-for="group in this.store.groups" class="interstellarium-unit-card">
+            <a @click="this.redirectToGroup(group)" class="interstellarium-unit-link">
+              {{ group.name }}
+            </a>
+          </div>
         </template>
-        
-        <template v-slot:create-entity>
-          <DashboardCreateEntity
-              @click="this.$router.push({name: 'CreateGroup'})"/>
+      </Main>
+
+      <Footer>
+        <template v-slot:tools>
+          <CreateUnit unit-class-name="Group"></CreateUnit>
         </template>
-      </DashboardMain>
+      </Footer>
     </div>
   </div>
 </template>
