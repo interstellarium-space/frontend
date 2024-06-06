@@ -18,18 +18,17 @@ import GroupProfile from "./pages/dashboard/groups/GroupProfile.vue";
 import Works from "./pages/dashboard/works/Works.vue";
 import CreateWork from "./pages/dashboard/works/CreateWork.vue";
 import WorkProfile from "./pages/dashboard/works/WorkProfile.vue";
+import Equipment from "./pages/dashboard/equipment/Equipment.vue";
+import CreateEquipment from "./pages/dashboard/equipment/CreateEquipment.vue";
+import EquipmentProfile from "./pages/dashboard/equipment/EquipmentProfile.vue";
 /*
 import Departments from "./pages/departments/Departments.vue";
 import Projects from "./pages/projects/Projects.vue";
 import Contracts from "./pages/contracts/Contracts.vue";
 
-import Equipment from "./pages/equipment/Equipment.vue";
-
-import CreateUser from "./pages/users/CreateUser.vue";
 import CreateDepartment from "./pages/departments/CreateDepartment.vue";
 import CreateContract from "./pages/contracts/CreateContract.vue";
 import CreateProject from "./pages/projects/CreateProject.vue";
-import CreateEquipment from "./pages/equipment/CreateEquipment.vue";
 
 */
 
@@ -149,6 +148,31 @@ const router = createRouter({
             path: "/dashboard/works/:workId",
             name: "WorkProfile",
             component: WorkProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/equipment",
+            name: "Equipment",
+            component: Equipment,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/equipment/create",
+            name: "CreateEquipment",
+            component: CreateEquipment,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: "/dashboard/equipment/:equipmentId",
+            name: "EquipmentProfile",
+            component: EquipmentProfile,
             meta: {
                 requiresAuth: true
             }
