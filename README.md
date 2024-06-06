@@ -12,3 +12,11 @@
 ![Users](./docs/resources/users.png "Users")
 ## Create User page
 ![Create User](./docs/resources/create-user.png "Create User")
+## Groups page
+![Groups](./docs/resources/groups.png "Groups")
+## Create Group page
+![Create Group](./docs/resources/create-group.png "Create Group")
+## Works page
+![Works](./docs/resources/works.png "Works")
+## Create Work page
+![Create Work](./docs/resources/create-work.png "Create Work")
