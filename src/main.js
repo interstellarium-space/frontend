@@ -24,6 +24,9 @@ import EquipmentProfile from "./pages/dashboard/equipment/EquipmentProfile.vue";
 import Departments from "./pages/dashboard/departments/Departments.vue";
 import CreateDepartment from "./pages/dashboard/departments/CreateDepartment.vue";
 import DepartmentProfile from "./pages/dashboard/departments/DepartmentProfile.vue";
+import Projects from "./pages/dashboard/projects/Projects.vue";
+import CreateProject from "./pages/dashboard/projects/CreateProject.vue";
+import ProjectProfile from "./pages/dashboard/projects/ProjectProfile.vue";
 
 const router = createRouter({
     routes: [
@@ -191,6 +194,31 @@ const router = createRouter({
             path: "/dashboard/departments/:departmentId",
             name: "DepartmentProfile",
             component: DepartmentProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/projects",
+            name: "Projects",
+            component: Projects,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/projects/create",
+            name: "CreateProject",
+            component: CreateProject,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: "/dashboard/projects/:projectId",
+            name: "ProjectProfile",
+            component: ProjectProfile,
             meta: {
                 requiresAuth: true
             }

@@ -1,90 +1,77 @@
 <script>
-  import axios from "axios";
-  
-  import {prepareAPIRequest} from "../../services/APIRequests.js";
+  import { useProjectsStore } from "../../../stores/dashboard/Projects.js";
 
-  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../../components/dashboard/Main.vue";
-  import DashboardSearchArea from "../../components/dashboard/Search.vue";
-  import DashboardCreateEntity from "../../components/dashboard/buttons/CreateUnit.vue";
-  
+  import Main from "../../../components/dashboard/Main.vue";
+  import Sidebar from "../../../components/dashboard/Sidebar.vue";
+  import Header from "../../../components/dashboard/Header.vue";
+  import Footer from "../../../components/dashboard/Footer.vue";
+
+  import Search from "../../../components/dashboard/forms/Search.vue";
+  import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
+
+  import { APIProjectsGet } from "../../../services/api/projects/Get.js";
+
   export default {
     components: {
-      DashboardCreateEntity,
-      DashboardSearchArea,
-      DashboardSidebar,
-      DashboardMain
+      CreateUnit,
+      Search,
+      Main,
+      Sidebar,
+      Header,
+      Footer
     },
-    
-    // hack for component-dependent html tag 'body' styling
-    beforeCreate: function() {
-        document.body.className = 'dashboard'
-        document.getElementById('app').className = 'dashboard'
-    },
-    
-    beforeRouteLeave: function () {
-      document.body.classList.remove('dashboard')
-      document.getElementById('app').classList.remove('dashboard')
-    },
-    
+
     setup() {
-      document.title = 'Проекты | Interstellarium'
+      document.title = "Проекты | Interstellarium"
+      const store = useProjectsStore()
+      return { store }
     },
-    
+
     data() {
       return {
-        searchFilters: {
-          name: null,
-          start_date: null,
-          finish_date: null
-        },
-        projects: []
+        searchIsInProgress: false,
+        seacrhMessage: ""
       }
     },
-    
+
     methods: {
-      prepareSearchFilters() {
-        if (this.searchFilters.name === '')
-          this.searchFilters.name = null
-        if (this.searchFilters.start_date === '')
-          this.searchFilters.start_date = null
-        if (this.searchFilters.finish_date === '')
-          this.searchFilters.finish_date = null
+      redirectToProject(project) {
+        this.$router.push({ name: "ProjectProfile", params: { projectId: project.id } })
       },
-      
+
+      searchFormIsValid() {
+        if (this.store.filters.name === "") {
+          this.store.filters.name = null
+        }
+        if (this.store.filters.startDate === "") {
+          this.store.filters.startDate = null
+        }
+        if (this.store.filters.finishDate === "") {
+          this.store.filters.finishDate = null
+        }
+        return true
+      },
+
       async searchProjects() {
-        let req = prepareAPIRequest('/api/projects')
-        
-        this.prepareSearchFilters()
-        
-        let payload = {
-          name: this.searchFilters.name,
-          start_date: this.searchFilters.start_date,
-          finish_date: this.searchFilters.finish_date,
-        }
-        
-        console.log(payload)
-        
-        let router = this.$router
-        
-        const res = await axios.post(req.url, payload, req.config).catch(
-            function (error) {
-              if (error.response.status === 401) {
-                router.push({name: 'Logout'})
-              }
+        if (this.searchFormIsValid()) {
+          this.searchIsInProgress = true
+          this.store.projects = []
+          this.seacrhMessage = ""
+
+          let response = await APIProjectsGet(this.store.filters)
+
+          if (response.isOk) {
+            this.store.projects = response.data
+          } else {
+            this.seacrhMessage = response.msg
+
+            if (response.code === 401) {
+              this.$router.push({ name: "AuthLogout" })
             }
-        )
-        
-        console.debug(res)
-        
-        if (res && res.status === 200) {
-          this.projects = res.data
-          console.log(res.data)
+          }
+
+          this.searchIsInProgress = false
         }
-      },
-      
-      mounted() {
-        document.title = 'Проекты | Interstellarium'
       }
     }
   }
@@ -93,85 +80,81 @@
 <template>
   <div class="interstellarium-container">
     <div class="interstellarium-dashboard">
-      <DashboardSidebar></DashboardSidebar>
-      <DashboardMain>
-        <template v-slot:search-area>
-          <DashboardSearchArea>
-            <template v-slot:main-line-fields>
-              <div class="col-5 col-sm-8 col-lg-9 my-2 my-md-1 px-1 px-sm-2">
-                <input
-                    type="text"
+      <Header></Header>
+      <Sidebar></Sidebar>
+
+      <Main>
+        <template v-slot:tools>
+          <Search>
+            <template v-slot:search>
+              <div class="col-5 col-sm-8 col-lg-9 my-1 px-1 px-sm-2">
+                <input v-model="store.filters.name" type="text"
                     class="form-control"
-                    id="filter-name"
-                    placeholder="Введите наименование проекта"
-                    v-model="searchFilters.name"
+                    placeholder="Название проекта"
                 >
               </div>
-              <div class="col-4 col-sm-2 my-2 my-md-1 px-1 px-sm-2">
-                <input
-                    @click="this.searchProjects()"
-                    type="submit"
+              <div class="col-4 col-sm-2 my-1 px-1 px-sm-2">
+                <input @click="this.searchProjects()" type="submit"
                     class="form-control btn btn-interstellarium"
-                    id="search"
                     value="Поиск"
                 >
               </div>
             </template>
+
             <template v-slot:filters>
-              <div
-                  class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
-                <input
-                    type="text"
+              <div class="col-6 my-1 px-1 px-sm-2">
+                <input v-model="this.store.filters.startDate" type="text"
                     class="form-control"
-                    id="filter-start-date"
-                    placeholder="Начат с даты"
+                    placeholder="Начат после"
                     onfocus="this.type='date'"
-                    v-model="searchFilters.start_date"
                 >
               </div>
-              <div
-                  class="col-6 my-2 my-md-1 px-1 px-sm-2 interstellarium-dashboard-search-filter hidden">
-                <input
-                    type="text"
+              <div class="col-6 my-1 px-1 px-sm-2">
+                <input v-model="this.store.filters.finishDate" type="text"
                     class="form-control"
-                    id="filter-finish-date"
-                    placeholder="Завершен до даты"
+                    placeholder="Закончен до"
                     onfocus="this.type='date'"
-                    v-model="searchFilters.finish_date"
                 >
               </div>
             </template>
-          </DashboardSearchArea>
+          </Search>
         </template>
-        
+
         <template v-slot:content>
-          <div v-for="project in this.projects"
-               class="interstellarium-dashboard-main-content-card mb-3">
-            <div class="interstellarium-dashboard-main-content-link">
-              {{ project.name }}
+          <div v-show="this.searchIsInProgress" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
-            <div v-if="project.chief.id != null"
-                 class="interstellarium-dashboard-main-content-text">
+          </div>
+          <div v-show="this.seacrhMessage" class="text-danger text-center">
+            {{ this.seacrhMessage }}
+          </div>
+          <div v-for="project in this.store.projects" class="interstellarium-unit-card">
+            <a @click="this.redirectToProject(project)" class="interstellarium-unit-link">
+              {{ project.name }}
+            </a>
+            <div v-if="project.chief.id" class="interstellarium-unit-description">
               Руководитель: {{ project.chief.name }}
             </div>
-            <div v-else class="interstellarium-dashboard-main-content-text">
+            <div v-else class="interstellarium-unit-description">
               Руководитель: не назначен
             </div>
-            <div v-if="project.group.id != null"
-                 class="interstellarium-dashboard-main-content-text">
+            <div v-if="project.group.id"
+                 class="interstellarium-unit-description">
               Рабочая группа: {{ project.group.name }}
             </div>
-            <div v-else class="interstellarium-dashboard-main-content-text">
+            <div v-else class="interstellarium-unit-description">
               Рабочая группа: не назначена
             </div>
           </div>
         </template>
-        
-        <template v-slot:create-entity>
-          <DashboardCreateEntity
-              @click="this.$router.push({name: 'CreateProject'})"/>
+      </Main>
+
+      <Footer>
+        <template v-slot:tools>
+          <CreateUnit unit-class-name="Project"></CreateUnit>
         </template>
-      </DashboardMain>
+      </Footer>
     </div>
   </div>
 </template>

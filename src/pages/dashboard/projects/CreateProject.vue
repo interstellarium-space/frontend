@@ -1,85 +1,71 @@
 <script>
-  import axios from "axios";
-  
-  import {prepareAPIRequest} from "../../services/APIRequests.js";
+  import Main from "../../../components/dashboard/Main.vue";
+  import Sidebar from "../../../components/dashboard/Sidebar.vue";
+  import Header from "../../../components/dashboard/Header.vue";
+  import Footer from "../../../components/dashboard/Footer.vue";
+  import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
 
-  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../../components/dashboard/Main.vue";
-  
+  import { APIProjectsCreate } from "../../../services/api/projects/Create.js";
+
   export default {
     components: {
-      DashboardSidebar,
-      DashboardMain
+      CreateUnit,
+      Main,
+      Sidebar,
+      Header,
+      Footer
     },
-    
-    // hack for component-dependent html tag 'body' styling
-    beforeCreate: function() {
-        document.body.className = 'dashboard'
-        document.getElementById('app').className = 'dashboard'
-    },
-    
-    beforeRouteLeave: function () {
-        document.body.classList.remove('dashboard')
-        document.getElementById('app').classList.remove('dashboard')
-    },
-    
+
     setup() {
-      document.title = 'Создать проект | Interstellarium'
+      document.title = "Создать проект | Interstellarium"
     },
-    
+
     data() {
       return {
         form: {
-          name: null,
-          start_date: null,
-          finish_date: null
-        }
+          name: "",
+          startDate: null,
+          finishDate: null
+        },
+        msg: "",
+        inProgress: false
       }
     },
-    
+
     methods: {
-      prepareForm() {
-        if (this.form.name === '')
-          this.form.name = null
-        if (this.form.start_date === '')
-          this.form.start_date = null
-        if (this.form.finish_date === '')
-          this.form.finish_date = null
+      redirectToProject(project) {
+        this.$router.push({ name: "ProjectProfile", params: { projectId: project.id } })
       },
-      
+
+      formIsValid() {
+        if (this.form.name === "") {
+          this.msg = "Пожалуйста, введите название проекта"
+          return false
+        }
+        this.msg = ""
+        return true
+      },
+
       async createProject() {
-        let req = prepareAPIRequest('/api/projects/create')
-        
-        this.prepareForm()
-        
-        let payload =  {
-          name: this.form.name,
-          start_date: this.form.start_date,
-          finish_date: this.form.finish_date,
-        }
-        
-        console.log(payload)
-        
-        let router = this.$router
-        
-        const res = await axios.post(req.url, payload, req.config).catch(
-            function (error) {
-              if (error.response.status === 401) {
-                router.push({name: 'Logout'})
-              }
+        if (this.formIsValid()) {
+          this.inProgress = true
+          this.msg = ""
+
+          let response = await APIProjectsCreate(this.form)
+
+          if (response.isOk) {
+            this.redirectToProject(response.data)
+          } else {
+            this.msg = response.msg
+
+            if (response.code === 401) {
+              this.$router.push({ name: "AuthLogout" })
             }
-        )
-        
-        console.debug(res)
-        
-        if (res && res.status === 201) {
-          this.$router.push({name: 'Projects'})
+          }
+
+          this.inProgress = false
         }
       },
-      
-      mounted() {
-        document.title = 'Создать проект | Interstellarium'
-      }
     }
   }
 </script>
@@ -87,18 +73,25 @@
 <template>
   <div class="interstellarium-container">
     <div class="interstellarium-dashboard">
-      <DashboardSidebar></DashboardSidebar>
-      <DashboardMain>
+      <Header></Header>
+      <Sidebar></Sidebar>
+
+      <Main>
+        <template v-slot:tools></template>
+
         <template v-slot:content>
-          <form @submit.prevent="" autocomplete=off class="interstellarium-dashboard-form">
-            <div class="interstellarium-dashboard-form-content">
+          <form @submit.prevent="" autocomplete=off class="interstellarium-dashboard-edit-form">
+            <div class="interstellarium-dashboard-edit-form-content">
+              <div class="interstellarium-dashboard-edit-form-header">
+                Новый проект
+              </div>
               <div class="row">
                 <div class="col-12">
                   <input
+                      v-model="this.form.name"
                       class="form-control mb-3"
                       type="text"
-                      placeholder="Название проекта"
-                      v-model="form.name"
+                      placeholder="Название"
                       required
                   >
                 </div>
@@ -106,26 +99,32 @@
               <div class="row">
                 <div class="col-12">
                   <input
-                      type="text"
+                      v-model="this.form.startDate"
                       class="form-control mb-3"
-                      id="start-date"
+                      type="text"
                       placeholder="Дата начала"
                       onfocus="this.type='date'"
-                      v-model="form.start_date"
                   >
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
                   <input
-                      type="text"
+                      v-model="this.form.finishDate"
                       class="form-control mb-3"
-                      id="finish-date"
+                      type="text"
                       placeholder="Дата завершения"
                       onfocus="this.type='date'"
-                      v-model="form.finish_date"
                   >
                 </div>
+              </div>
+              <div v-show="this.inProgress" class="text-center mb-3">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+              <div v-show="this.msg" class="text-danger text-center mb-3">
+                {{ this.msg }}
               </div>
               <div class="row">
                 <div class="col-12 d-flex justify-content-center">
@@ -140,7 +139,11 @@
             </div>
           </form>
         </template>
-      </DashboardMain>
+      </Main>
+
+      <Footer>
+        <template v-slot:tools></template>
+      </Footer>
     </div>
   </div>
 </template>
@@ -151,28 +154,7 @@
 
 .interstellarium-dashboard-main {
     top: 5rem;
-}
-
-.interstellarium-dashboard-form {
-    width: 100%;
     display: flex;
     justify-content: center;
 }
-
-.interstellarium-dashboard-form-content {
-    width: 100%;
-}
-
-@media (min-width: 768px) {
-    .interstellarium-dashboard-form-content {
-        width: 75%;
-    }
-}
-
-@media (min-width: 992px) {
-    .interstellarium-dashboard-form-content {
-        width: 50%;
-    }
-}
-
 </style>

@@ -4,7 +4,7 @@
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
 
-  import { APIDepartmentsProfile } from "../../../services/api/departments/Profile.js";
+  import {APIProjectsProfile} from "../../../services/api/projects/Profile.js";
 
   export default {
     components: {
@@ -19,7 +19,7 @@
       let response = null
 
       let loadPage = async () => {
-        response = await APIDepartmentsProfile(this.$route.params.departmentId)
+        response = await APIProjectsProfile(this.$route.params.projectId)
       }
 
       loadPage()

@@ -1,32 +1,32 @@
 <script>
-import Main from "../../../components/dashboard/Main.vue";
-import Sidebar from "../../../components/dashboard/Sidebar.vue";
-import Header from "../../../components/dashboard/Header.vue";
-import Footer from "../../../components/dashboard/Footer.vue";
+  import Main from "../../../components/dashboard/Main.vue";
+  import Sidebar from "../../../components/dashboard/Sidebar.vue";
+  import Header from "../../../components/dashboard/Header.vue";
+  import Footer from "../../../components/dashboard/Footer.vue";
 
-import {APIWorksProfile} from "../../../services/api/works/Profile.js";
+  import {APIWorksProfile} from "../../../services/api/works/Profile.js";
 
-export default {
-  components: {
-    Main,
-    Sidebar,
-    Header,
-    Footer
-  },
+  export default {
+    components: {
+      Main,
+      Sidebar,
+      Header,
+      Footer
+    },
 
-  setup() {
-    document.title = "Interstellarium"
-    let response = null
+    setup() {
+      document.title = "Interstellarium"
+      let response = null
 
-    let loadPage = async () => {
-      response = await APIWorksProfile(this.$route.params.workId)
-    }
+      let loadPage = async () => {
+        response = await APIWorksProfile(this.$route.params.workId)
+      }
 
-    loadPage()
+      loadPage()
 
-    console.log(response)
-  },
-}
+      console.log(response)
+    },
+  }
 </script>
 
 <template>
