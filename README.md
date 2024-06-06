@@ -24,3 +24,7 @@
 ![Equipment](./docs/resources/equipment.png "Equipment")
 ## Create Equipment page
 ![Create Equipment](./docs/resources/create-equipment.png "Create Equipment")
+## Departments page
+![Departments](./docs/resources/departments.png "Departments")
+## Create Department page
+![Create Department](./docs/resources/create-department.png "Create Department")

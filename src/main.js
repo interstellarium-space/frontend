@@ -21,16 +21,9 @@ import WorkProfile from "./pages/dashboard/works/WorkProfile.vue";
 import Equipment from "./pages/dashboard/equipment/Equipment.vue";
 import CreateEquipment from "./pages/dashboard/equipment/CreateEquipment.vue";
 import EquipmentProfile from "./pages/dashboard/equipment/EquipmentProfile.vue";
-/*
-import Departments from "./pages/departments/Departments.vue";
-import Projects from "./pages/projects/Projects.vue";
-import Contracts from "./pages/contracts/Contracts.vue";
-
-import CreateDepartment from "./pages/departments/CreateDepartment.vue";
-import CreateContract from "./pages/contracts/CreateContract.vue";
-import CreateProject from "./pages/projects/CreateProject.vue";
-
-*/
+import Departments from "./pages/dashboard/departments/Departments.vue";
+import CreateDepartment from "./pages/dashboard/departments/CreateDepartment.vue";
+import DepartmentProfile from "./pages/dashboard/departments/DepartmentProfile.vue";
 
 const router = createRouter({
     routes: [
@@ -177,9 +170,8 @@ const router = createRouter({
                 requiresAuth: true
             }
         },
-        /*
         {
-            path: "/departments",
+            path: "/dashboard/departments",
             name: "Departments",
             component: Departments,
             meta: {
@@ -187,47 +179,7 @@ const router = createRouter({
             }
         },
         {
-            path: "/projects",
-            name: "Projects",
-            component: Projects,
-            meta: {
-                requiresAuth: true
-            }
-        },
-        {
-            path: "/contracts",
-            name: "Contracts",
-            component: Contracts,
-            meta: {
-                requiresAuth: true
-            }
-        },
-        {
-            path: "/groups",
-            name: "Groups",
-            component: Groups,
-            meta: {
-                requiresAuth: true
-            }
-        },
-        {
-            path: "/equipment",
-            name: "Equipment",
-            component: Equipment,
-            meta: {
-                requiresAuth: true
-            }
-        },
-        {
-            path: "/works",
-            name: "Works",
-            component: Works,
-            meta: {
-                requiresAuth: true
-            }
-        },
-        {
-            path: "/departments/create",
+            path: "/dashboard/departments/create",
             name: "CreateDepartment",
             component: CreateDepartment,
             meta: {
@@ -236,50 +188,13 @@ const router = createRouter({
             }
         },
         {
-            path: "/contracts/create",
-            name: "CreateContract",
-            component: CreateContract,
+            path: "/dashboard/departments/:departmentId",
+            name: "DepartmentProfile",
+            component: DepartmentProfile,
             meta: {
-                requiresAuth: true,
-                requiresAdmin: true
+                requiresAuth: true
             }
         },
-        {
-            path: "/projects/create",
-            name: "CreateProject",
-            component: CreateProject,
-            meta: {
-                requiresAuth: true,
-                requiresAdmin: true
-            }
-        },
-        {
-            path: "/equipment/create",
-            name: "CreateEquipment",
-            component: CreateEquipment,
-            meta: {
-                requiresAuth: true,
-                requiresAdmin: true
-            }
-        },
-        {
-            path: "/group/create",
-            name: "CreateGroup",
-            component: CreateGroup,
-            meta: {
-                requiresAuth: true,
-                requiresAdmin: true
-            }
-        },
-        {
-            path: "/work/create",
-            name: "CreateWork",
-            component: CreateWork,
-            meta: {
-                requiresAuth: true,
-                requiresAdmin: true
-            }
-        },*/
     ],
     history: createWebHistory()
 })
