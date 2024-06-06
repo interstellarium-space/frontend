@@ -32,3 +32,7 @@
 ![Projects](./docs/resources/projects.png "Projects")
 ## Create Project page
 ![Create Project](./docs/resources/create-project.png "Create Project")
+## Contracts page
+![Contracts](./docs/resources/contracts.png "Contracts")
+## Create Contract page
+![Create Contract](./docs/resources/create-contract.png "Create Contract")
