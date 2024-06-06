@@ -8,3 +8,7 @@
 ![Reset Password](./docs/resources/reset-password.png "Reset Password")
 ## Dashboard page
 ![Dashboard](./docs/resources/dashboard.png "Dashboard")
+## Users page
+![Users](./docs/resources/users.png "Users")
+## Create User page
+![Create User](./docs/resources/create-user.png "Create User")
