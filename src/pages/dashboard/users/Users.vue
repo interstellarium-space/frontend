@@ -26,6 +26,13 @@
       const store = useUsersStore()
       return { store }
     },
+
+    data() {
+      return {
+        searchIsInProgress: false,
+        seacrhMessage: ""
+      }
+    },
     
     methods: {
       redirectToUser(user) {
@@ -47,19 +54,23 @@
       
       async searchUsers() {
         if (this.searchFormIsValid()) {
+          this.searchIsInProgress = true
+          this.store.users = []
+          this.seacrhMessage = ""
+
           let response = await APIUsersGet(this.store.filters)
           
           if (response.isOk) {
             this.store.users = response.data
           } else {
-            console.log(response.msg)
+            this.seacrhMessage = response.msg
             
             if (response.code === 401) {
               this.$router.push({ name: "AuthLogout" })
             }
           }
-          
-          console.log(response)
+
+          this.searchIsInProgress = false
         }
       }
     }
@@ -110,6 +121,14 @@
         </template>
         
         <template v-slot:content>
+          <div v-show="this.searchIsInProgress" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div v-show="this.seacrhMessage" class="text-danger text-center">
+            {{ this.seacrhMessage }}
+          </div>
           <div v-for="user in this.store.users" class="interstellarium-unit-card">
             <a @click="this.redirectToUser(user)" class="interstellarium-unit-link">
               {{ user.name }}
