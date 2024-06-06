@@ -27,6 +27,9 @@ import DepartmentProfile from "./pages/dashboard/departments/DepartmentProfile.v
 import Projects from "./pages/dashboard/projects/Projects.vue";
 import CreateProject from "./pages/dashboard/projects/CreateProject.vue";
 import ProjectProfile from "./pages/dashboard/projects/ProjectProfile.vue";
+import Contracts from "./pages/dashboard/contracts/Contracts.vue";
+import CreateContract from "./pages/dashboard/contracts/CreateContract.vue";
+import ContractProfile from "./pages/dashboard/contracts/ContractProfile.vue";
 
 const router = createRouter({
     routes: [
@@ -219,6 +222,31 @@ const router = createRouter({
             path: "/dashboard/projects/:projectId",
             name: "ProjectProfile",
             component: ProjectProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/contracts",
+            name: "Contracts",
+            component: Contracts,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/contracts/create",
+            name: "CreateContract",
+            component: CreateContract,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: "/dashboard/contracts/:contractId",
+            name: "ContractProfile",
+            component: ContractProfile,
             meta: {
                 requiresAuth: true
             }
