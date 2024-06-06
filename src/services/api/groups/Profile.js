@@ -25,7 +25,7 @@ function handleError(error) {
             case 400: data.msg = "Некорректные данные запроса"; break
             case 401: data.msg = "Требуется авторизация"; break
             case 403: data.msg = "Доступ запрещен!"; break
-            case 404: data.msg = "Пользователь не найден"; break
+            case 404: data.msg = "Объект не найден"; break
             default: data.msg = "Ошибка при отправке запроса... Уже исправляем!"
         }
         data.code = error.response.status
