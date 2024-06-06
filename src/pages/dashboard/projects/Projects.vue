@@ -146,6 +146,20 @@
             <div v-else class="interstellarium-unit-description">
               Рабочая группа: не назначена
             </div>
+            <div v-if="project.start_date"
+                 class="interstellarium-unit-description">
+              Дата начала: {{ project.start_date }}
+            </div>
+            <div v-else class="interstellarium-unit-description">
+              Дата начала: не установлена
+            </div>
+            <div v-if="project.finish_date"
+                 class="interstellarium-unit-description">
+              Дата завершения: {{ project.finish_date }}
+            </div>
+            <div v-else class="interstellarium-unit-description">
+              Дата завершения: не установлена
+            </div>
           </div>
         </template>
       </Main>
