@@ -16,16 +16,12 @@
 
     setup() {
       document.title = "Interstellarium"
-      let response = null
-
-      let loadPage = async () => {
-        response = await APIEquipmentProfile(this.$route.params.equipmentId)
-      }
-
-      loadPage()
-
-      console.log(response)
     },
+
+    async mounted() {
+      let response = await APIEquipmentProfile(this.$route.params.equipmentId);
+      console.log(response)
+    }
   }
 </script>
 

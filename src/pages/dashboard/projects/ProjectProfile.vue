@@ -4,7 +4,7 @@
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
 
-  import {APIProjectsProfile} from "../../../services/api/projects/Profile.js";
+  import { APIProjectsProfile } from "../../../services/api/projects/Profile.js";
 
   export default {
     components: {
@@ -16,16 +16,12 @@
 
     setup() {
       document.title = "Interstellarium"
-      let response = null
-
-      let loadPage = async () => {
-        response = await APIProjectsProfile(this.$route.params.projectId)
-      }
-
-      loadPage()
-
-      console.log(response)
     },
+
+    async mounted() {
+      let response = await APIProjectsProfile(this.$route.params.projectId);
+      console.log(response)
+    }
   }
 </script>
 

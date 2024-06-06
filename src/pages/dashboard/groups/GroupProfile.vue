@@ -16,16 +16,12 @@
 
     setup() {
       document.title = "Interstellarium"
-      let response = null
-
-      let loadPage = async () => {
-        response = await APIGroupsProfile(this.$route.params.groupId)
-      }
-
-      loadPage()
-
-      console.log(response)
     },
+
+    async mounted() {
+      let response = await APIGroupsProfile(this.$route.params.groupId);
+      console.log(response)
+    }
   }
 </script>
 
