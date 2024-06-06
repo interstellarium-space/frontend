@@ -1,72 +1,70 @@
 <script>
-  import axios from "axios";
-  
-  import {prepareAPIRequest} from "../../services/APIRequests.js";
+  import Main from "../../../components/dashboard/Main.vue";
+  import Sidebar from "../../../components/dashboard/Sidebar.vue";
+  import Header from "../../../components/dashboard/Header.vue";
+  import Footer from "../../../components/dashboard/Footer.vue";
+  import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
 
-  import DashboardSidebar from "../../components/dashboard/Sidebar.vue";
-  import DashboardMain from "../../components/dashboard/Main.vue";
-  
+  import { APIWorksCreate } from "../../../services/api/works/Create.js";
+
   export default {
     components: {
-      DashboardSidebar,
-      DashboardMain
+      CreateUnit,
+      Main,
+      Sidebar,
+      Header,
+      Footer
     },
-    
-    // hack for component-dependent html tag 'body' styling
-    beforeCreate: function() {
-        document.body.className = 'dashboard'
-        document.getElementById('app').className = 'dashboard'
-    },
-    
-    beforeRouteLeave: function () {
-        document.body.classList.remove('dashboard')
-        document.getElementById('app').classList.remove('dashboard')
-    },
-    
+
     setup() {
-      document.title = 'Создать работу | Interstellarium'
+      document.title = "Создать работу | Interstellarium"
     },
-    
+
     data() {
       return {
         form: {
-          name: null,
-          cost: null
-        }
+          name: "",
+          cost: 0
+        },
+        msg: "",
+        inProgress: false
       }
     },
-    
+
     methods: {
-      async createWork() {
-        let req = prepareAPIRequest('/api/works/create')
-        
-        let payload =  {
-          name: this.form.name,
-          cost: this.form.cost
+      redirectToWork(work) {
+        this.$router.push({ name: "WorkProfile", params: { workId: work.id } })
+      },
+
+      formIsValid() {
+        if (this.name === "") {
+          this.msg = "Пожалуйста, введите название работы"
+          return false
         }
-        
-        console.log(payload)
-        
-        let router = this.$router
-        
-        const res = await axios.post(req.url, payload, req.config).catch(
-            function (error) {
-              if (error.response.status === 401) {
-                router.push({name: 'Logout'})
-              }
+        this.msg = ""
+        return true
+      },
+
+      async createWork() {
+        if (this.formIsValid()) {
+          this.inProgress = true
+          this.msg = ""
+
+          let response = await APIWorksCreate(this.form)
+
+          if (response.isOk) {
+            this.redirectToWork(response.data)
+          } else {
+            this.msg = response.msg
+
+            if (response.code === 401) {
+              this.$router.push({ name: "AuthLogout" })
             }
-        )
-        
-        console.debug(res)
-        
-        if (res && res.status === 201) {
-          this.$router.push({name: 'Works'})
+          }
+
+          this.inProgress = false
         }
       },
-      
-      mounted() {
-        document.title = 'Создать работу | Interstellarium'
-      }
     }
   }
 </script>
@@ -74,18 +72,25 @@
 <template>
   <div class="interstellarium-container">
     <div class="interstellarium-dashboard">
-      <DashboardSidebar></DashboardSidebar>
-      <DashboardMain>
+      <Header></Header>
+      <Sidebar></Sidebar>
+
+      <Main>
+        <template v-slot:tools></template>
+
         <template v-slot:content>
-          <form @submit.prevent="" autocomplete=off class="interstellarium-dashboard-form">
-            <div class="interstellarium-dashboard-form-content">
+          <form @submit.prevent="" autocomplete=off class="interstellarium-dashboard-edit-form">
+            <div class="interstellarium-dashboard-edit-form-content">
+              <div class="interstellarium-dashboard-edit-form-header">
+                Новая работа
+              </div>
               <div class="row">
                 <div class="col-12">
                   <input
+                      v-model="this.form.name"
                       class="form-control mb-3"
                       type="text"
-                      placeholder="Название работы"
-                      v-model="form.name"
+                      placeholder="Название"
                       required
                   >
                 </div>
@@ -93,12 +98,20 @@
               <div class="row">
                 <div class="col-12">
                   <input
+                      v-model="this.form.cost"
                       class="form-control mb-3"
                       type="number"
                       placeholder="Стоимость"
-                      v-model="form.cost"
                   >
                 </div>
+              </div>
+              <div v-show="this.inProgress" class="text-center mb-3">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+              <div v-show="this.msg" class="text-danger text-center mb-3">
+                {{ this.msg }}
               </div>
               <div class="row">
                 <div class="col-12 d-flex justify-content-center">
@@ -113,7 +126,11 @@
             </div>
           </form>
         </template>
-      </DashboardMain>
+      </Main>
+
+      <Footer>
+        <template v-slot:tools></template>
+      </Footer>
     </div>
   </div>
 </template>
@@ -124,28 +141,7 @@
 
 .interstellarium-dashboard-main {
     top: 5rem;
-}
-
-.interstellarium-dashboard-form {
-    width: 100%;
     display: flex;
     justify-content: center;
 }
-
-.interstellarium-dashboard-form-content {
-    width: 100%;
-}
-
-@media (min-width: 768px) {
-    .interstellarium-dashboard-form-content {
-        width: 75%;
-    }
-}
-
-@media (min-width: 992px) {
-    .interstellarium-dashboard-form-content {
-        width: 50%;
-    }
-}
-
 </style>

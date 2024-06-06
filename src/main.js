@@ -15,19 +15,22 @@ import UserProfile from "./pages/dashboard/users/UserProfile.vue";
 import Groups from "./pages/dashboard/groups/Groups.vue";
 import CreateGroup from "./pages/dashboard/groups/CreateGroup.vue";
 import GroupProfile from "./pages/dashboard/groups/GroupProfile.vue";
+import Works from "./pages/dashboard/works/Works.vue";
+import CreateWork from "./pages/dashboard/works/CreateWork.vue";
+import WorkProfile from "./pages/dashboard/works/WorkProfile.vue";
 /*
 import Departments from "./pages/departments/Departments.vue";
 import Projects from "./pages/projects/Projects.vue";
 import Contracts from "./pages/contracts/Contracts.vue";
 
 import Equipment from "./pages/equipment/Equipment.vue";
-import Works from "./pages/works/Works.vue";
+
 import CreateUser from "./pages/users/CreateUser.vue";
 import CreateDepartment from "./pages/departments/CreateDepartment.vue";
 import CreateContract from "./pages/contracts/CreateContract.vue";
 import CreateProject from "./pages/projects/CreateProject.vue";
 import CreateEquipment from "./pages/equipment/CreateEquipment.vue";
-import CreateWork from "./pages/works/CreateWork.vue";
+
 */
 
 const router = createRouter({
@@ -121,6 +124,31 @@ const router = createRouter({
             path: "/dashboard/groups/:groupId",
             name: "GroupProfile",
             component: GroupProfile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/works",
+            name: "Works",
+            component: Works,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/dashboard/works/create",
+            name: "CreateWork",
+            component: CreateWork,
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true
+            }
+        },
+        {
+            path: "/dashboard/works/:workId",
+            name: "WorkProfile",
+            component: WorkProfile,
             meta: {
                 requiresAuth: true
             }
