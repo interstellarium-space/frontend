@@ -28,3 +28,7 @@
 ![Departments](./docs/resources/departments.png "Departments")
 ## Create Department page
 ![Create Department](./docs/resources/create-department.png "Create Department")
+## Projects page
+![Projects](./docs/resources/projects.png "Projects")
+## Create Project page
+![Create Project](./docs/resources/create-project.png "Create Project")
