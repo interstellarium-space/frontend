@@ -28,11 +28,17 @@
           name: "",
           isAdmin: false,
           birthdate: null
-        }
+        },
+        msg: "",
+        inProgress: false
       }
     },
     
     methods: {
+      redirectToUser(user) {
+        this.$router.push({ name: "UserProfile", params: { userId: user.id } })
+      },
+
       formIsValid() {
         if (this.email === "") {
           this.msg = "Пожалуйста, введите E-mail"
@@ -52,19 +58,22 @@
       
       async createUser() {
         if (this.formIsValid()) {
+          this.inProgress = true
+          this.msg = ""
+
           let response = await APIUsersCreate(this.form)
           
           if (response.isOk) {
-            // TODO: go to user
+            this.redirectToUser(response.data)
           } else {
-            console.log(response.msg)
+            this.msg = response.msg
             
             if (response.code === 401) {
               this.$router.push({ name: "AuthLogout" })
             }
           }
           
-          console.log(response)
+          this.inProgress = false
         }
       },
     }
@@ -129,6 +138,14 @@
                       onfocus="this.type='date'"
                   >
                 </div>
+              </div>
+              <div v-show="this.inProgress" class="text-center mb-3">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+              <div v-show="this.msg" class="text-danger text-center mb-3">
+                {{ this.msg }}
               </div>
               <div class="row">
                 <div class="col-12 d-flex justify-content-center">
