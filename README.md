@@ -20,3 +20,7 @@
 ![Works](./docs/resources/works.png "Works")
 ## Create Work page
 ![Create Work](./docs/resources/create-work.png "Create Work")
+## Equipment page
+![Equipment](./docs/resources/equipment.png "Equipment")
+## Create Equipment page
+![Create Equipment](./docs/resources/create-equipment.png "Create Equipment")
