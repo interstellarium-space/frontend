@@ -32,6 +32,7 @@
     flex-direction: column;
     align-items: stretch;
     background-color: white;
+    padding-bottom: 3rem;
 }
 
 .interstellarium-dashboard-sidebar {
@@ -110,11 +111,17 @@
     border: 3px solid #FFF;
 }
 
-.interstellarium-unit-card {
+.interstellarium-unit-card, .interstellarium-unit-actionable-card {
     border: 1px solid #DDDDDD;
     border-radius: .75rem;
     padding: 1rem;
     margin-bottom: 1rem;
+}
+
+.interstellarium-unit-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .interstellarium-unit-link {
@@ -170,6 +177,12 @@
 
     .interstellarium-dashboard-edit-form-content {
         width: 50%;
+    }
+
+    .interstellarium-unit-actionable-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 }
 
