@@ -1,4 +1,4 @@
-# frontend
+# Interstellarium Frontend
 
 ## Index page
 ![Index](./docs/resources/index.png "Index")
