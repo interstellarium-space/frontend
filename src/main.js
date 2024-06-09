@@ -3,6 +3,7 @@ import { createPinia } from "pinia"
 import { createRouter, createWebHistory } from "vue-router"
 
 import { logout, getUser, getToken, isAdmin } from "./services/Auth.js";
+import { parseJwt } from "./services/Auth.js";
 
 import App from "./App.vue";
 import Index from "./pages/Index.vue";
@@ -260,13 +261,11 @@ router.beforeEach((to, from, next) => {
         let token = getToken()
         let user = getUser()
 
-        if (token == null || user == null) {
-            next({
-                name: "AuthLogin",
-                params: {
-                    nextUrl: to.fullPath
-                }
-            })
+        let tokenPayload = parseJwt(token)
+
+        if (token == null || user == null || tokenPayload.exp < Date.now() / 1000) {
+            logout()
+            next({ name: "AuthLogin" })
         } else {
             if (to.matched.some(record => record.meta.requiresAdmin)) {
                 if (isAdmin(user) === true){
