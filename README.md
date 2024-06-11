@@ -60,21 +60,29 @@
 ![Users](./docs/resources/desktop/users.png "Users")
 ## Create User page
 ![Create User](./docs/resources/desktop/create-user.png "Create User")
+## User Profile page
+![User Profile](./docs/resources/desktop/user-profile.png "User Profile")
 
 ## Groups page
 ![Groups](./docs/resources/desktop/groups.png "Groups")
 ## Create Group page
 ![Create Group](./docs/resources/desktop/create-group.png "Create Group")
+## Group Profile page
+![Group Profile](./docs/resources/desktop/group-profile.png "Group Profile")
 
 ## Works page
 ![Works](./docs/resources/desktop/works.png "Works")
 ## Create Work page
 ![Create Work](./docs/resources/desktop/create-work.png "Create Work")
+## Work Profile page
+![Work Profile](./docs/resources/desktop/work-profile.png "Work Profile")
 
 ## Equipment page
 ![Equipment](./docs/resources/desktop/equipment.png "Equipment")
 ## Create Equipment page
 ![Create Equipment](./docs/resources/desktop/create-equipment.png "Create Equipment")
+## Equipment Profile page
+![Equipment Profile](./docs/resources/desktop/equipment-profile.png "Equipment Profile")
 
 ## Departments page
 ![Departments](./docs/resources/desktop/departments.png "Departments")
