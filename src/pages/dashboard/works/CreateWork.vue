@@ -24,7 +24,7 @@
       return {
         form: {
           name: "",
-          cost: 0
+          cost: ""
         },
         msg: "",
         inProgress: false
@@ -102,6 +102,7 @@
                       class="form-control mb-3"
                       type="number"
                       placeholder="Стоимость"
+                      required
                   >
                 </div>
               </div>
