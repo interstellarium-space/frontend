@@ -109,7 +109,7 @@
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </div>
-              <div v-show="this.msg" class="text-danger text-center mb-3">
+              <div v-show="this.msg" class="interstellarium-error text-danger text-center mb-3">
                 {{ this.msg }}
               </div>
               <div class="row">

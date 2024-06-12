@@ -169,7 +169,7 @@
             </div>
           </div>
           <div v-else class="interstellarium-content-wrapper">
-            <div v-show="this.errorMessage" class="text-danger text-center">
+            <div v-show="this.errorMessage" class="interstellarium-error text-danger text-center">
               {{ this.errorMessage }}
             </div>
           </div>

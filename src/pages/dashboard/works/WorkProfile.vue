@@ -177,7 +177,7 @@
             </div>
           </div>
           <div v-else class="interstellarium-content-wrapper">
-            <div v-show="this.errorMessage" class="text-danger text-center">
+            <div v-show="this.errorMessage" class="interstellarium-error text-danger text-center">
               {{ this.errorMessage }}
             </div>
           </div>
@@ -200,6 +200,6 @@
 @import "/src/styles/dashboard.css";
 
 .interstellarium-dashboard-main {
-  top: 5rem;
+    top: 5rem;
 }
 </style>

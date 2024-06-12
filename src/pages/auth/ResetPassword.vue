@@ -58,7 +58,7 @@
                 Войти в систему
               </a>
             </p>
-            <div v-if="msg" class="text-danger text-center mb-3">
+            <div v-if="msg" class="interstellarium-error text-danger text-center mb-3">
               {{ msg }}
             </div>
             <div class="d-flex justify-content-center mb-4">

@@ -123,7 +123,7 @@
               <span class="visually-hidden">Loading...</span>
             </div>
           </div>
-          <div v-show="this.seacrhMessage" class="text-danger text-center">
+          <div v-show="this.seacrhMessage" class="interstellarium-error text-danger text-center">
             {{ this.seacrhMessage }}
           </div>
           <div v-for="work in this.store.works" class="interstellarium-unit-card">

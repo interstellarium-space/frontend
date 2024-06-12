@@ -37,6 +37,9 @@ a {
     background: var(--interstellarium-gradient);
 }
 
+.interstellarium-error {
+    font-family: var(--interstellarium-base-font-family), sans-serif;
+}
 
 @media (min-width: 576px) {
     :root {
