@@ -1,12 +1,14 @@
 <script>
   import { APIContractsGet } from "../../../services/api/contracts/Get.js";
   
-  import Dialog from "../../../components/dashboard/Dialog.vue";
+  import Dialog from "../Dialog.vue";
 
   export default {
     components: {
       Dialog
     },
+
+    props: ['onChoose'],
     
     data() {
       return {
@@ -18,6 +20,11 @@
         searchMessage: ""
       }
     },
+
+    setup(props) {
+      const onChoose = props.onChoose
+      return { onChoose }
+    },
     
     methods: {
       searchFormIsValid() {
@@ -28,7 +35,7 @@
       },
       
       choose(contract) {
-        console.log(contract)
+        this.onChoose(contract.id)
       },
       
       async search() {
@@ -83,7 +90,7 @@
         {{ this.searchMessage }}
       </div>
       <div v-for="contract in this.contracts" class="interstellarium-unit-card">
-        <a @click="this.choose(contract)" class="interstellarium-unit-link">
+        <a @click="this.choose(contract)" data-bs-dismiss="modal" class="interstellarium-unit-link">
           {{ contract.name }}
         </a>
       </div>

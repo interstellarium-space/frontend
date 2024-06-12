@@ -7,7 +7,7 @@
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
   import Dialog from "../../../components/dashboard/Dialog.vue";
-  import ChooseContract from "./ChooseContract.vue";
+  import ChooseContract from "../../../components/dashboard/dialogs/ChooseContract.vue";
 
   export default {
     components: {
@@ -92,6 +92,10 @@
         }
 
         this.pageIsLoading = false
+      },
+
+      async changeContract(contractId) {
+        console.log('Id:' + contractId)
       }
     }
   }
@@ -192,7 +196,7 @@
     </div>
   </div>
 
-  <ChooseContract></ChooseContract>
+  <ChooseContract :on-choose="this.changeContract"></ChooseContract>
   <Dialog id="choose-project"></Dialog>
   <Dialog id="choose-executor"></Dialog>
 </template>
