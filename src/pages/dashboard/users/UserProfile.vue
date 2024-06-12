@@ -85,19 +85,26 @@
       },
 
       async setDepartment(departmentId) {
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
         let response = await APIUsersUpdateDepartment(
             this.$route.params.userId, departmentId
         );
 
         if (response.isOk) {
+          this.pageIsReady = true
           await this.loadData()
         } else {
           if (response.code === 401) {
             this.$router.push({name: "AuthLogout"})
           }
+          this.errorMessage = response.msg
         }
 
         console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async addGroup(groupId) {
@@ -157,7 +164,12 @@
               <div v-else class="interstellarium-unit-description">
                 Отдел: не назначен
               </div>
-              <div class="interstellarium-unit-actions mt-3 mt-md-0">
+              <div v-if="this.user.department.id" class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" @click="this.setDepartment(null)" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                  Открепить
+                </button>
+              </div>
+              <div v-else class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-department" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
