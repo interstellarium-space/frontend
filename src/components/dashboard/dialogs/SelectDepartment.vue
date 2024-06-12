@@ -90,8 +90,8 @@
       <div v-show="this.searchMessage" class="interstellarium-error text-danger text-center">
         {{ this.searchMessage }}
       </div>
-      <div v-for="department in this.departments" class="interstellarium-unit-card">
-        <a @click="this.select(department)" data-bs-dismiss="modal" class="interstellarium-unit-link">
+      <div v-for="department in this.departments" @click="this.select(department)" data-bs-dismiss="modal" class="interstellarium-unit-clickable-card">
+        <a class="interstellarium-unit-link">
           {{ department.name }}
         </a>
       </div>

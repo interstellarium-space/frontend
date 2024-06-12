@@ -90,8 +90,8 @@
       <div v-show="this.searchMessage" class="interstellarium-error text-danger text-center">
         {{ this.searchMessage }}
       </div>
-      <div v-for="user in this.users" class="interstellarium-unit-card">
-        <a @click="this.select(user)" data-bs-dismiss="modal" class="interstellarium-unit-link">
+      <div v-for="user in this.users" @click="this.select(user)" data-bs-dismiss="modal" class="interstellarium-unit-clickable-card">
+        <a class="interstellarium-unit-link">
           {{ user.name }}
         </a>
       </div>

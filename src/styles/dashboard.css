@@ -111,11 +111,23 @@
 }
 
 
-.interstellarium-unit-card, .interstellarium-unit-actionable-card {
+.interstellarium-unit-card,
+.interstellarium-unit-actionable-card,
+.interstellarium-unit-clickable-card {
     border: 1px solid #DDDDDD;
+    background-color: #FFFFFF;
     border-radius: .75rem;
     padding: 1rem;
     margin-bottom: 1rem;
+}
+
+.interstellarium-unit-clickable-card {
+    cursor: pointer;
+}
+
+.interstellarium-unit-clickable-card:hover {
+    background-color: #DDDDDD;
+    transition: background-color 0.15s ease-in-out ;
 }
 
 .interstellarium-unit-actions {
