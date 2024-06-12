@@ -76,6 +76,8 @@
 ![Create Work](./docs/resources/desktop/create-work.png "Create Work")
 ## Work Profile page
 ![Work Profile](./docs/resources/desktop/work-profile.png "Work Profile")
+## Work Profile: Choose Contract
+![Work Profile: Choose Contract](./docs/resources/desktop/work-profile-choose-contract.png "Work Profile: Choose Contract")
 
 ## Equipment page
 ![Equipment](./docs/resources/desktop/equipment.png "Equipment")
