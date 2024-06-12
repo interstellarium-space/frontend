@@ -89,35 +89,49 @@
       },
 
       async setDepartment(departmentId) {
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
         let response = await APIEquipmentUpdateDepartment(
             this.$route.params.equipmentId, departmentId
         );
 
         if (response.isOk) {
+          this.pageIsReady = true
           await this.loadData()
         } else {
           if (response.code === 401) {
             this.$router.push({name: "AuthLogout"})
           }
+          this.errorMessage = response.msg
         }
 
         console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async setGroup(groupId) {
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
         let response = await APIEquipmentUpdateGroup(
             this.$route.params.equipmentId, groupId
         );
 
         if (response.isOk) {
+          this.pageIsReady = true
           await this.loadData()
         } else {
           if (response.code === 401) {
             this.$router.push({name: "AuthLogout"})
           }
+          this.errorMessage = response.msg
         }
 
         console.log(response)
+
+        this.pageIsLoading = false
       }
     }
   }
@@ -157,7 +171,12 @@
               <div v-else class="interstellarium-unit-description">
                 Коллективная собственность
               </div>
-              <div class="interstellarium-unit-actions mt-3 mt-md-0">
+              <div v-if="this.equipment.department.id" class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" @click="this.setDepartment(null)" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                  Открепить
+                </button>
+              </div>
+              <div v-else class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-department" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Изменить
                 </button>
@@ -173,7 +192,12 @@
               <div v-else class="interstellarium-unit-description">
                 Рабочая группа: не указана
               </div>
-              <div class="interstellarium-unit-actions mt-3 mt-md-0">
+              <div v-if="this.equipment.group.id" class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" @click="this.setGroup(null)" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                  Открепить
+                </button>
+              </div>
+              <div v-else class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Изменить
                 </button>
