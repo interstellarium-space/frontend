@@ -41,7 +41,8 @@
         },
         pageIsLoading: false,
         pageInitIsStarted: false,
-        pageIsReady: false
+        pageIsReady: false,
+        errorMessage: ""
       }
     },
 
@@ -62,17 +63,18 @@
 
           if (response.isOk) {
             this.equipment = response.data
+            this.pageIsReady = true
           } else {
             if (response.code === 401) {
               this.$router.push({name: "AuthLogout"})
             }
+            this.errorMessage = response.msg
           }
 
           console.log(response)
         }
 
         this.pageIsLoading = false
-        this.pageIsReady = true
       }
     }
   }
@@ -147,6 +149,11 @@
               <div v-if="this.equipment.groups_assignments.length === 0" class="interstellarium-unit-description">
                 История пуста
               </div>
+            </div>
+          </div>
+          <div v-else class="interstellarium-content-wrapper">
+            <div v-show="this.errorMessage" class="text-danger text-center">
+              {{ this.errorMessage }}
             </div>
           </div>
         </template>

@@ -40,7 +40,8 @@
         },
         pageIsLoading: false,
         pageInitIsStarted: false,
-        pageIsReady: false
+        pageIsReady: false,
+        errorMessage: ""
       }
     },
 
@@ -61,17 +62,18 @@
 
           if (response.isOk) {
             this.user = response.data
+            this.pageIsReady = true
           } else {
             if (response.code === 401) {
               this.$router.push({name: "AuthLogout"})
             }
+            this.errorMessage = response.msg
           }
 
           console.log(response)
         }
 
         this.pageIsLoading = false
-        this.pageIsReady = true
       }
     }
   }
@@ -164,6 +166,11 @@
               <div v-if="this.user.projects_assignments.length === 0" class="interstellarium-unit-description">
                 Пользователь не участвовал в проектах
               </div>
+            </div>
+          </div>
+          <div v-else class="interstellarium-content-wrapper">
+            <div v-show="this.errorMessage" class="text-danger text-center">
+              {{ this.errorMessage }}
             </div>
           </div>
         </template>

@@ -43,11 +43,20 @@
         },
         pageIsLoading: false,
         pageInitIsStarted: false,
-        pageIsReady: false
+        pageIsReady: false,
+        errorMessage: ""
       }
     },
 
     methods: {
+      redirectToGroup(group) {
+        this.$router.push({ name: "GroupProfile", params: { groupId: group.id } })
+      },
+
+      redirectToUser(user) {
+        this.$router.push({ name: "UserProfile", params: { userId: user.id } })
+      },
+
       async autoload() {
         if (!this.pageInitIsStarted)
           return await this.loadData()
@@ -64,17 +73,18 @@
 
           if (response.isOk) {
             this.contract = response.data
+            this.pageIsReady = true
           } else {
             if (response.code === 401) {
               this.$router.push({name: "AuthLogout"})
             }
+            this.errorMessage = response.msg
           }
 
           console.log(response)
         }
 
         this.pageIsLoading = false
-        this.pageIsReady = true
       }
     }
   }
@@ -120,7 +130,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.contract.chief.id" class="interstellarium-unit-description">
-                Начальник: {{ this.contract.chief.name }}
+                Начальник:
+                <a @click="this.redirectToUser(this.contract.chief)" class="interstellarium-unit-link">
+                  {{ this.contract.chief.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Начальник: не назначен
@@ -133,7 +146,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.contract.group.id" class="interstellarium-unit-description">
-                Рабочая группа: {{ this.contract.group.name }}
+                Рабочая группа:
+                <a @click="this.redirectToGroup(this.contract.group)" class="interstellarium-unit-link">
+                  {{ this.contract.group.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Рабочая группа: не назначена
@@ -168,6 +184,11 @@
               <div v-if="this.contract.works.length === 0" class="interstellarium-unit-description">
                 По контракту не зарегистрировано ни одной работы
               </div>
+            </div>
+          </div>
+          <div v-else class="interstellarium-content-wrapper">
+            <div v-show="this.errorMessage" class="text-danger text-center">
+              {{ this.errorMessage }}
             </div>
           </div>
         </template>

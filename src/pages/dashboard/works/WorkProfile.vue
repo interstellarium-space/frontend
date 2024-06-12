@@ -44,11 +44,24 @@
         },
         pageIsLoading: false,
         pageInitIsStarted: false,
-        pageIsReady: false
+        pageIsReady: false,
+        errorMessage: ""
       }
     },
 
     methods: {
+      redirectToContract(contract) {
+        this.$router.push({ name: "ContractProfile", params: { contractId: contract.id } })
+      },
+
+      redirectToProject(project) {
+        this.$router.push({ name: "ProjectProfile", params: { projectId: project.id } })
+      },
+
+      redirectToExecutor(executor) {
+        this.$router.push({ name: "GroupProfile", params: { groupId: executor.id } })
+      },
+
       async autoload() {
         if (!this.pageInitIsStarted)
           return await this.loadData()
@@ -65,17 +78,18 @@
 
           if (response.isOk) {
             this.work = response.data
+            this.pageIsReady = true
           } else {
             if (response.code === 401) {
               this.$router.push({name: "AuthLogout"})
             }
+            this.errorMessage = response.msg
           }
 
           console.log(response)
         }
 
         this.pageIsLoading = false
-        this.pageIsReady = true
       }
     }
   }
@@ -115,7 +129,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.work.contract.id" class="interstellarium-unit-description">
-                Контракт: {{ this.work.contract.name }}
+                Контракт:
+                <a @click="this.redirectToContract(this.work.contract)" class="interstellarium-unit-link">
+                  {{ this.work.contract.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Контракт: не присвоен
@@ -128,7 +145,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.work.project.id" class="interstellarium-unit-description">
-                Проект: {{ this.work.project.name }}
+                Проект:
+                <a @click="this.redirectToProject(this.work.project)" class="interstellarium-unit-link">
+                  {{ this.work.project.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Проект: не присвоен
@@ -141,7 +161,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.work.executor.id" class="interstellarium-unit-description">
-                Исполнитель: {{ this.work.executor.name }}
+                Исполнитель:
+                <a @click="this.redirectToExecutor(this.work.executor)" class="interstellarium-unit-link">
+                  {{ this.work.executor.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Исполнитель: не назначен
@@ -151,6 +174,11 @@
                   Назначить
                 </button>
               </div>
+            </div>
+          </div>
+          <div v-else class="interstellarium-content-wrapper">
+            <div v-show="this.errorMessage" class="text-danger text-center">
+              {{ this.errorMessage }}
             </div>
           </div>
         </template>

@@ -36,10 +36,7 @@
 
     methods: {
       redirectToContract(contract) {
-        this.$router.push({
-          name: "ContractProfile",
-          params: {contractId: contract.id}
-        })
+        this.$router.push({name: "ContractProfile", params: {contractId: contract.id}})
       },
 
       searchFormIsValid() {
@@ -132,35 +129,29 @@
           <div v-show="this.seacrhMessage" class="text-danger text-center">
             {{ this.seacrhMessage }}
           </div>
-          <div v-for="contract in this.store.contracts"
-               class="interstellarium-unit-card">
-            <a @click="this.redirectToContract(contract)"
-               class="interstellarium-unit-link">
+          <div v-for="contract in this.store.contracts" class="interstellarium-unit-card">
+            <a @click="this.redirectToContract(contract)" class="interstellarium-unit-link">
               {{ contract.name }}
             </a>
-            <div v-if="contract.chief.id"
-                 class="interstellarium-unit-description">
+            <div v-if="contract.chief.id" class="interstellarium-unit-description">
               Руководитель: {{ contract.chief.name }}
             </div>
             <div v-else class="interstellarium-unit-description">
               Руководитель: не назначен
             </div>
-            <div v-if="contract.group.id"
-                 class="interstellarium-unit-description">
+            <div v-if="contract.group.id" class="interstellarium-unit-description">
               Рабочая группа: {{ contract.group.name }}
             </div>
             <div v-else class="interstellarium-unit-description">
               Рабочая группа: не назначена
             </div>
-            <div v-if="contract.start_date"
-                 class="interstellarium-unit-description">
+            <div v-if="contract.start_date" class="interstellarium-unit-description">
               Дата начала: {{ contract.start_date }}
             </div>
             <div v-else class="interstellarium-unit-description">
               Дата начала: не установлена
             </div>
-            <div v-if="contract.finish_date"
-                 class="interstellarium-unit-description">
+            <div v-if="contract.finish_date" class="interstellarium-unit-description">
               Дата завершения: {{ contract.finish_date }}
             </div>
             <div v-else class="interstellarium-unit-description">
