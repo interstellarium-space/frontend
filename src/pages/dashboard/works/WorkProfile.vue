@@ -1,6 +1,9 @@
 <script>
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIWorksProfile } from "../../../services/api/works/Profile.js";
+  import { APIWorksUpdateContract } from "../../../services/api/works/update/Contract.js";
+  import { APIWorksUpdateProject } from "../../../services/api/works/update/Project.js";
+  import { APIWorksUpdateGroup } from "../../../services/api/works/update/Group.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -41,7 +44,7 @@
             id: 0,
             name: "",
           },
-          executor: {
+          group: {
             id: 0,
             name: "",
           },
@@ -62,8 +65,8 @@
         this.$router.push({ name: "ProjectProfile", params: { projectId: project.id } })
       },
 
-      redirectToExecutor(executor) {
-        this.$router.push({ name: "GroupProfile", params: { groupId: executor.id } })
+      redirectToGroup(group) {
+        this.$router.push({ name: "GroupProfile", params: { groupId: group.id } })
       },
 
       async autoload() {
@@ -95,15 +98,69 @@
       },
 
       async setContract(contractId) {
-        console.log('Id:' + contractId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIWorksUpdateContract(
+            this.$route.params.workId, contractId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async setProject(projectId) {
-        console.log('Id:' + projectId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIWorksUpdateProject(
+            this.$route.params.workId, projectId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async setGroup(groupId) {
-        console.log('Id:' + groupId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIWorksUpdateGroup(
+            this.$route.params.workId, groupId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       }
     }
   }
@@ -144,14 +201,19 @@
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.work.contract.id" class="interstellarium-unit-description">
                 Контракт:
-                <a @click="this.redirectToContract(this.work.contract)" class="interstellarium-intext-link badge text-bg-dark">
+                <a @click="this.redirectToContract(this.work.contract)" class="interstellarium-unit-link">
                   {{ this.work.contract.name }}
                 </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Контракт: не присвоен
               </div>
-              <div class="interstellarium-unit-actions mt-3 mt-md-0">
+              <div v-if="this.work.contract.id" class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" @click="this.setContract(null)" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                  Открепить
+                </button>
+              </div>
+              <div v-else class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Выбрать
                 </button>
@@ -160,31 +222,41 @@
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.work.project.id" class="interstellarium-unit-description">
                 Проект:
-                <a @click="this.redirectToProject(this.work.project)" class="interstellarium-intext-link badge text-bg-dark">
+                <a @click="this.redirectToProject(this.work.project)" class="interstellarium-unit-link">
                   {{ this.work.project.name }}
                 </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Проект: не присвоен
               </div>
-              <div class="interstellarium-unit-actions mt-3 mt-md-0">
+              <div v-if="this.work.project.id" class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" @click="this.setProject(null)" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                  Открепить
+                </button>
+              </div>
+              <div v-else class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-project" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Выбрать
                 </button>
               </div>
             </div>
             <div class="interstellarium-unit-actionable-card">
-              <div v-if="this.work.executor.id" class="interstellarium-unit-description">
+              <div v-if="this.work.group.id" class="interstellarium-unit-description">
                 Исполнитель:
-                <a @click="this.redirectToExecutor(this.work.executor)" class="interstellarium-intext-link badge text-bg-dark">
-                  {{ this.work.executor.name }}
+                <a @click="this.redirectToGroup(this.work.group)" class="interstellarium-unit-link">
+                  {{ this.work.group.name }}
                 </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Исполнитель: не назначен
               </div>
-              <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-executor" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+              <div v-if="this.work.group.id" class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" @click="this.setGroup(null)" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                  Открепить
+                </button>
+              </div>
+              <div v-else class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -206,7 +278,7 @@
 
   <SelectContract id="select-contract" :on-select="this.setContract"></SelectContract>
   <SelectProject id="select-project" :on-select="this.setProject"></SelectProject>
-  <SelectGroup id="select-executor" :on-select="this.setGroup"></SelectGroup>
+  <SelectGroup id="select-group" :on-select="this.setGroup"></SelectGroup>
 </template>
 
 <style scoped>
