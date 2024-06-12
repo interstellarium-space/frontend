@@ -1,6 +1,8 @@
 <script>
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIEquipmentProfile } from "../../../services/api/equipment/Profile.js";
+  import { APIEquipmentUpdateDepartment } from "../../../services/api/equipment/update/Department.js";
+  import { APIEquipmentUpdateGroup } from "../../../services/api/equipment/update/Group.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -49,6 +51,14 @@
     },
 
     methods: {
+      redirectToDepartment(department) {
+        this.$router.push({ name: "DepartmentProfile", params: { departmentId: department.id } })
+      },
+
+      redirectToGroup(group) {
+        this.$router.push({ name: "GroupProfile", params: { groupId: group.id } })
+      },
+
       async autoload() {
         if (!this.pageInited) {
           this.pageInited = true
@@ -59,6 +69,7 @@
 
       async loadData() {
         this.pageIsLoading = true
+        this.pageIsReady = false
 
         let response = await APIEquipmentProfile(this.$route.params.equipmentId);
 
@@ -78,11 +89,35 @@
       },
 
       async setDepartment(departmentId) {
-        console.log('Id:' + departmentId)
+        let response = await APIEquipmentUpdateDepartment(
+            this.$route.params.equipmentId, departmentId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+        }
+
+        console.log(response)
       },
 
       async setGroup(groupId) {
-        console.log('Id:' + groupId)
+        let response = await APIEquipmentUpdateGroup(
+            this.$route.params.equipmentId, groupId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+        }
+
+        console.log(response)
       }
     }
   }
@@ -114,7 +149,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.equipment.department.id" class="interstellarium-unit-description">
-                Отдел: {{ this.equipment.department.name }}
+                Отдел:
+                <a @click="this.redirectToDepartment(this.equipment.department)" class="interstellarium-unit-link">
+                  {{ this.equipment.department.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Коллективная собственность
@@ -127,7 +165,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.equipment.group.id" class="interstellarium-unit-description">
-                Рабочая группа: {{ this.equipment.group.name }}
+                Рабочая группа:
+                <a @click="this.redirectToGroup(this.equipment.group)" class="interstellarium-unit-link">
+                  {{ this.equipment.group.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Рабочая группа: не указана
