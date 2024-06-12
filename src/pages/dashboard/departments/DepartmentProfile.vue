@@ -1,6 +1,7 @@
 <script>
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIDepartmentsProfile } from "../../../services/api/departments/Profile.js";
+  import { APIDepartmentsUpdateChief } from "../../../services/api/departments/update/Chief.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -8,6 +9,7 @@
   import Footer from "../../../components/dashboard/Footer.vue";
   import SelectUser from "../../../components/dashboard/dialogs/SelectUser.vue";
   import SelectEquipment from "../../../components/dashboard/dialogs/SelectEquipment.vue";
+  import {APIUsersUpdateDepartment} from "../../../services/api/users/update/Department.js";
 
   export default {
     components: {
@@ -45,6 +47,10 @@
     },
 
     methods : {
+      redirectToUser(user) {
+        this.$router.push({ name: "UserProfile", params: { userId: user.id } })
+      },
+
       async autoload() {
         if (!this.pageInited) {
           this.pageInited = true
@@ -55,6 +61,7 @@
 
       async loadData() {
         this.pageIsLoading = true
+        this.pageIsReady = false
 
         let response = await APIDepartmentsProfile(this.$route.params.departmentId);
 
@@ -74,7 +81,19 @@
       },
 
       async setChief(chiefId) {
-        console.log('Id:' + chiefId)
+        let response = await APIDepartmentsUpdateChief(
+            this.$route.params.departmentId, chiefId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+        }
+
+        console.log(response)
       },
 
       async addUser(userId) {
@@ -114,7 +133,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.department.chief.id" class="interstellarium-unit-description">
-                Начальник: {{ this.department.chief.name }}
+                Начальник:
+                <a @click="this.redirectToUser(this.department.chief)" class="interstellarium-intext-link badge text-bg-dark">
+                  {{ this.department.chief.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Начальник: не назначен
