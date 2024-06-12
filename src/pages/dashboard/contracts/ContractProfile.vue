@@ -93,35 +93,49 @@
       },
 
       async setChief(chiefId) {
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
         let response = await APIContractsUpdateChief(
             this.$route.params.contractId, chiefId
         );
 
         if (response.isOk) {
+          this.pageIsReady = true
           await this.loadData()
         } else {
           if (response.code === 401) {
             this.$router.push({name: "AuthLogout"})
           }
+          this.errorMessage = response.msg
         }
 
         console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async setGroup(groupId) {
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
         let response = await APIContractsUpdateGroup(
             this.$route.params.contractId, groupId
         );
 
         if (response.isOk) {
+          this.pageIsReady = true
           await this.loadData()
         } else {
           if (response.code === 401) {
             this.$router.push({name: "AuthLogout"})
           }
+          this.errorMessage = response.msg
         }
 
         console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async addProject(projectId) {
@@ -171,15 +185,20 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.contract.chief.id" class="interstellarium-unit-description">
-                Начальник:
+                Руководитель:
                 <a @click="this.redirectToUser(this.contract.chief)" class="interstellarium-unit-link">
                   {{ this.contract.chief.name }}
                 </a>
               </div>
               <div v-else class="interstellarium-unit-description">
-                Начальник: не назначен
+                Руководитель: не назначен
               </div>
-              <div class="interstellarium-unit-actions mt-3 mt-md-0">
+              <div v-if="this.contract.chief.id" class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" @click="this.setChief(null)" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                  Открепить
+                </button>
+              </div>
+              <div v-else class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-chief" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
@@ -195,7 +214,12 @@
               <div v-else class="interstellarium-unit-description">
                 Рабочая группа: не назначена
               </div>
-              <div class="interstellarium-unit-actions mt-3 mt-md-0">
+              <div v-if="this.contract.group.id" class="interstellarium-unit-actions mt-3 mt-md-0">
+                <button v-show="this.userIsAdmin" @click="this.setGroup(null)" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                  Открепить
+                </button>
+              </div>
+              <div v-else class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
