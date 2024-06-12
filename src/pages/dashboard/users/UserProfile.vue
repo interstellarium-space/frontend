@@ -43,7 +43,7 @@
           contracts_assignments: [],
         },
         pageIsLoading: false,
-        pageInitIsStarted: false,
+        pageInited: false,
         pageIsReady: false,
         errorMessage: ""
       }
@@ -51,31 +51,29 @@
 
     methods: {
       async autoload() {
-        if (!this.pageInitIsStarted)
+        if (!this.pageInited) {
+          this.pageInited = true
           return await this.loadData()
+        }
         return false
       },
 
       async loadData() {
         this.pageIsLoading = true
 
-        if (!this.pageInitIsStarted) {
-          this.pageInitIsStarted = true
+        let response = await APIUsersProfile(this.$route.params.userId);
 
-          let response = await APIUsersProfile(this.$route.params.userId);
-
-          if (response.isOk) {
-            this.user = response.data
-            this.pageIsReady = true
-          } else {
-            if (response.code === 401) {
-              this.$router.push({name: "AuthLogout"})
-            }
-            this.errorMessage = response.msg
+        if (response.isOk) {
+          this.user = response.data
+          this.pageIsReady = true
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
           }
-
-          console.log(response)
+          this.errorMessage = response.msg
         }
+
+        console.log(response)
 
         this.pageIsLoading = false
       },
@@ -155,7 +153,7 @@
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
-                  + Добавить в группу
+                  + Добавить
                 </button>
               </div>
             </div>

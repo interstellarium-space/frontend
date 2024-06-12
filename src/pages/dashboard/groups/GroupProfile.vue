@@ -43,7 +43,7 @@
           equipment: [],
         },
         pageIsLoading: false,
-        pageInitIsStarted: false,
+        pageInited: false,
         pageIsReady: false,
         errorMessage: ""
       }
@@ -51,31 +51,29 @@
 
     methods: {
       async autoload() {
-        if (!this.pageInitIsStarted)
+        if (!this.pageInited) {
+          this.pageInited = true
           return await this.loadData()
+        }
         return false
       },
 
       async loadData() {
         this.pageIsLoading = true
 
-        if (!this.pageInitIsStarted) {
-          this.pageInitIsStarted = true
+        let response = await APIGroupsProfile(this.$route.params.groupId);
 
-          let response = await APIGroupsProfile(this.$route.params.groupId);
-
-          if (response.isOk) {
-            this.group = response.data
-            this.pageIsReady = true
-          } else {
-            if (response.code === 401) {
-              this.$router.push({name: "AuthLogout"})
-            }
-            this.errorMessage = response.msg
+        if (response.isOk) {
+          this.group = response.data
+          this.pageIsReady = true
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
           }
-
-          console.log(response)
+          this.errorMessage = response.msg
         }
+
+        console.log(response)
 
         this.pageIsLoading = false
       },

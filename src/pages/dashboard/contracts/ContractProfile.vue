@@ -46,7 +46,7 @@
           works: [],
         },
         pageIsLoading: false,
-        pageInitIsStarted: false,
+        pageInited: false,
         pageIsReady: false,
         errorMessage: ""
       }
@@ -62,31 +62,29 @@
       },
 
       async autoload() {
-        if (!this.pageInitIsStarted)
+        if (!this.pageInited) {
+          this.pageInited = true
           return await this.loadData()
+        }
         return false
       },
 
       async loadData() {
         this.pageIsLoading = true
 
-        if (!this.pageInitIsStarted) {
-          this.pageInitIsStarted = true
+        let response = await APIContractsProfile(this.$route.params.contractId);
 
-          let response = await APIContractsProfile(this.$route.params.contractId);
-
-          if (response.isOk) {
-            this.contract = response.data
-            this.pageIsReady = true
-          } else {
-            if (response.code === 401) {
-              this.$router.push({name: "AuthLogout"})
-            }
-            this.errorMessage = response.msg
+        if (response.isOk) {
+          this.contract = response.data
+          this.pageIsReady = true
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
           }
-
-          console.log(response)
+          this.errorMessage = response.msg
         }
+
+        console.log(response)
 
         this.pageIsLoading = false
       },
