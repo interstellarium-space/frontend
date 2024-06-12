@@ -6,11 +6,19 @@
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
-  import Dialog from "../../../components/dashboard/Dialog.vue";
+  import SelectUser from "../../../components/dashboard/dialogs/SelectUser.vue";
+  import SelectWork from "../../../components/dashboard/dialogs/SelectWork.vue";
+  import SelectContract from "../../../components/dashboard/dialogs/SelectContract.vue";
+  import SelectProject from "../../../components/dashboard/dialogs/SelectProject.vue";
+  import SelectEquipment from "../../../components/dashboard/dialogs/SelectEquipment.vue";
 
   export default {
     components: {
-      Dialog,
+      SelectEquipment,
+      SelectProject,
+      SelectContract,
+      SelectWork,
+      SelectUser,
       Main,
       Sidebar,
       Header,
@@ -70,6 +78,26 @@
         }
 
         this.pageIsLoading = false
+      },
+
+      async addUser(userId) {
+        console.log('Id:' + userId)
+      },
+
+      async addWork(workId) {
+        console.log('Id:' + workId)
+      },
+
+      async addContract(contractId) {
+        console.log('Id:' + contractId)
+      },
+
+      async addProject(projectId) {
+        console.log('Id:' + projectId)
+      },
+
+      async addEquipment(equipmentId) {
+        console.log('Id:' + equipmentId)
       }
     }
   }
@@ -109,7 +137,7 @@
                  В группе никто не состоит
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-user" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-user" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
@@ -124,7 +152,7 @@
                  За группой не закреплено работ
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-work" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-work" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Прикрепить
                 </button>
               </div>
@@ -139,7 +167,7 @@
                  Группа не работает ни по одному контракту
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
@@ -154,7 +182,7 @@
                  Группа не работает ни по одному проекту
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-project" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-project" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
@@ -169,7 +197,7 @@
                  Группой не используется оборудование
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-equipment" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-equipment" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
@@ -189,11 +217,11 @@
     </div>
   </div>
 
-  <Dialog id="add-user"></Dialog>
-  <Dialog id="add-work"></Dialog>
-  <Dialog id="add-contract"></Dialog>
-  <Dialog id="add-project"></Dialog>
-  <Dialog id="add-equipment"></Dialog>
+  <SelectUser id="select-user" :on-select="this.addUser"></SelectUser>
+  <SelectWork id="select-work" :on-select="this.addWork"></SelectWork>
+  <SelectContract id="select-contract" :on-select="this.addContract"></SelectContract>
+  <SelectProject id="select-project" :on-select="this.addProject"></SelectProject>
+  <SelectEquipment id="select-equipment" :on-select="this.addEquipment"></SelectEquipment>
 </template>
 
 <style scoped>

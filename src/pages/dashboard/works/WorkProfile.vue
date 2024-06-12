@@ -6,13 +6,15 @@
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
-  import Dialog from "../../../components/dashboard/Dialog.vue";
   import SelectContract from "../../../components/dashboard/dialogs/SelectContract.vue";
+  import SelectProject from "../../../components/dashboard/dialogs/SelectProject.vue";
+  import SelectGroup from "../../../components/dashboard/dialogs/SelectGroup.vue";
 
   export default {
     components: {
+      SelectGroup,
+      SelectProject,
       SelectContract,
-      Dialog,
       Main,
       Sidebar,
       Header,
@@ -96,6 +98,14 @@
 
       async setContract(contractId) {
         console.log('Id:' + contractId)
+      },
+
+      async setProject(projectId) {
+        console.log('Id:' + projectId)
+      },
+
+      async setGroup(groupId) {
+        console.log('Id:' + groupId)
       }
     }
   }
@@ -197,8 +207,8 @@
   </div>
 
   <SelectContract id="select-contract" :on-select="this.setContract"></SelectContract>
-  <Dialog id="select-project"></Dialog>
-  <Dialog id="select-executor"></Dialog>
+  <SelectProject id="select-project" :on-select="this.setProject"></SelectProject>
+  <SelectGroup id="select-executor" :on-select="this.setGroup"></SelectGroup>
 </template>
 
 <style scoped>

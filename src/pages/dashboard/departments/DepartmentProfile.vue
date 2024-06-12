@@ -6,11 +6,13 @@
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
-  import Dialog from "../../../components/dashboard/Dialog.vue";
+  import SelectUser from "../../../components/dashboard/dialogs/SelectUser.vue";
+  import SelectEquipment from "../../../components/dashboard/dialogs/SelectEquipment.vue";
 
   export default {
     components: {
-      Dialog,
+      SelectEquipment,
+      SelectUser,
       Main,
       Sidebar,
       Header,
@@ -71,6 +73,18 @@
         }
 
         this.pageIsLoading = false
+      },
+
+      async setChief(chiefId) {
+        console.log('Id:' + chiefId)
+      },
+
+      async addUser(userId) {
+        console.log('Id:' + userId)
+      },
+
+      async addEquipment(equipmentId) {
+        console.log('Id:' + equipmentId)
       }
     }
   }
@@ -108,7 +122,7 @@
                 Начальник: не назначен
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-chief" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-chief" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -123,7 +137,7 @@
                 В отделе не числится ни один пользователь
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-user" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-user" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Прикрепить
                 </button>
               </div>
@@ -138,7 +152,7 @@
                 За отделом не закреплено оборудование
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-equipment" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-equipment" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
@@ -158,9 +172,9 @@
     </div>
   </div>
 
-  <Dialog id="choose-chief"></Dialog>
-  <Dialog id="add-user"></Dialog>
-  <Dialog id="add-equipment"></Dialog>
+  <SelectUser id="select-chief" :on-select="this.setChief"></SelectUser>
+  <SelectUser id="select-user" :on-select="this.addUser"></SelectUser>
+  <SelectEquipment id="select-equipment" :on-select="this.addEquipment"></SelectEquipment>
 </template>
 
 <style scoped>

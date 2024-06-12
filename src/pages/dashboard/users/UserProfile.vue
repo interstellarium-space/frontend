@@ -7,9 +7,13 @@
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
   import Dialog from "../../../components/dashboard/Dialog.vue";
+  import SelectDepartment from "../../../components/dashboard/dialogs/SelectDepartment.vue";
+  import SelectGroup from "../../../components/dashboard/dialogs/SelectGroup.vue";
 
   export default {
     components: {
+      SelectGroup,
+      SelectDepartment,
       Dialog,
       Main,
       Sidebar,
@@ -74,7 +78,15 @@
         }
 
         this.pageIsLoading = false
-      }
+      },
+
+      async setDepartment(departmentId) {
+        console.log('Id:' + departmentId)
+      },
+
+      async addGroup(groupId) {
+        console.log('Id:' + groupId)
+      },
     }
   }
 </script>
@@ -127,7 +139,7 @@
                 Отдел: не назначен
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-department" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-department" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -142,7 +154,7 @@
                 Пользователь не состоит в рабочих группах
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить в группу
                 </button>
               </div>
@@ -182,8 +194,8 @@
     </div>
   </div>
 
-  <Dialog id="choose-department"></Dialog>
-  <Dialog id="add-group"></Dialog>
+  <SelectDepartment id="select-department" :on-select="this.setDepartment"></SelectDepartment>
+  <SelectGroup id="select-group" :on-select="this.addGroup"></SelectGroup>
 </template>
 
 <style scoped>

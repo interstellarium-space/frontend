@@ -62,6 +62,8 @@
 ![Create User](./docs/resources/desktop/create-user.png "Create User")
 ## User Profile page
 ![User Profile](./docs/resources/desktop/user-profile.png "User Profile")
+## Select User
+![Select User](./docs/resources/desktop/user-select.png "Select User")
 
 ## Groups page
 ![Groups](./docs/resources/desktop/groups.png "Groups")
@@ -69,6 +71,8 @@
 ![Create Group](./docs/resources/desktop/create-group.png "Create Group")
 ## Group Profile page
 ![Group Profile](./docs/resources/desktop/group-profile.png "Group Profile")
+## Select Group
+![Select Group](./docs/resources/desktop/group-select.png "Select Group")
 
 ## Works page
 ![Works](./docs/resources/desktop/works.png "Works")
@@ -76,8 +80,8 @@
 ![Create Work](./docs/resources/desktop/create-work.png "Create Work")
 ## Work Profile page
 ![Work Profile](./docs/resources/desktop/work-profile.png "Work Profile")
-## Work Profile: Choose Contract
-![Work Profile: Choose Contract](./docs/resources/desktop/work-profile-choose-contract.png "Work Profile: Choose Contract")
+## Select Work
+![Select Work](./docs/resources/desktop/work-select.png "Select Work")
 
 ## Equipment page
 ![Equipment](./docs/resources/desktop/equipment.png "Equipment")
@@ -85,6 +89,8 @@
 ![Create Equipment](./docs/resources/desktop/create-equipment.png "Create Equipment")
 ## Equipment Profile page
 ![Equipment Profile](./docs/resources/desktop/equipment-profile.png "Equipment Profile")
+## Select Equipment
+![Select Equipment](./docs/resources/desktop/equipment-select.png "Select Equipment")
 
 ## Departments page
 ![Departments](./docs/resources/desktop/departments.png "Departments")
@@ -92,6 +98,8 @@
 ![Create Department](./docs/resources/desktop/create-department.png "Create Department")
 ## Department Profile page
 ![Department Profile](./docs/resources/desktop/department-profile.png "Department Profile")
+## Select Department
+![Select Department](./docs/resources/desktop/department-select.png "Select Department")
 
 ## Projects page
 ![Projects](./docs/resources/desktop/projects.png "Projects")
@@ -99,6 +107,8 @@
 ![Create Project](./docs/resources/desktop/create-project.png "Create Project")
 ## Project Profile page
 ![Project Profile](./docs/resources/desktop/project-profile.png "Project Profile")
+## Select Project
+![Select Project](./docs/resources/desktop/project-select.png "Select Project")
 
 ## Contracts page
 ![Contracts](./docs/resources/desktop/contracts.png "Contracts")
@@ -106,3 +116,5 @@
 ![Create Contract](./docs/resources/desktop/create-contract.png "Create Contract")
 ## Contract Profile page
 ![Contract Profile](./docs/resources/desktop/contract-profile.png "Contract Profile")
+## Select Contract
+![Select Contract](./docs/resources/desktop/contract-select.png "Select Contract")

@@ -6,11 +6,15 @@
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
-  import Dialog from "../../../components/dashboard/Dialog.vue";
+  import SelectUser from "../../../components/dashboard/dialogs/SelectUser.vue";
+  import SelectGroup from "../../../components/dashboard/dialogs/SelectGroup.vue";
+  import SelectContract from "../../../components/dashboard/dialogs/SelectContract.vue";
 
   export default {
     components: {
-      Dialog,
+      SelectContract,
+      SelectGroup,
+      SelectUser,
       Main,
       Sidebar,
       Header,
@@ -77,7 +81,19 @@
         }
 
         this.pageIsLoading = false
-      }
+      },
+
+      async setChief(chiefId) {
+        console.log('Id:' + chiefId)
+      },
+
+      async setGroup(groupId) {
+        console.log('Id:' + groupId)
+      },
+
+      async addContract(contractId) {
+        console.log('Id:' + contractId)
+      },
     }
   }
 </script>
@@ -128,7 +144,7 @@
                 Начальник: не назначен
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-chief" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-chief" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -141,7 +157,7 @@
                 Рабочая группа: не назначена
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -156,7 +172,7 @@
                 К проекту не привязано ни одного контракта
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
@@ -186,9 +202,9 @@
     </div>
   </div>
 
-  <Dialog id="choose-chief"></Dialog>
-  <Dialog id="choose-group"></Dialog>
-  <Dialog id="add-contract"></Dialog>
+  <SelectUser id="select-chief" :on-select="this.setChief"></SelectUser>
+  <SelectGroup id="select-group" :on-select="this.setGroup"></SelectGroup>
+  <SelectContract id="select-contract" :on-select="this.addContract"></SelectContract>
 </template>
 
 <style scoped>
