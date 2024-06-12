@@ -8,7 +8,7 @@
       Dialog
     },
 
-    props: ['onChoose'],
+    props: ['id', 'onSelect'],
     
     data() {
       return {
@@ -22,8 +22,9 @@
     },
 
     setup(props) {
-      const onChoose = props.onChoose
-      return { onChoose }
+      const id = props.id
+      const onSelect = props.onSelect
+      return { id, onSelect }
     },
     
     methods: {
@@ -34,8 +35,8 @@
         return true
       },
       
-      choose(contract) {
-        this.onChoose(contract.id)
+      select(contract) {
+        this.onSelect(contract.id)
       },
       
       async search() {
@@ -60,7 +61,7 @@
 </script>
 
 <template>
-  <Dialog id="choose-contract">
+  <Dialog :id="this.id">
     <template v-slot:dialog-header>
       <form class="w-100 interstellarium-search-form p-1" @submit.prevent="" autocomplete=off>
         <div class="row">
@@ -90,7 +91,7 @@
         {{ this.searchMessage }}
       </div>
       <div v-for="contract in this.contracts" class="interstellarium-unit-card">
-        <a @click="this.choose(contract)" data-bs-dismiss="modal" class="interstellarium-unit-link">
+        <a @click="this.select(contract)" data-bs-dismiss="modal" class="interstellarium-unit-link">
           {{ contract.name }}
         </a>
       </div>

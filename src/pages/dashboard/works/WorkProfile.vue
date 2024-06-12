@@ -7,11 +7,11 @@
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
   import Dialog from "../../../components/dashboard/Dialog.vue";
-  import ChooseContract from "../../../components/dashboard/dialogs/ChooseContract.vue";
+  import SelectContract from "../../../components/dashboard/dialogs/SelectContract.vue";
 
   export default {
     components: {
-      ChooseContract,
+      SelectContract,
       Dialog,
       Main,
       Sidebar,
@@ -94,7 +94,7 @@
         this.pageIsLoading = false
       },
 
-      async changeContract(contractId) {
+      async setContract(contractId) {
         console.log('Id:' + contractId)
       }
     }
@@ -144,7 +144,7 @@
                 Контракт: не присвоен
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Выбрать
                 </button>
               </div>
@@ -160,7 +160,7 @@
                 Проект: не присвоен
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-project" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-project" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Выбрать
                 </button>
               </div>
@@ -176,7 +176,7 @@
                 Исполнитель: не назначен
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-executor" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-executor" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -196,9 +196,9 @@
     </div>
   </div>
 
-  <ChooseContract :on-choose="this.changeContract"></ChooseContract>
-  <Dialog id="choose-project"></Dialog>
-  <Dialog id="choose-executor"></Dialog>
+  <SelectContract id="select-contract" :on-select="this.setContract"></SelectContract>
+  <Dialog id="select-project"></Dialog>
+  <Dialog id="select-executor"></Dialog>
 </template>
 
 <style scoped>
