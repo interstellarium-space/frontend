@@ -150,7 +150,7 @@
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.user.department.id" class="interstellarium-unit-description">
                 Отдел:
-                <a @click="this.redirectToDepartment(this.user.department)" class="interstellarium-intext-link badge text-bg-dark">
+                <a @click="this.redirectToDepartment(this.user.department)" class="interstellarium-unit-link">
                   {{ this.user.department.name }}
                 </a>
               </div>

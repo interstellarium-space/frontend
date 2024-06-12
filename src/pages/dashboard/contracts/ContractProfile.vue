@@ -1,6 +1,8 @@
 <script>
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIContractsProfile } from "../../../services/api/contracts/Profile.js";
+  import { APIContractsUpdateChief } from "../../../services/api/contracts/update/Chief.js";
+  import { APIContractsUpdateGroup } from "../../../services/api/contracts/update/Group.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -71,6 +73,7 @@
 
       async loadData() {
         this.pageIsLoading = true
+        this.pageIsReady = false
 
         let response = await APIContractsProfile(this.$route.params.contractId);
 
@@ -90,11 +93,35 @@
       },
 
       async setChief(chiefId) {
-        console.log('Id:' + chiefId)
+        let response = await APIContractsUpdateChief(
+            this.$route.params.contractId, chiefId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+        }
+
+        console.log(response)
       },
 
       async setGroup(groupId) {
-        console.log('Id:' + groupId)
+        let response = await APIContractsUpdateGroup(
+            this.$route.params.contractId, groupId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+        }
+
+        console.log(response)
       },
 
       async addProject(projectId) {

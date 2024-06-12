@@ -9,7 +9,6 @@
   import Footer from "../../../components/dashboard/Footer.vue";
   import SelectUser from "../../../components/dashboard/dialogs/SelectUser.vue";
   import SelectEquipment from "../../../components/dashboard/dialogs/SelectEquipment.vue";
-  import {APIUsersUpdateDepartment} from "../../../services/api/users/update/Department.js";
 
   export default {
     components: {
@@ -134,7 +133,7 @@
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.department.chief.id" class="interstellarium-unit-description">
                 Начальник:
-                <a @click="this.redirectToUser(this.department.chief)" class="interstellarium-intext-link badge text-bg-dark">
+                <a @click="this.redirectToUser(this.department.chief)" class="interstellarium-unit-link">
                   {{ this.department.chief.name }}
                 </a>
               </div>
