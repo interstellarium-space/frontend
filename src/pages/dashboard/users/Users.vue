@@ -29,7 +29,7 @@
     data() {
       return {
         searchIsInProgress: false,
-        seacrhMessage: ""
+        searchMessage: ""
       }
     },
     
@@ -55,14 +55,14 @@
         if (this.searchFormIsValid()) {
           this.searchIsInProgress = true
           this.store.users = []
-          this.seacrhMessage = ""
+          this.searchMessage = ""
 
           let response = await APIUsersGet(this.store.filters)
           
           if (response.isOk) {
             this.store.users = response.data
           } else {
-            this.seacrhMessage = response.msg
+            this.searchMessage = response.msg
             
             if (response.code === 401) {
               this.$router.push({ name: "AuthLogout" })
@@ -125,8 +125,8 @@
               <span class="visually-hidden">Loading...</span>
             </div>
           </div>
-          <div v-show="this.seacrhMessage" class="interstellarium-error text-danger text-center">
-            {{ this.seacrhMessage }}
+          <div v-show="this.searchMessage" class="interstellarium-error text-danger text-center">
+            {{ this.searchMessage }}
           </div>
           <div v-for="user in this.store.users" class="interstellarium-unit-card">
             <a @click="this.redirectToUser(user)" class="interstellarium-unit-link">

@@ -30,7 +30,7 @@
     data() {
       return {
         searchIsInProgress: false,
-        seacrhMessage: ""
+        searchMessage: ""
       }
     },
 
@@ -50,14 +50,14 @@
         if (this.searchFormIsValid()) {
           this.searchIsInProgress = true
           this.store.departments = []
-          this.seacrhMessage = ""
+          this.searchMessage = ""
 
           let response = await APIDepartmentsGet(this.store.filters)
 
           if (response.isOk) {
             this.store.departments = response.data
           } else {
-            this.seacrhMessage = response.msg
+            this.searchMessage = response.msg
 
             if (response.code === 401) {
               this.$router.push({ name: "AuthLogout" })
@@ -103,8 +103,8 @@
               <span class="visually-hidden">Loading...</span>
             </div>
           </div>
-          <div v-show="this.seacrhMessage" class="interstellarium-error text-danger text-center">
-            {{ this.seacrhMessage }}
+          <div v-show="this.searchMessage" class="interstellarium-error text-danger text-center">
+            {{ this.searchMessage }}
           </div>
           <div v-for="department in this.store.departments" class="interstellarium-unit-card">
             <a @click="this.redirectToDepartment(department)" class="interstellarium-unit-link">

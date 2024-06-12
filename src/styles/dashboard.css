@@ -93,7 +93,6 @@
     justify-content: center;
     align-items: center;
 }
-
 .interstellarium-dashboard-sidebar::-webkit-scrollbar,
 .interstellarium-dashboard-main::-webkit-scrollbar {
     width: 12px;
@@ -110,6 +109,7 @@
     border-radius: 20px;
     border: 3px solid #FFF;
 }
+
 
 .interstellarium-unit-card, .interstellarium-unit-actionable-card {
     border: 1px solid #DDDDDD;
@@ -129,6 +129,13 @@
     cursor: pointer;
     text-decoration: none;
     color: var(--interstellarium-dark)
+}
+
+.interstellarium-intext-link {
+    font-family: var(--interstellarium-base-font-family), sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    text-wrap: pretty;
 }
 
 .interstellarium-unit-description {

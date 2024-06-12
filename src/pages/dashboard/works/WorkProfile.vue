@@ -7,9 +7,11 @@
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
   import Dialog from "../../../components/dashboard/Dialog.vue";
+  import ChooseContract from "./ChooseContract.vue";
 
   export default {
     components: {
+      ChooseContract,
       Dialog,
       Main,
       Sidebar,
@@ -130,7 +132,7 @@
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.work.contract.id" class="interstellarium-unit-description">
                 Контракт:
-                <a @click="this.redirectToContract(this.work.contract)" class="interstellarium-unit-link">
+                <a @click="this.redirectToContract(this.work.contract)" class="interstellarium-intext-link badge text-bg-dark">
                   {{ this.work.contract.name }}
                 </a>
               </div>
@@ -146,7 +148,7 @@
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.work.project.id" class="interstellarium-unit-description">
                 Проект:
-                <a @click="this.redirectToProject(this.work.project)" class="interstellarium-unit-link">
+                <a @click="this.redirectToProject(this.work.project)" class="interstellarium-intext-link badge text-bg-dark">
                   {{ this.work.project.name }}
                 </a>
               </div>
@@ -162,7 +164,7 @@
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.work.executor.id" class="interstellarium-unit-description">
                 Исполнитель:
-                <a @click="this.redirectToExecutor(this.work.executor)" class="interstellarium-unit-link">
+                <a @click="this.redirectToExecutor(this.work.executor)" class="interstellarium-intext-link badge text-bg-dark">
                   {{ this.work.executor.name }}
                 </a>
               </div>
@@ -190,7 +192,7 @@
     </div>
   </div>
 
-  <Dialog id="choose-contract"></Dialog>
+  <ChooseContract></ChooseContract>
   <Dialog id="choose-project"></Dialog>
   <Dialog id="choose-executor"></Dialog>
 </template>

@@ -33,4 +33,18 @@
 <style scoped>
 @import "/src/styles/style.css";
 @import "/src/styles/dashboard.css";
+
+.interstellarium-dialog-body::-webkit-scrollbar {
+    width: 12px;
+}
+
+.interstellarium-dialog-body::-webkit-scrollbar-track {
+    background: #FFF;
+}
+
+.interstellarium-dialog-body::-webkit-scrollbar-thumb {
+    background-color: #DDDDDD;
+    border-radius: 20px;
+    border: 3px solid #FFF;
+}
 </style>
