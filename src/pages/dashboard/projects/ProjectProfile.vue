@@ -1,6 +1,8 @@
 <script>
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIProjectsProfile } from "../../../services/api/projects/Profile.js";
+  import { APIProjectsUpdateChief } from "../../../services/api/projects/update/Chief.js";
+  import { APIProjectsUpdateGroup } from "../../../services/api/projects/update/Group.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -53,6 +55,14 @@
     },
 
     methods: {
+      redirectToGroup(group) {
+        this.$router.push({ name: "GroupProfile", params: { groupId: group.id } })
+      },
+
+      redirectToUser(user) {
+        this.$router.push({ name: "UserProfile", params: { userId: user.id } })
+      },
+
       async autoload() {
         if (!this.pageInited) {
           this.pageInited = true
@@ -63,6 +73,7 @@
 
       async loadData() {
         this.pageIsLoading = true
+        this.pageIsReady = false
 
         let response = await APIProjectsProfile(this.$route.params.projectId);
 
@@ -82,11 +93,35 @@
       },
 
       async setChief(chiefId) {
-        console.log('Id:' + chiefId)
+        let response = await APIProjectsUpdateChief(
+            this.$route.params.projectId, chiefId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+        }
+
+        console.log(response)
       },
 
       async setGroup(groupId) {
-        console.log('Id:' + groupId)
+        let response = await APIProjectsUpdateGroup(
+            this.$route.params.projectId, groupId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+        }
+
+        console.log(response)
       },
 
       async addContract(contractId) {
@@ -136,7 +171,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.project.chief.id" class="interstellarium-unit-description">
-                Начальник: {{ this.project.chief.name }}
+                Начальник:
+                <a @click="this.redirectToUser(this.project.chief)" class="interstellarium-unit-link">
+                  {{ this.project.chief.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Начальник: не назначен
@@ -149,7 +187,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.project.group.id" class="interstellarium-unit-description">
-                Рабочая группа: {{ this.project.group.name }}
+                Рабочая группа:
+                <a @click="this.redirectToGroup(this.project.group)" class="interstellarium-unit-link">
+                  {{ this.project.group.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Рабочая группа: не назначена
