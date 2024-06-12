@@ -1,6 +1,7 @@
 <script>
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIUsersProfile } from "../../../services/api/users/Profile.js";
+  import { APIUsersUpdateDepartment } from "../../../services/api/users/update/Department.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -50,6 +51,10 @@
     },
 
     methods: {
+      redirectToDepartment(department) {
+        this.$router.push({ name: "DepartmentProfile", params: { departmentId: department.id } })
+      },
+
       async autoload() {
         if (!this.pageInited) {
           this.pageInited = true
@@ -60,6 +65,7 @@
 
       async loadData() {
         this.pageIsLoading = true
+        this.pageIsReady = false
 
         let response = await APIUsersProfile(this.$route.params.userId);
 
@@ -79,7 +85,19 @@
       },
 
       async setDepartment(departmentId) {
-        console.log('Id:' + departmentId)
+        let response = await APIUsersUpdateDepartment(
+            this.$route.params.userId, departmentId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+        }
+
+        console.log(response)
       },
 
       async addGroup(groupId) {
@@ -131,7 +149,10 @@
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.user.department.id" class="interstellarium-unit-description">
-                Отдел: {{ this.user.department.name }}
+                Отдел:
+                <a @click="this.redirectToDepartment(this.user.department)" class="interstellarium-intext-link badge text-bg-dark">
+                  {{ this.user.department.name }}
+                </a>
               </div>
               <div v-else class="interstellarium-unit-description">
                 Отдел: не назначен
