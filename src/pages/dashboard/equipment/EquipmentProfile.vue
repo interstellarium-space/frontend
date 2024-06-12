@@ -1,80 +1,81 @@
 <script>
-import Main from "../../../components/dashboard/Main.vue";
-import Sidebar from "../../../components/dashboard/Sidebar.vue";
-import Header from "../../../components/dashboard/Header.vue";
-import Footer from "../../../components/dashboard/Footer.vue";
+  import { getUser, isAdmin } from "../../../services/Auth.js";
+  import { APIEquipmentProfile } from "../../../services/api/equipment/Profile.js";
 
-import {getUser, isAdmin} from "../../../services/Auth.js";
+  import Main from "../../../components/dashboard/Main.vue";
+  import Sidebar from "../../../components/dashboard/Sidebar.vue";
+  import Header from "../../../components/dashboard/Header.vue";
+  import Footer from "../../../components/dashboard/Footer.vue";
+  import Dialog from "../../../components/dashboard/Dialog.vue";
 
-import {APIEquipmentProfile} from "../../../services/api/equipment/Profile.js";
-
-export default {
-  components: {
-    Main,
-    Sidebar,
-    Header,
-    Footer
-  },
-
-  setup() {
-    document.title = "Interstellarium"
-    let userIsAdmin = isAdmin(getUser())
-    return {userIsAdmin}
-  },
-
-  data() {
-    return {
-      equipment: {
-        id: 0,
-        name: "",
-        department: {
-          id: 0,
-          name: "",
-        },
-        group: {
-          id: 0,
-          name: "",
-        },
-        departments_assignments: [],
-        groups_assignments: [],
-      },
-      pageIsLoading: false,
-      pageInitIsStarted: false,
-      pageIsReady: false
-    }
-  },
-
-  methods: {
-    async autoload() {
-      if (!this.pageInitIsStarted)
-        return await this.loadData()
-      return false
+  export default {
+    components: {
+      Dialog,
+      Main,
+      Sidebar,
+      Header,
+      Footer
     },
 
-    async loadData() {
-      this.pageIsLoading = true
+    setup() {
+      document.title = "Interstellarium"
+      let userIsAdmin = isAdmin(getUser())
+      return {userIsAdmin}
+    },
 
-      if (!this.pageInitIsStarted) {
-        this.pageInitIsStarted = true
+    data() {
+      return {
+        equipment: {
+          id: 0,
+          name: "",
+          department: {
+            id: 0,
+            name: "",
+          },
+          group: {
+            id: 0,
+            name: "",
+          },
+          departments_assignments: [],
+          groups_assignments: [],
+        },
+        pageIsLoading: false,
+        pageInitIsStarted: false,
+        pageIsReady: false
+      }
+    },
 
-        let response = await APIEquipmentProfile(this.$route.params.equipmentId);
+    methods: {
+      async autoload() {
+        if (!this.pageInitIsStarted)
+          return await this.loadData()
+        return false
+      },
 
-        if (response.isOk) {
-          this.equipment = response.data
-        } else {
-          if (response.code === 401) {
-            this.$router.push({name: "AuthLogout"})
+      async loadData() {
+        this.pageIsLoading = true
+
+        if (!this.pageInitIsStarted) {
+          this.pageInitIsStarted = true
+
+          let response = await APIEquipmentProfile(this.$route.params.equipmentId);
+
+          if (response.isOk) {
+            this.equipment = response.data
+          } else {
+            if (response.code === 401) {
+              this.$router.push({name: "AuthLogout"})
+            }
           }
+
+          console.log(response)
         }
 
-        console.log(response)
+        this.pageIsLoading = false
+        this.pageIsReady = true
       }
-
-      this.pageIsLoading = false
-      this.pageIsReady = true
     }
   }
-}
 </script>
 
 <template>
@@ -109,7 +110,7 @@ export default {
                 Коллективная собственность
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-department" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Изменить
                 </button>
               </div>
@@ -122,7 +123,7 @@ export default {
                 Рабочая группа: не указана
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Изменить
                 </button>
               </div>
@@ -156,6 +157,9 @@ export default {
       </Footer>
     </div>
   </div>
+
+  <Dialog id="choose-department"></Dialog>
+  <Dialog id="choose-group"></Dialog>
 </template>
 
 <style scoped>
@@ -165,17 +169,4 @@ export default {
 .interstellarium-dashboard-main {
   top: 5rem;
 }
-
-.interstellarium-unit-title {
-  font-family: var(--interstellarium-work-font-family), sans-serif;
-  color: var(--interstellarium-dark);
-  font-size: 1.5rem;
-}
-
-.interstellarium-unit-subtitle {
-  font-family: var(--interstellarium-work-font-family), sans-serif;
-  color: var(--interstellarium-dark);
-  font-size: 1.1rem;
-}
-
 </style>

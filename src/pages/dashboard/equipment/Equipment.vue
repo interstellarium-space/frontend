@@ -1,5 +1,6 @@
 <script>
-  import {useEquipmentStore} from "../../../stores/dashboard/Equipment.js";
+  import { useEquipmentStore } from "../../../stores/dashboard/Equipment.js";
+  import { APIEquipmentGet } from "../../../services/api/equipment/Get.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -9,7 +10,6 @@
   import Search from "../../../components/dashboard/forms/Search.vue";
   import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
 
-  import { APIEquipmentGet } from "../../../services/api/equipment/Get.js";
 
   export default {
     components: {

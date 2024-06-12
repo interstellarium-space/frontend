@@ -1,5 +1,6 @@
 <script>
   import { useProjectsStore } from "../../../stores/dashboard/Projects.js";
+  import { APIProjectsGet } from "../../../services/api/projects/Get.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -8,8 +9,6 @@
 
   import Search from "../../../components/dashboard/forms/Search.vue";
   import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
-
-  import { APIProjectsGet } from "../../../services/api/projects/Get.js";
 
   export default {
     components: {

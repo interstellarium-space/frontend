@@ -1,5 +1,6 @@
 <script>
   import { useWorksStore } from "../../../stores/dashboard/Works.js";
+  import { APIWorksGet } from "../../../services/api/works/Get.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -8,8 +9,6 @@
 
   import Search from "../../../components/dashboard/forms/Search.vue";
   import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
-
-  import { APIWorksGet } from "../../../services/api/works/Get.js";
 
   export default {
     components: {

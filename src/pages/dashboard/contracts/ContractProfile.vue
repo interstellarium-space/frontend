@@ -1,15 +1,16 @@
 <script>
+  import { getUser, isAdmin } from "../../../services/Auth.js";
+  import { APIContractsProfile } from "../../../services/api/contracts/Profile.js";
+
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
-
-  import { getUser, isAdmin } from "../../../services/Auth.js";
-
-  import { APIContractsProfile } from "../../../services/api/contracts/Profile.js";
+  import Dialog from "../../../components/dashboard/Dialog.vue";
 
   export default {
     components: {
+      Dialog,
       Main,
       Sidebar,
       Header,
@@ -125,7 +126,7 @@
                 Начальник: не назначен
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-chief" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -138,7 +139,7 @@
                 Рабочая группа: не назначена
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -153,7 +154,7 @@
                 По контракту не выполняется ни одного проекта
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-project" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
@@ -177,6 +178,10 @@
       </Footer>
     </div>
   </div>
+
+  <Dialog id="choose-chief"></Dialog>
+  <Dialog id="choose-group"></Dialog>
+  <Dialog id="add-project"></Dialog>
 </template>
 
 <style scoped>
@@ -186,17 +191,4 @@
 .interstellarium-dashboard-main {
   top: 5rem;
 }
-
-.interstellarium-unit-title {
-  font-family: var(--interstellarium-work-font-family), sans-serif;
-  color: var(--interstellarium-dark);
-  font-size: 1.5rem;
-}
-
-.interstellarium-unit-subtitle {
-  font-family: var(--interstellarium-work-font-family), sans-serif;
-  color: var(--interstellarium-dark);
-  font-size: 1.1rem;
-}
-
 </style>

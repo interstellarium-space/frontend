@@ -1,15 +1,13 @@
 <script>
+  import { APIUsersCreate } from "../../../services/api/users/Create.js";
+
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
-  import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
 
-  import { APIUsersCreate } from "../../../services/api/users/Create.js";
-  
   export default {
     components: {
-      CreateUnit,
       Main,
       Sidebar,
       Header,

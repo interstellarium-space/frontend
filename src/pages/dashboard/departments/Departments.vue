@@ -1,5 +1,6 @@
 <script>
   import { useDepartmentsStore } from "../../../stores/dashboard/Departments.js";
+  import { APIDepartmentsGet } from "../../../services/api/departments/Get.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -9,7 +10,6 @@
   import Search from "../../../components/dashboard/forms/Search.vue";
   import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
 
-  import { APIDepartmentsGet } from "../../../services/api/departments/Get.js";
 
   export default {
     components: {

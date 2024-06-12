@@ -1,6 +1,7 @@
 <script>
   import { useUsersStore } from "../../../stores/dashboard/Users.js";
-  
+  import { APIUsersGet } from "../../../services/api/users/Get.js";
+
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
@@ -8,9 +9,7 @@
   
   import Search from "../../../components/dashboard/forms/Search.vue";
   import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
-  
-  import { APIUsersGet } from "../../../services/api/users/Get.js";
-  
+
   export default {
     components: {
       CreateUnit,

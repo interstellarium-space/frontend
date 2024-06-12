@@ -1,5 +1,6 @@
 <script>
   import { useGroupsStore } from "../../../stores/dashboard/Groups.js";
+  import { APIGroupsGet } from "../../../services/api/groups/Get.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -8,8 +9,6 @@
 
   import Search from "../../../components/dashboard/forms/Search.vue";
   import CreateUnit from "../../../components/dashboard/buttons/CreateUnit.vue";
-
-  import { APIGroupsGet } from "../../../services/api/groups/Get.js";
 
   export default {
     components: {

@@ -1,15 +1,16 @@
 <script>
+  import { getUser, isAdmin } from "../../../services/Auth.js";
+  import { APIUsersProfile } from "../../../services/api/users/Profile.js";
+
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
   import Header from "../../../components/dashboard/Header.vue";
   import Footer from "../../../components/dashboard/Footer.vue";
-
-  import { getUser, isAdmin } from "../../../services/Auth.js";
-
-  import { APIUsersProfile } from "../../../services/api/users/Profile.js";
+  import Dialog from "../../../components/dashboard/Dialog.vue";
 
   export default {
     components: {
+      Dialog,
       Main,
       Sidebar,
       Header,
@@ -124,7 +125,7 @@
                 Отдел: не назначен
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#choose-department" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   Назначить
                 </button>
               </div>
@@ -139,7 +140,7 @@
                 Пользователь не состоит в рабочих группах
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
-                <button v-show="this.userIsAdmin" class="btn btn-interstellarium rounded-pill fw-bold px-3">
+                <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#add-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить в группу
                 </button>
               </div>
@@ -173,6 +174,9 @@
       </Footer>
     </div>
   </div>
+
+  <Dialog id="choose-department"></Dialog>
+  <Dialog id="add-group"></Dialog>
 </template>
 
 <style scoped>
@@ -182,17 +186,4 @@
 .interstellarium-dashboard-main {
   top: 5rem;
 }
-
-.interstellarium-unit-title {
-  font-family: var(--interstellarium-work-font-family), sans-serif;
-  color: var(--interstellarium-dark);
-  font-size: 1.5rem;
-}
-
-.interstellarium-unit-subtitle {
-  font-family: var(--interstellarium-work-font-family), sans-serif;
-  color: var(--interstellarium-dark);
-  font-size: 1.1rem;
-}
-
 </style>

@@ -135,6 +135,30 @@
     font-family: var(--interstellarium-base-font-family), sans-serif;
 }
 
+.interstellarium-unit-title {
+    font-family: var(--interstellarium-work-font-family), sans-serif;
+    color: var(--interstellarium-dark);
+    font-size: 1.5rem;
+}
+
+.interstellarium-unit-subtitle {
+    font-family: var(--interstellarium-work-font-family), sans-serif;
+    color: var(--interstellarium-dark);
+    font-size: 1.1rem;
+}
+
+.interstellarium-dialog {
+    border-radius: 1rem;
+    background-color: #FFFFFF;
+    padding: 1rem;
+}
+
+.interstellarium-dialog-content {
+    border: none;
+    height: 100%;
+    width: 100%;
+}
+
 .interstellarium-dashboard-edit-form {
     width: 100%;
     display: flex;
