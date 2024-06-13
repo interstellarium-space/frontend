@@ -43,7 +43,7 @@
           {{ page.title }}
         </div>
       </div>
-      <div @click="this.redirectToLogout()" class="interstellarium-dashboard-sidebar-card col-12 mt-3 bg-danger">
+      <div @click="this.redirectToLogout()" class="interstellarium-dashboard-sidebar-card col-12 mt-3 btn-interstellarium-danger">
         <div class="interstellarium-dashboard-sidebar-card-link text-white">
           Выйти
         </div>

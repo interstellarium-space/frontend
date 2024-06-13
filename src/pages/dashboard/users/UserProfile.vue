@@ -3,6 +3,7 @@
   import { APIUsersProfile } from "../../../services/api/users/Profile.js";
   import { APIUsersUpdateDepartment } from "../../../services/api/users/update/Department.js";
   import { APIUsersUpdateGroups } from "../../../services/api/users/update/Groups.js";
+  import { APIUsersDeleteGroup } from "../../../services/api/users/delete/Group.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -132,6 +133,28 @@
 
         this.pageIsLoading = false
       },
+
+      async removeGroup(groupId) {
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIUsersDeleteGroup(
+            this.$route.params.userId, groupId
+        );
+
+        if (response.isOk) {
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
+      }
     }
   }
 </script>
@@ -219,6 +242,9 @@
               <a @click="this.redirectToGroup(group)" class="interstellarium-unit-link">
                 {{ group.name }}
               </a>
+              <button v-show="this.userIsAdmin" @click="this.removeGroup(group.id)" class="btn btn-interstellarium-danger rounded-pill fw-bold px-3">
+                Исключить
+              </button>
             </div>
             <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">

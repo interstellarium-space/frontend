@@ -5,6 +5,7 @@
     --interstellarium-tertiary: #495057;
     --interstellarium-light-grey: #AAA;
     --interstellarium-gradient: linear-gradient(135deg, #0575E6 40%, #021B79 110%);
+    --interstellarium-danger-gradient: linear-gradient(135deg, #ED213A 40%, #93291E 110%);
     --interstellarium-base-font-family: 'Nunito';
     --interstellarium-special-font-family: 'Rubik Vinyl';
     --interstellarium-work-font-family: 'Russo One';
@@ -23,14 +24,21 @@ a {
     cursor: pointer;
 }
 
-.btn-interstellarium,
-.btn-interstellarium:hover,
-.btn-interstellarium:active,
-.btn-interstellarium:focus-visible {
-    background: var(--interstellarium-gradient);
+.btn-interstellarium, .btn-interstellarium-danger,
+.btn-interstellarium:hover, .btn-interstellarium-danger:hover,
+.btn-interstellarium:active, .btn-interstellarium-danger:active,
+.btn-interstellarium:focus-visible, .btn-interstellarium-danger:focus-visible {
     color: #FFFFFF !important;
     font-family: var(--interstellarium-base-font-family), sans-serif;
     outline: none;
+}
+
+.btn-interstellarium {
+    background: var(--interstellarium-gradient);
+}
+
+.btn-interstellarium-danger {
+    background: var(--interstellarium-danger-gradient);
 }
 
 .bg-interstellarium {
