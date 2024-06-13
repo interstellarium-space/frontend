@@ -212,15 +212,59 @@
               <div v-if="this.equipment.departments_assignments.length === 0" class="interstellarium-unit-description">
                 История пуста
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Записей всего: {{ this.equipment.departments_assignments.length }}
+              </div>
+            </div>
+            <div v-for="(assignment, index) in this.equipment.departments_assignments" class="interstellarium-unit-card">
+              <div class="row">
+                <div class="col-1 px-1 text-center interstellarium-assignment-note">
+                  #{{ this.equipment.departments_assignments.length - index }}
+                </div>
+                <div class="col-3 px-1 text-center interstellarium-assignment-note">
+                  {{ assignment.department.name }}
+                </div>
+                <div class="col-4 px-1 text-center interstellarium-assignment-note">
+                  {{ assignment.assignment_date }}
+                </div>
+                <div v-if="assignment.is_assigned" class="col-3 px-1 text-center text-success interstellarium-assignment-note">
+                  Assigned
+                </div>
+                <div v-else class="col-3 px-1 text-center text-danger interstellarium-assignment-note">
+                  Unassinged
+                </div>
+              </div>
             </div>
             <div class="mb-3">
               <div class="interstellarium-unit-subtitle">
                 История передач группам
               </div>
             </div>
-            <div class="interstellarium-unit-actionable-card">
+            <div class="interstellarium-unit-card">
               <div v-if="this.equipment.groups_assignments.length === 0" class="interstellarium-unit-description">
                 История пуста
+              </div>
+              <div v-else class="interstellarium-unit-description">
+                Записей всего: {{ this.equipment.groups_assignments.length }}
+              </div>
+            </div>
+            <div v-for="(assignment, index) in this.equipment.groups_assignments " class="interstellarium-unit-card">
+              <div class="row">
+                <div class="col-1 px-1 text-center interstellarium-assignment-note">
+                  #{{ this.equipment.groups_assignments.length - index }}
+                </div>
+                <div class="col-4 px-1 text-center interstellarium-assignment-note">
+                  {{ assignment.group.name }}
+                </div>
+                <div class="col-4 px-1 text-center interstellarium-assignment-note">
+                  {{ assignment.assignment_date }}
+                </div>
+                <div v-if="assignment.is_assigned" class="col-3 px-1 text-center text-success interstellarium-assignment-note">
+                  Assigned
+                </div>
+                <div v-else class="col-3 px-1 text-center text-danger interstellarium-assignment-note">
+                  Unassinged
+                </div>
               </div>
             </div>
           </div>

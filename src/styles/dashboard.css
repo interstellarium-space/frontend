@@ -166,6 +166,12 @@
     font-size: 1.1rem;
 }
 
+.interstellarium-assignment-note {
+    font-family: var(--interstellarium-base-font-family), sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
 .interstellarium-dialog {
     border-radius: 1rem;
     background-color: #FFFFFF;
@@ -199,6 +205,10 @@
 @media (min-width: 576px) {
     .interstellarium-dashboard-edit-form-content {
         width: 60%;
+    }
+
+    .interstellarium-assignment-note {
+        font-size: 1rem;
     }
 }
 
