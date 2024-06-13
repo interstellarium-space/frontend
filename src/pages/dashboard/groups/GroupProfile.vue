@@ -1,6 +1,11 @@
 <script>
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIGroupsProfile } from "../../../services/api/groups/Profile.js";
+  import { APIGroupsUpdateUsers } from "../../../services/api/groups/update/Users.js";
+  import { APIGroupsUpdateContracts } from "../../../services/api/groups/update/Contracts.js";
+  import { APIGroupsUpdateProjects } from "../../../services/api/groups/update/Projects.js";
+  import { APIGroupsUpdateEquipment } from "../../../services/api/groups/update/Equipment.js";
+  import { APIGroupsUpdateWorks } from "../../../services/api/groups/update/Works.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -50,6 +55,26 @@
     },
 
     methods: {
+      redirectToUser(user) {
+        this.$router.push({ name: "UserProfile", params: { userId: user.id } })
+      },
+
+      redirectToWork(work) {
+        this.$router.push({ name: "WorkProfile", params: { workId: work.id } })
+      },
+
+      redirectToContract(contract) {
+        this.$router.push({name: "ContractProfile", params: {contractId: contract.id}})
+      },
+
+      redirectToProject(project) {
+        this.$router.push({ name: "ProjectProfile", params: { projectId: project.id } })
+      },
+
+      redirectToEquipment(equipment) {
+        this.$router.push({ name: "EquipmentProfile", params: { equipmentId: equipment.id } })
+      },
+
       async autoload() {
         if (!this.pageInited) {
           this.pageInited = true
@@ -79,23 +104,118 @@
       },
 
       async addUser(userId) {
-        console.log('Id:' + userId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIGroupsUpdateUsers(
+            this.$route.params.groupId, userId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async addWork(workId) {
-        console.log('Id:' + workId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIGroupsUpdateWorks(
+            this.$route.params.groupId, workId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async addContract(contractId) {
-        console.log('Id:' + contractId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIGroupsUpdateContracts(
+            this.$route.params.groupId, contractId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async addProject(projectId) {
-        console.log('Id:' + projectId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIGroupsUpdateProjects(
+            this.$route.params.groupId, projectId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async addEquipment(equipmentId) {
-        console.log('Id:' + equipmentId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIGroupsUpdateEquipment(
+            this.$route.params.groupId, equipmentId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       }
     }
   }
@@ -125,7 +245,7 @@
                 {{ this.group.name }}
               </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 Персонал
               </div>
@@ -134,13 +254,21 @@
               <div v-if="this.group.users.length === 0" class="interstellarium-unit-description">
                  В группе никто не состоит
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Численность: {{ this.group.users.length }}
+              </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-user" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
             </div>
-            <div class="mb-3">
+            <div v-for="user in this.group.users" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToUser(user)" class="interstellarium-unit-link">
+                {{ user.name }}
+              </a>
+            </div>
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 Работы
               </div>
@@ -149,13 +277,21 @@
               <div v-if="this.group.works.length === 0" class="interstellarium-unit-description">
                  За группой не закреплено работ
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Количество: {{ this.group.works.length }}
+              </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-work" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Прикрепить
                 </button>
               </div>
             </div>
-            <div class="mb-3">
+            <div v-for="work in this.group.works" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToWork(work)" class="interstellarium-unit-link">
+                {{ work.name }}
+              </a>
+            </div>
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 Контракты
               </div>
@@ -164,13 +300,21 @@
               <div v-if="this.group.contracts.length === 0" class="interstellarium-unit-description">
                  Группа не работает ни по одному контракту
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Всего: {{ this.group.contracts.length }}
+              </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
             </div>
-            <div class="mb-3">
+            <div v-for="contract in this.group.contracts" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToContract(contract)" class="interstellarium-unit-link">
+                {{ contract.name }}
+              </a>
+            </div>
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 Проекты
               </div>
@@ -179,26 +323,42 @@
               <div v-if="this.group.projects.length === 0" class="interstellarium-unit-description">
                  Группа не работает ни по одному проекту
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Всего: {{ this.group.projects.length }}
+              </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-project" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
             </div>
-            <div class="mb-3">
+            <div v-for="project in this.group.projects" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToProject(project)" class="interstellarium-unit-link">
+                {{ project.name }}
+              </a>
+            </div>
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 Оборудование
               </div>
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.group.equipment.length === 0" class="interstellarium-unit-description">
-                 Группой не используется оборудование
+                Группой не используется оборудование
+              </div>
+              <div v-else class="interstellarium-unit-description">
+                Количество: {{ this.group.equipment.length }}
               </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-equipment" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
+            </div>
+            <div v-for="equipment in this.group.equipment" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToEquipment(equipment)" class="interstellarium-unit-link">
+                {{ equipment.name }}
+              </a>
             </div>
           </div>
           <div v-else class="interstellarium-content-wrapper">
