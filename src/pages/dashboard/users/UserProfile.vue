@@ -2,6 +2,7 @@
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIUsersProfile } from "../../../services/api/users/Profile.js";
   import { APIUsersUpdateDepartment } from "../../../services/api/users/update/Department.js";
+  import { APIUsersUpdateGroups } from "../../../services/api/users/update/Groups.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -53,6 +54,10 @@
     methods: {
       redirectToDepartment(department) {
         this.$router.push({ name: "DepartmentProfile", params: { departmentId: department.id } })
+      },
+
+      redirectToGroup(group) {
+        this.$router.push({ name: "GroupProfile", params: { groupId: group.id } })
       },
 
       async autoload() {
@@ -108,7 +113,26 @@
       },
 
       async addGroup(groupId) {
-        console.log('Id:' + groupId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIUsersUpdateGroups(
+            this.$route.params.userId, groupId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
     }
   }
@@ -175,7 +199,7 @@
                 </button>
               </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 Рабочие группы
               </div>
@@ -184,30 +208,82 @@
               <div v-if="this.user.groups.length === 0" class="interstellarium-unit-description">
                 Пользователь не состоит в рабочих группах
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Всего групп: {{ this.user.groups.length }}
+              </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-group" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
             </div>
-            <div class="mb-3">
+            <div v-for="group in this.user.groups" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToGroup(group)" class="interstellarium-unit-link">
+                {{ group.name }}
+              </a>
+            </div>
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
-                Участие в контрактах
+                История участия в контрактах
               </div>
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.user.contracts_assignments.length === 0" class="interstellarium-unit-description">
                 Пользователь не участвовал в контрактах
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Записей всего: {{ this.user.contracts_assignments.length }}
+              </div>
             </div>
-            <div class="mb-3">
+            <div v-for="(assignment, index) in this.user.contracts_assignments " class="interstellarium-unit-card">
+              <div class="row">
+                <div class="col-1 px-1 text-center interstellarium-assignment-note">
+                  #{{ this.user.contracts_assignments.length - index }}
+                </div>
+                <div class="col-4 px-1 text-center interstellarium-assignment-note">
+                  {{ assignment.contract.name }}
+                </div>
+                <div class="col-4 px-1 text-center interstellarium-assignment-note">
+                  {{ assignment.assignment_date }}
+                </div>
+                <div v-if="assignment.is_assigned" class="col-3 px-1 text-center text-success interstellarium-assignment-note">
+                  Joined
+                </div>
+                <div v-else class="col-3 px-1 text-center text-danger interstellarium-assignment-note">
+                  Left
+                </div>
+              </div>
+            </div>
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
-                Участие в проектах
+                История участия в проектах
               </div>
             </div>
             <div class="interstellarium-unit-actionable-card">
               <div v-if="this.user.projects_assignments.length === 0" class="interstellarium-unit-description">
                 Пользователь не участвовал в проектах
+              </div>
+              <div v-else class="interstellarium-unit-description">
+                Записей всего: {{ this.user.projects_assignments.length }}
+              </div>
+            </div>
+            <div v-for="(assignment, index) in this.user.projects_assignments " class="interstellarium-unit-card">
+              <div class="row">
+                <div class="col-1 px-1 text-center interstellarium-assignment-note">
+                  #{{ this.user.projects_assignments.length - index }}
+                </div>
+                <div class="col-4 px-1 text-center interstellarium-assignment-note">
+                  {{ assignment.project.name }}
+                </div>
+                <div class="col-4 px-1 text-center interstellarium-assignment-note">
+                  {{ assignment.assignment_date }}
+                </div>
+                <div v-if="assignment.is_assigned" class="col-3 px-1 text-center text-success interstellarium-assignment-note">
+                  Joined
+                </div>
+                <div v-else class="col-3 px-1 text-center text-danger interstellarium-assignment-note">
+                  Left
+                </div>
               </div>
             </div>
           </div>

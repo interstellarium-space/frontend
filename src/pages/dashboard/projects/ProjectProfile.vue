@@ -253,7 +253,7 @@
                 </button>
               </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 Котракты
               </div>
@@ -276,7 +276,7 @@
                 {{ contract.name }}
               </a>
             </div>
-            <div class="mb-3">
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 Проектные работы
               </div>

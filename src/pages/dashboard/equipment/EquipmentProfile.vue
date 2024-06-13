@@ -203,7 +203,7 @@
                 </button>
               </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 История передач отделам
               </div>
@@ -235,7 +235,7 @@
                 </div>
               </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-2 mt-5">
               <div class="interstellarium-unit-subtitle">
                 История передач группам
               </div>
