@@ -2,6 +2,8 @@
   import { getUser, isAdmin } from "../../../services/Auth.js";
   import { APIDepartmentsProfile } from "../../../services/api/departments/Profile.js";
   import { APIDepartmentsUpdateChief } from "../../../services/api/departments/update/Chief.js";
+  import { APIDepartmentsUpdateUsers } from "../../../services/api/departments/update/Users.js";
+  import { APIDepartmentsUpdateEquipment } from "../../../services/api/departments/update/Equipment.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -48,6 +50,10 @@
     methods : {
       redirectToUser(user) {
         this.$router.push({ name: "UserProfile", params: { userId: user.id } })
+      },
+
+      redirectToEquipment(equipment) {
+        this.$router.push({ name: "EquipmentProfile", params: { equipmentId: equipment.id } })
       },
 
       async autoload() {
@@ -102,11 +108,49 @@
       },
 
       async addUser(userId) {
-        console.log('Id:' + userId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIDepartmentsUpdateUsers(
+            this.$route.params.departmentId, userId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
 
       async addEquipment(equipmentId) {
-        console.log('Id:' + equipmentId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIDepartmentsUpdateEquipment(
+            this.$route.params.departmentId, equipmentId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       }
     }
   }
@@ -166,11 +210,19 @@
               <div v-if="this.department.users.length === 0" class="interstellarium-unit-description">
                 В отделе не числится ни один пользователь
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Всего: {{ this.department.users.length }}
+              </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-user" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Прикрепить
                 </button>
               </div>
+            </div>
+            <div v-for="user in this.department.users" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToUser(user)" class="interstellarium-unit-link">
+                {{ user.name }}
+              </a>
             </div>
             <div class="mb-3">
               <div class="interstellarium-unit-subtitle">
@@ -181,11 +233,19 @@
               <div v-if="this.department.equipment.length === 0" class="interstellarium-unit-description">
                 За отделом не закреплено оборудование
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Всего: {{ this.department.equipment.length }}
+              </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-equipment" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
+            </div>
+            <div v-for="equipment in this.department.equipment" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToEquipment(equipment)" class="interstellarium-unit-link">
+                {{ equipment.name }}
+              </a>
             </div>
           </div>
           <div v-else class="interstellarium-content-wrapper">
