@@ -94,6 +94,12 @@
         <a class="interstellarium-unit-link">
           {{ equipment.name }}
         </a>
+        <div v-show="equipment.group.id" class="interstellarium-unit-description">
+          Рабочая группа: {{ equipment.group.name }}
+        </div>
+        <div v-show="equipment.department.id" class="interstellarium-unit-description">
+          Отдел: {{ equipment.department.name }}
+        </div>
       </div>
     </template>
 

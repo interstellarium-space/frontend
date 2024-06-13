@@ -94,6 +94,12 @@
         <a class="interstellarium-unit-link">
           {{ work.name }}
         </a>
+        <div v-show="work.contract.id" class="interstellarium-unit-description">
+          Контракт: {{ work.contract.name }}
+        </div>
+        <div v-show="work.project.id" class="interstellarium-unit-description">
+          Проект: {{ work.project.name }}
+        </div>
       </div>
     </template>
 

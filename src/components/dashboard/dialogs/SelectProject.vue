@@ -94,6 +94,12 @@
         <a class="interstellarium-unit-link">
           {{ project.name }}
         </a>
+        <div v-show="project.chief.id" class="interstellarium-unit-description">
+          Руководитель: {{ project.chief.name }}
+        </div>
+        <div v-show="project.group.id" class="interstellarium-unit-description">
+          Рабочая группа: {{ project.group.name }}
+        </div>
       </div>
     </template>
 

@@ -97,7 +97,6 @@
         );
 
         if (response.isOk) {
-          this.pageIsReady = true
           await this.loadData()
         } else {
           if (response.code === 401) {
@@ -120,7 +119,6 @@
         );
 
         if (response.isOk) {
-          this.pageIsReady = true
           await this.loadData()
         } else {
           if (response.code === 401) {

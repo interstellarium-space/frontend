@@ -94,6 +94,9 @@
         <a class="interstellarium-unit-link">
           {{ user.name }}
         </a>
+        <div v-show="user.department.id" class="interstellarium-unit-description">
+          Отдел: {{ user.department.name }}
+        </div>
       </div>
     </template>
 
