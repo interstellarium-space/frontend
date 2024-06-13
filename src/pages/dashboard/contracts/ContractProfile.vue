@@ -37,6 +37,9 @@
           name: "",
           start_date: null,
           finish_date: null,
+          effectivity: 0.0,
+          works_total_cost: 0.0,
+          users_number: 0,
           chief: {
             id: 0,
             name: "",
@@ -206,6 +209,11 @@
               </div>
               <div v-else class="interstellarium-unit-description">
                 Дата завершения: не установлена
+              </div>
+            </div>
+            <div class="interstellarium-unit-card">
+              <div class="interstellarium-unit-description">
+                Эффективность контракта: {{ this.contract.effectivity }} р. / чел. ({{ this.contract.works_total_cost }} р., {{ this.contract.users_number }} чел.)
               </div>
             </div>
             <div class="interstellarium-unit-actionable-card">
