@@ -3,6 +3,7 @@
   import { APIProjectsProfile } from "../../../services/api/projects/Profile.js";
   import { APIProjectsUpdateChief } from "../../../services/api/projects/update/Chief.js";
   import { APIProjectsUpdateGroup } from "../../../services/api/projects/update/Group.js";
+  import { APIProjectsUpdateContracts } from "../../../services/api/projects/update/Contracts.js";
 
   import Main from "../../../components/dashboard/Main.vue";
   import Sidebar from "../../../components/dashboard/Sidebar.vue";
@@ -61,6 +62,14 @@
 
       redirectToUser(user) {
         this.$router.push({ name: "UserProfile", params: { userId: user.id } })
+      },
+
+      redirectToContract(contract) {
+        this.$router.push({name: "ContractProfile", params: {contractId: contract.id}})
+      },
+
+      redirectToWork(work) {
+        this.$router.push({ name: "WorkProfile", params: { workId: work.id } })
       },
 
       async autoload() {
@@ -139,7 +148,26 @@
       },
 
       async addContract(contractId) {
-        console.log('Id:' + contractId)
+        this.pageIsLoading = true
+        this.pageIsReady = false
+
+        let response = await APIProjectsUpdateContracts(
+            this.$route.params.projectId, contractId
+        );
+
+        if (response.isOk) {
+          this.pageIsReady = true
+          await this.loadData()
+        } else {
+          if (response.code === 401) {
+            this.$router.push({name: "AuthLogout"})
+          }
+          this.errorMessage = response.msg
+        }
+
+        console.log(response)
+
+        this.pageIsLoading = false
       },
     }
   }
@@ -234,11 +262,19 @@
               <div v-if="this.project.contracts.length === 0" class="interstellarium-unit-description">
                 К проекту не привязано ни одного контракта
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Всего: {{ this.project.contracts.length }}
+              </div>
               <div class="interstellarium-unit-actions mt-3 mt-md-0">
                 <button v-show="this.userIsAdmin" data-bs-toggle="modal" data-bs-target="#select-contract" class="btn btn-interstellarium rounded-pill fw-bold px-3">
                   + Добавить
                 </button>
               </div>
+            </div>
+            <div v-for="contract in this.project.contracts" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToContract(contract)" class="interstellarium-unit-link">
+                {{ contract.name }}
+              </a>
             </div>
             <div class="mb-3">
               <div class="interstellarium-unit-subtitle">
@@ -249,6 +285,14 @@
               <div v-if="this.project.works.length === 0" class="interstellarium-unit-description">
                 По проекту не зарегистрировано ни одной работы
               </div>
+              <div v-else class="interstellarium-unit-description">
+                Всего: {{ this.project.works.length }}
+              </div>
+            </div>
+            <div v-for="work in this.project.works" class="interstellarium-unit-actionable-card">
+              <a @click="this.redirectToWork(work)" class="interstellarium-unit-link">
+                {{ work.name }}
+              </a>
             </div>
           </div>
           <div v-else class="interstellarium-content-wrapper">
